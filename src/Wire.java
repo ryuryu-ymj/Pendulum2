@@ -25,10 +25,15 @@ public class Wire
      * ワイヤーがつながっているジョイントの数字　何もつながっていないと－1
      */
     public int jointLockedNum;
+    /**
+     * ワイヤーの長さ
+     */
+    private float length;
 
     Wire()
     {
         active = false;
+        jointLockedNum = -1;
     }
 
     public void update(GameContainer gc, double playerX, double playerY, double jointX, double jointY)
@@ -37,7 +42,8 @@ public class Wire
         this.y1 = playerY;
         this.x2 = jointX;
         this.y2 = jointY;
-        angle = Math.atan2(playerY - jointY, playerX - jointX);
+        angle = -Math.atan2(playerY - jointY, playerX - jointX);
+        length = (float) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 
         // 加速
         if(gc.getInput().isKeyDown(Input.KEY_SPACE))
@@ -48,7 +54,6 @@ public class Wire
         {
             stringForce = 0;
         }
-        System.out.println(stringForce);
     }
 
     public void render(Graphics g, ImageManager im)
@@ -98,5 +103,10 @@ public class Wire
     public static double getStringForce()
     {
         return stringForce;
+    }
+
+    public float getLength()
+    {
+        return length;
     }
 }

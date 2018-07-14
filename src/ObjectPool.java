@@ -53,7 +53,7 @@ public class ObjectPool
             player.update(gc, camera.getX(), camera.getY());
             if(wire.jointLockedNum != -1)
             {
-                player.pendulum(wire.getAngle(), wire.getStringForce());
+                player.pendulum(wire.getAngle(), wire.getStringForce(), wire.getLength(), joints[wire.jointLockedNum].abX, joints[wire.jointLockedNum].abY);
             }
         }
         if(wire.active)
