@@ -109,8 +109,8 @@ public class Player extends GameObject
         abX = abX + speedX;
         abY = abY + speedY;
 
-        speedX = slowDown(speedX);
-        speedY = slowDown(speedY);
+        //speedX = slowDown(speedX);
+        //speedY = slowDown(speedY);
 
         changeToDisplayPoint(cameraX, cameraY);
     }

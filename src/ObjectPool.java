@@ -96,6 +96,7 @@ public class ObjectPool
             {
                 if (joints[i].active && player.active)
                 {
+                    // 判定は少し甘い
                     if (gc.getInput().getMouseX() < joints[i].getDiX() + joints[i].radius * 5 && gc.getInput().getMouseX() > joints[i].getDiX() - joints[i].radius * 5)
                     {
                         if (gc.getInput().getMouseY() < joints[i].getDiY() + joints[i].radius * 5 && gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].radius * 5)
