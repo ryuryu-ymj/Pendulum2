@@ -20,6 +20,8 @@ public class Player extends GameObject
         this.abX = x;
         this.abY = y;
         this.radius = radius;
+        width = radius * 2;
+        height = radius * 2;
         speedX = 0;
         speedY = 0;
     }

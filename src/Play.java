@@ -21,6 +21,12 @@ public class Play extends GameState
     public static int counter;
 
     ObjectPool objectPool;
+    StageDate stageDate;
+
+    /**
+     * プレイするステージの番号 0から
+     */
+    private int stageNum;
 
     /**
      * コンストラクタ
@@ -29,6 +35,7 @@ public class Play extends GameState
     {
         super();
         objectPool = new ObjectPool();
+        stageDate = new StageDate();
     }
 
     /**
@@ -37,6 +44,8 @@ public class Play extends GameState
     public void init(GameContainer gc)
             throws SlickException
     {
+        stageNum = 0;
+        stageDate.loadStageDate(stageNum);
         objectPool.init();
     }
 
@@ -46,6 +55,7 @@ public class Play extends GameState
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
+        objectPool.moveGrounds(stageDate.getGroundNum(), stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes());
         objectPool.collisionDetection(gc);
         objectPool.update(gc);
         counter++;

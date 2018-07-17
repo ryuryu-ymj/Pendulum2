@@ -48,7 +48,7 @@ public class Wire
         {
             stringForce = 0;
         }
-        System.out.println(stringForce);
+        //System.out.println(stringForce);
     }
 
     public void render(Graphics g, ImageManager im)

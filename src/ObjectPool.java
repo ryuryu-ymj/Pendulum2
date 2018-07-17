@@ -12,18 +12,35 @@ public class ObjectPool
     Player player;
     Joint[] joints;
     Wire wire;
+    Ground[] grounds;
     Camera camera;
 
-    /** 画面上におけるjointの数の最大値 */
+    /**
+     * 画面上におけるgroundの数の最大値
+     */
+    public static final int GROUND_MAX = 100;
+    /**
+     * そのgroundが表示されたかどうか
+     */
+    public static boolean[] isGroundDisplay = new boolean[StageDate.GROUND_MAX];
+
+    /**
+     * 画面上におけるjointの数の最大値
+     */
     public static final int JOINT_MAX = 10;
 
     ObjectPool()
     {
-        player = new Player(0, 0, 20);
+        player = new Player(200, 200, 20);
         joints = new Joint[JOINT_MAX];
         for (int i = 0; i < JOINT_MAX; i++)
         {
             joints[i] = new Joint(15);
+        }
+        grounds = new Ground[GROUND_MAX];
+        for (int i = 0; i < grounds.length; i++)
+        {
+            grounds[i] = new Ground();
         }
         wire = new Wire();
         camera = new Camera();
@@ -48,19 +65,20 @@ public class ObjectPool
     public void update(GameContainer gc)
     {
         updateObjects(joints, gc);
-        if(player.active)
+        updateObjects(grounds, gc);
+        if (player.active)
         {
             player.update(gc, camera.getX(), camera.getY());
-            if(wire.jointLockedNum != -1)
+            if (wire.jointLockedNum != -1)
             {
                 player.pendulum(wire.getAngle(), wire.getStringForce());
             }
         }
-        if(wire.active)
+        if (wire.active)
         {
             wire.update(gc, player.getDiX(), player.getDiY(), joints[wire.jointLockedNum].getDiX(), joints[wire.jointLockedNum].getDiY());
         }
-        if(camera.active)
+        if (camera.active)
         {
             camera.update(player.abX, player.abY);
         }
@@ -71,16 +89,59 @@ public class ObjectPool
      */
     public void render(Graphics g, ImageManager im)
     {
-        g.setLineWidth(1.5f);
+        //g.setLineWidth(1.5f);
 
         renderObjects(joints, g, im);
-        if(player.active)
+        renderObjects(grounds, g, im);
+        if (player.active)
         {
             player.render(g, im);
         }
-        if(wire.active)
+        if (wire.active)
         {
             wire.render(g, im);
+        }
+    }
+
+    /**
+     * 新しいgroundを作る
+     *
+     * @param x    groundのx座標
+     * @param y    groundのy座標
+     * @param type groundのtype
+     * @return groundsの配列番号　なかったら-1
+     */
+    public int newGround(int x, int y, Ground.Type type, int num)
+    {
+        for (int i = 0; i < GROUND_MAX; i++)
+        {
+            if (!grounds[i].active)
+            {
+                grounds[i].activate(x, y, type, num);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void moveGrounds(int groundNum, int[] groundXs, int[] groundYs, Ground.Type[] groundTypes)
+    {
+        for (int i = 0; i < groundNum; i++)
+        {
+            if (checkEntering(groundXs[i], groundYs[i], (int)grounds[i].width, (int)grounds[i].height))
+            {
+                if (!isGroundDisplay[i])
+                {
+                    if (newGround(groundXs[i], groundYs[i], groundTypes[i], i) != -1)
+                    {
+                        isGroundDisplay[i] = true;
+                    }
+                    else
+                    {
+                        System.err.println("groundの数が足りません" + groundXs[i] + " " + groundYs[i] + " " + i);
+                    }
+                }
+            }
         }
     }
 
@@ -89,8 +150,8 @@ public class ObjectPool
      */
     public void collisionDetection(GameContainer gc)
     {
-        f :
-        if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
+        f:
+        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
         {
             for (int i = 0; i < JOINT_MAX; i++)
             {
@@ -100,7 +161,7 @@ public class ObjectPool
                     {
                         if (gc.getInput().getMouseY() < joints[i].getDiY() + joints[i].radius * 5 && gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].radius * 5)
                         {
-                            if(joints[i].lockRadius == 0 || getDistance(player, joints[i]) < joints[i].lockRadius)
+                            if (joints[i].lockRadius == 0 || getDistance(player, joints[i]) < joints[i].lockRadius)
                             {
                                 wire.jointLockedNum = i;
                                 wire.active = true;
@@ -114,11 +175,60 @@ public class ObjectPool
                 {
                     wire.jointLockedNum = -1;
                     wire.active = false;
-                    for(int g = 0; g < wire.isPlayerPass.length; g++)
+                    for (int g = 0; g < wire.isPlayerPass.length; g++)
                     {
                         wire.isPlayerPass[g] = false;
                     }
                     //camera.active = false;
+                }
+            }
+        }
+
+        // playerとgroundの衝突
+        for (Ground ground : grounds)
+        {
+            check:
+            if (ground.active)
+            {
+                if ((player.abX + player.width / 2 >= ground.abX - ground.width / 2
+                        && player.abX - player.width / 2 <= ground.abX + ground.width / 2)
+                        && player.abY + player.height / 2 >= ground.abY - ground.height / 2
+                        && player.abY - player.height / 2 <= ground.abY + ground.height / 2)
+                {
+                    float distanceX = player.abX - ground.abX;
+                    float distanceY = player.abY - ground.abY;
+                    float slope = distanceY / distanceX;
+                    if (slope < 1 && slope > -1)
+                    {
+                        if (distanceX > 0)
+                        {
+                            player.boundX(ground.abX + ground.width / 2);
+                            //System.out.print(ground.num + "right ");
+                        }
+                        else if (distanceX < 0)
+                        {
+                            player.boundX(ground.abX - ground.width / 2);
+                            //System.out.print(ground.num + "left ");
+                        }
+                    }
+                    else if (slope > 1 || slope < -1)
+                    {
+                        if (distanceY > 0)
+                        {
+                            player.boundY(ground.abY + ground.height / 2);
+                            //System.out.print(ground.num + "under ");
+                        }
+                        else if (distanceY < 0)
+                        {
+                            player.boundY(ground.abY - ground.height / 2);
+                            //System.out.print(ground.num + "on ");
+                        }
+                    }
+
+                    if (ground.getType() == Ground.Type.SPINE)
+                    {
+                        //isPlayerDead = true;
+                    }
                 }
             }
         }
@@ -171,6 +281,7 @@ public class ObjectPool
 
     /**
      * ２点間の距離を返す
+     *
      * @param ga ゲームオブジェクト
      * @param gb 比較先ゲームオブジェクト
      * @return 距離
@@ -180,6 +291,25 @@ public class ObjectPool
         //三平方の定理
         double Xdiff = Math.abs(ga.abX - gb.abX);
         double Ydiff = Math.abs(ga.abY - gb.abY);
-        return Math.sqrt(Math.pow(Xdiff,2) + Math.pow(Ydiff,2));
+        return Math.sqrt(Math.pow(Xdiff, 2) + Math.pow(Ydiff, 2));
+    }
+
+    /**
+     * オブジェクトが画面内に存在するかの判定
+     *
+     * @param x      オブジェクトの中心点のx座標
+     * @param y      オブジェクトの中心点のy座標
+     * @param width  オブジェクトの横幅
+     * @param height オブジェクトの縦幅
+     * @return オブジェクトが画面内に存在するか
+     */
+    public boolean checkEntering(int x, int y, int width, int height)
+    {
+        if (x + width / 2 > camera.getX() - Play.DISPLAY_WIDTH / 2
+                && x - width / 2 < camera.getX() + Play.DISPLAY_WIDTH / 2
+                && y + height / 2 > camera.getY() - Play.DISPLAY_HEIGHT / 2
+                && y - height / 2 < camera.getY() + Play.DISPLAY_HEIGHT / 2)
+            return true;
+        return false;
     }
 }
