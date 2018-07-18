@@ -128,7 +128,7 @@ public class ObjectPool
     {
         for (int i = 0; i < groundNum; i++)
         {
-            if (checkEntering(groundXs[i], groundYs[i], (int)grounds[i].width, (int)grounds[i].height))
+            if (checkEntering(groundXs[i], groundYs[i], (int) grounds[i].width, (int) grounds[i].height))
             {
                 if (!isGroundDisplay[i])
                 {
@@ -190,44 +190,32 @@ public class ObjectPool
             check:
             if (ground.active)
             {
-                if ((player.abX + player.width / 2 >= ground.abX - ground.width / 2
-                        && player.abX - player.width / 2 <= ground.abX + ground.width / 2)
-                        && player.abY + player.height / 2 >= ground.abY - ground.height / 2
-                        && player.abY - player.height / 2 <= ground.abY + ground.height / 2)
+                if (player.abX > ground.abX - ground.width / 2
+                        && player.abX < ground.abX + ground.width / 2
+                        && player.abY + player.height / 2 > ground.abY - ground.height / 2
+                        && player.abY - player.height / 2 < ground.abY + ground.height / 2)
                 {
-                    float distanceX = player.abX - ground.abX;
-                    float distanceY = player.abY - ground.abY;
-                    float slope = distanceY / distanceX;
-                    if (slope < 1 && slope > -1)
+                    if (player.abY > ground.abY)
                     {
-                        if (distanceX > 0)
-                        {
-                            player.boundX(ground.abX + ground.width / 2);
-                            //System.out.print(ground.num + "right ");
-                        }
-                        else if (distanceX < 0)
-                        {
-                            player.boundX(ground.abX - ground.width / 2);
-                            //System.out.print(ground.num + "left ");
-                        }
+                        player.boundDown(ground.abY + ground.height / 2);
                     }
-                    else if (slope > 1 || slope < -1)
+                    else
                     {
-                        if (distanceY > 0)
-                        {
-                            player.boundY(ground.abY + ground.height / 2);
-                            //System.out.print(ground.num + "under ");
-                        }
-                        else if (distanceY < 0)
-                        {
-                            player.boundY(ground.abY - ground.height / 2);
-                            //System.out.print(ground.num + "on ");
-                        }
+                        player.boundUp(ground.abY - ground.height / 2);
                     }
-
-                    if (ground.getType() == Ground.Type.SPINE)
+                }
+                else if (player.abX + player.height / 2 > ground.abX - ground.width / 2
+                            && player.abX - player.height / 2 < ground.abX + ground.width / 2
+                            && player.abY > ground.abY - ground.height / 2
+                            && player.abY < ground.abY + ground.height / 2)
+                {
+                    if (player.abX > ground.abX)
                     {
-                        //isPlayerDead = true;
+                        player.boundRight(ground.abX + ground.width / 2);
+                    }
+                    else
+                    {
+                        player.boundLeft(ground.abX - ground.width / 2);
                     }
                 }
             }

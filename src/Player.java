@@ -44,39 +44,51 @@ public class Player extends GameObject
     }
 
     /**
-     * x座標の跳ね返り
+     * 上方向への跳ね返り
      */
-    public void boundX(float groundX)
+    public void boundUp(float groundY)
     {
-        speedX = -speedX;
-        // 地面の左
-        if (abX < groundX)
+        if (speedY > 0)
         {
-            abX = groundX - radius;
+            speedY = -speedY;
         }
-        // 地面の右
-        else
-        {
-            abX = groundX + radius;
-        }
+        abY = groundY - radius;
     }
 
     /**
-     * y座標の跳ね返り
+     * 下方向への跳ね返り
      */
-    public void boundY(float groundY)
+    public void boundDown(float groundY)
     {
-        speedY = -speedY;
-        // 地面の上
-        if (abY < groundY)
+        if (speedY < 0)
         {
-            abY = groundY - radius;
+            speedY = -speedY;
         }
-        // 地面の下
-        else
+        abY = groundY + radius;
+    }
+
+    /**
+     * 左方向への跳ね返り
+     */
+    public void boundLeft(float groundX)
+    {
+        if (speedX > 0)
         {
-            abY = groundY + radius;
+            speedX = -speedX;
         }
+        abX = groundX - radius;
+    }
+
+    /**
+     * 右方向への跳ね返り
+     */
+    public void boundRight(float groundX)
+    {
+        if (speedX < 0)
+        {
+            speedX = -speedX;
+        }
+        abX = groundX + radius;
     }
 
     private float slowDown(float a)
