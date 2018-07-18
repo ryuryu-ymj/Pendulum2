@@ -14,18 +14,31 @@ public class StageDate
      * groundの型
      */
     private Ground.Type[] groundTypes;
-    private int startX, startY;
-    private int goalX, goalY;
-    private int warpX, warpY;
-    /** 時間制限 */
+    /**
+     * 1ステージにあるgroundの数
+     */
+    private int groundNum;
+    /**
+     * jointの絶対座標（空の場合は-1）
+     */
+    private int[] jointXs, jointYs;
+    /**
+     * 1ステージにあるjointの数
+     */
+    private int jointNum;
+    /**
+     * 時間制限
+     */
     private int timeLimit;
-    /**  */
-    int groundNum;
 
     /**
      * 1ステージにあるgroundの最大数
      */
     public static final int GROUND_MAX = 150;
+    /**
+     * 1ステージにあるjointの最大数
+     */
+    public static final int JOINT_MAX = 50;
     /**
      * ステージの最大数
      */
@@ -36,6 +49,8 @@ public class StageDate
         groundXs = new int[GROUND_MAX];
         groundYs = new int[GROUND_MAX];
         groundTypes = new Ground.Type[GROUND_MAX];
+        jointXs = new int[JOINT_MAX];
+        jointYs = new int[JOINT_MAX];
     }
 
     /**
@@ -62,10 +77,17 @@ public class StageDate
             int lineCnt = 0;
             groundNum = 0;
             int groundCnt = 0;
+            jointNum = 0;
+            int jointCnt = 0;
             for (int i = 0; i < groundXs.length; i++)
             {
                 groundXs[i] = -1;
                 groundYs[i] = -1;
+            }
+            for (int i = 0; i < jointXs.length; i++)
+            {
+                jointXs[i] = -1;
+                jointYs[i] = -1;
             }
             while ((line = br.readLine()) != null)
             {
@@ -110,26 +132,23 @@ public class StageDate
                                 }
                                 catch (ArrayIndexOutOfBoundsException e)
                                 {
-                                    if (groundNum == groundCnt)
-                                    {
-                                        groundNum--;
-                                    }
-                                    System.err.println("1ステージにあるground数が上限を超えました" + (groundCnt + 1));
+                                    System.err.println("1ステージにあるground数が上限を超えました " + e.getMessage());
                                 }
                                 groundCnt++;
                                 //System.out.println(j + " " + i);
                                 break;
-                            case 's':
-                                startX = letterCnt * Ground.WIDTH;
-                                startY = lineCnt * Ground.WIDTH;
-                                break;
-                            case 'g':
-                                goalX = letterCnt * Ground.WIDTH;
-                                goalY = lineCnt * Ground.WIDTH;
-                                break;
-                            case 'w':
-                                warpX = letterCnt * Ground.WIDTH;
-                                warpY = lineCnt * Ground.WIDTH;
+                            case 'j':
+                                try
+                                {
+                                    jointXs[jointCnt] = letterCnt * Ground.WIDTH;
+                                    jointYs[jointCnt] = lineCnt * Ground.WIDTH;
+                                    jointNum++;
+                                }
+                                catch (ArrayIndexOutOfBoundsException e)
+                                {
+                                    System.err.println("1ステージにあるground数が上限を超えました " + e.getMessage());
+                                }
+                                jointCnt++;
                                 break;
                         }
                     }
@@ -155,50 +174,31 @@ public class StageDate
         return groundYs;
     }
 
-    public int getGroundNum()
-    {
-        return groundNum;
-    }
-
     public Ground.Type[] getGroundTypes()
     {
         return groundTypes;
     }
 
-    public int getStartX()
+    public int getGroundNum()
     {
-        return startX;
+        return groundNum;
     }
 
-    public int getStartY()
+    public int[] getJointXs()
     {
-        return startY;
+        return jointXs;
     }
 
-    public int getGoalX()
+    public int[] getJointYs()
     {
-        return goalX;
+        return jointYs;
     }
 
-    public int getGoalY()
+    public int getJointNum()
     {
-        return goalY;
+        return jointNum;
     }
 
-    public int getWarpX()
-    {
-        return warpX;
-    }
-
-    public int getWarpY()
-    {
-        return warpY;
-    }
-
-    /**
-     *
-     * @return 時間制限
-     */
     public int getTimeLimit()
     {
         return timeLimit;

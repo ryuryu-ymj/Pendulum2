@@ -56,6 +56,7 @@ public class Play extends GameState
             throws SlickException
     {
         objectPool.moveGrounds(stageDate.getGroundNum(), stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes());
+        objectPool.moveJoints(stageDate.getJointNum(), stageDate.getJointXs(), stageDate.getJointYs());
         objectPool.collisionDetection(gc);
         objectPool.update(gc);
         counter++;

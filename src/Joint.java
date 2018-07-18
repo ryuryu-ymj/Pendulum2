@@ -39,6 +39,12 @@ public class Joint extends GameObject
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
+        if (checkLeaving(0))
+        {
+            active = false;
+            ObjectPool.isJointDisplay[num] = false;
+            //System.out.println("delate " + num + " " + (int)abX / 55 + "," + (int)abY / 55);
+        }
         changeToDisplayPoint(cameraX, cameraY);
     }
 
@@ -49,13 +55,13 @@ public class Joint extends GameObject
         g.drawOval((int)getDiX() - radius, (int)getDiY() - radius, radius * 2, radius * 2);
     }
 
-    public void activate(int abX, int abY, int type, int lockRadius, boolean isPlayerLoop)
+    public void activate(int abX, int abY, int type, int lockRadius, int num)
     {
         this.abX = abX;
         this.abY = abY;
         this.type = type;
         this.lockRadius = lockRadius;
-        this.isPlayerLoop = isPlayerLoop;
+        this.num = num;
         active = true;
     }
 }

@@ -28,6 +28,10 @@ public class ObjectPool
      * 画面上におけるjointの数の最大値
      */
     public static final int JOINT_MAX = 10;
+    /**
+     * そのジョイントが表示されたかどうか
+     */
+    static boolean[] isJointDisplay = new boolean[StageDate.JOINT_MAX];
 
     ObjectPool()
     {
@@ -53,10 +57,24 @@ public class ObjectPool
     public void init()
     {
         player.active = true;
-        joints[0].activate(200, 0, 0, 0, true);
-        joints[1].activate(-200, 0, 0, 0, true);
         wire.active = false;
-        //camera.active = true;
+        camera.active = true;
+        for (int i = 0; i < isJointDisplay.length; i++)
+        {
+            isJointDisplay[i] = false;
+        }
+        for (int i = 0; i < joints.length; i++)
+        {
+            joints[i].active = false;
+        }
+        for (int i = 0; i < isGroundDisplay.length; i++)
+        {
+            isGroundDisplay[i] = false;
+        }
+        for (int i = 0; i < grounds.length; i++)
+        {
+            grounds[i].active = false;
+        }
     }
 
     /**
@@ -104,7 +122,7 @@ public class ObjectPool
     }
 
     /**
-     * 新しいgroundを作る
+     * 新しくgroundをactivateする
      *
      * @param x    groundのx座標
      * @param y    groundのy座標
@@ -124,6 +142,14 @@ public class ObjectPool
         return -1;
     }
 
+    /**
+     * 画面内にあるgroundsをnewGroundする
+     *
+     * @param groundNum   1ステージにあるgroundの数
+     * @param groundXs    groundの絶対座標（空の場合は-1）
+     * @param groundYs    groundの絶対座標（空の場合は-1）
+     * @param groundTypes groundの型
+     */
     public void moveGrounds(int groundNum, int[] groundXs, int[] groundYs, Ground.Type[] groundTypes)
     {
         for (int i = 0; i < groundNum; i++)
@@ -139,6 +165,58 @@ public class ObjectPool
                     else
                     {
                         System.err.println("groundの数が足りません" + groundXs[i] + " " + groundYs[i] + " " + i);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 新しくjointをactivateする
+     *
+     * @param x          jointのx座標
+     * @param y          jointのy座標
+     * @param type       jointのtype
+     * @param lockRadius jointのlockRadius
+     * @param num        jointがステージ上のどのjointを演じているのか（stageDate.jointXsの配列番号）
+     * @return jointsの配列番号　なかったら-1
+     */
+    public int newJoint(int x, int y, int type, int lockRadius, int num)
+    {
+        for (int i = 0; i < JOINT_MAX; i++)
+        {
+            if (!joints[i].active)
+            {
+                joints[i].activate(x, y, type, lockRadius, num);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 画面内にあるjointsをnewJointする
+     *
+     * @param jointNum   1ステージにあるgroundの数
+     * @param jointXs    groundの絶対座標（空の場合は-1）
+     * @param jointYs    groundの絶対座標（空の場合は-1）
+     * @param jointTypes groundの型
+     */
+    public void moveJoints(int jointNum, int[] jointXs, int[] jointYs)
+    {
+        for (int i = 0; i < jointNum; i++)
+        {
+            if (!isJointDisplay[i])
+            {
+                if (checkEntering(jointXs[i], jointYs[i], joints[0].radius, joints[0].radius))
+                {
+                    if (newJoint(jointXs[i], jointYs[i], 0, 0, i) != -1)
+                    {
+                        isJointDisplay[i] = true;
+                    }
+                    else
+                    {
+                        System.err.println("jointの数が足りません" + jointXs[i] + " " + jointYs[i] + " " + i);
                     }
                 }
             }
@@ -165,7 +243,6 @@ public class ObjectPool
                             {
                                 wire.jointLockedNum = i;
                                 wire.active = true;
-                                camera.active = true;
                             }
                             break f;
                         }
@@ -205,9 +282,9 @@ public class ObjectPool
                     }
                 }
                 else if (player.abX + player.height / 2 > ground.abX - ground.width / 2
-                            && player.abX - player.height / 2 < ground.abX + ground.width / 2
-                            && player.abY > ground.abY - ground.height / 2
-                            && player.abY < ground.abY + ground.height / 2)
+                        && player.abX - player.height / 2 < ground.abX + ground.width / 2
+                        && player.abY > ground.abY - ground.height / 2
+                        && player.abY < ground.abY + ground.height / 2)
                 {
                     if (player.abX > ground.abX)
                     {
