@@ -13,6 +13,11 @@ public class Player extends GameObject
      * 半径
      */
     private int radius;
+    /**
+     * 口が向く方向の角度<br>
+     * 12時から時計回り　ラジアン
+     */
+    private double angle;
     private final int speedMax = 11;
 
     Player(int x, int y)
@@ -24,10 +29,12 @@ public class Player extends GameObject
         height = radius * 2;
         speedX = 0;
         speedY = 0;
+        angle = 0;
     }
 
     /**
      * 振り子運動
+     *
      * @param wireAngle ワイヤーの角度
      * @param wireForce ワイヤーの張力
      */
@@ -91,15 +98,23 @@ public class Player extends GameObject
         abX = groundX + radius;
     }
 
-    private float slowDown(float a)
+    private float slowDown(float a, float delta)
     {
-        if (a > 0)
+        if (a > delta)
         {
-            a -= 0.01;
+            a -= delta;
         }
-        else if (a < 0)
+        else if (a >= 0)
         {
-            a += 0.01;
+            a = 0;
+        }
+        else if (a < -delta)
+        {
+            a += delta;
+        }
+        else if (a <= 0)
+        {
+            a = 0;
         }
         return a;
     }
@@ -123,8 +138,19 @@ public class Player extends GameObject
         abX = abX + speedX;
         abY = abY + speedY;
 
-        speedX = slowDown(speedX);
-        speedY = slowDown(speedY);
+        speedX = slowDown(speedX, 0.01f);
+        speedY = slowDown(speedY, 0.01f);
+
+        double deltaAngle = Math.atan2(gc.getInput().getMouseY() - getDiY(), gc.getInput().getMouseX() - getDiX()) + Math.PI / 2 - angle;
+        if (deltaAngle > Math.PI * 2)
+        {
+            deltaAngle = deltaAngle - Math.PI * 2;
+        }
+        if (deltaAngle > Math.PI)
+        {
+            deltaAngle = -(Math.PI * 2 - deltaAngle);
+        }
+        angle += deltaAngle / 30;
 
         changeToDisplayPoint(cameraX, cameraY);
     }
@@ -134,6 +160,6 @@ public class Player extends GameObject
     {
         /*g.setColor(Color.orange);
         g.drawOval((int) getDiX() - radius, (int) getDiY() - radius, radius * 2, radius * 2);*/
-        im.drawPlayer(getDiX(), getDiY(), radius * 2, radius * 2);
+        im.drawPlayer(getDiX(), getDiY(), radius * 2, radius * 2, (float) Math.toDegrees(angle));
     }
 }

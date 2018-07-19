@@ -95,7 +95,7 @@ public class Wire
         return angle;
     }
 
-    public static double getStringForce()
+    public double getStringForce()
     {
         return stringForce;
     }

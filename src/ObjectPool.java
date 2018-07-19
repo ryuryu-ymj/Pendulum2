@@ -90,6 +90,7 @@ public class ObjectPool
             if (wire.jointLockedNum != -1)
             {
                 player.pendulum(wire.getAngle(), wire.getStringForce());
+                //System.out.println(wire.getAngle());
             }
         }
         if (wire.active)
