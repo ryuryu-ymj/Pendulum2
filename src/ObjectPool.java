@@ -35,7 +35,7 @@ public class ObjectPool
 
     ObjectPool()
     {
-        player = new Player(200, 200, 20);
+        player = new Player(200, 200);
         joints = new Joint[JOINT_MAX];
         for (int i = 0; i < JOINT_MAX; i++)
         {

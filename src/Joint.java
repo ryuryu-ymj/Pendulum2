@@ -51,8 +51,9 @@ public class Joint extends GameObject
     @Override
     public void render(Graphics g, ImageManager im)
     {
-        g.setColor(Color.blue);
-        g.drawOval((int)getDiX() - radius, (int)getDiY() - radius, radius * 2, radius * 2);
+        /*g.setColor(Color.blue);
+        g.drawOval((int)getDiX() - radius, (int)getDiY() - radius, radius * 2, radius * 2);*/
+        im.drawJoint(getDiX(), getDiY(), radius * 2, radius * 2);
     }
 
     public void activate(int abX, int abY, int type, int lockRadius, int num)

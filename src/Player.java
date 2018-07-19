@@ -15,11 +15,11 @@ public class Player extends GameObject
     private int radius;
     private final int speedMax = 11;
 
-    Player(int x, int y, int radius)
+    Player(int x, int y)
     {
         this.abX = x;
         this.abY = y;
-        this.radius = radius;
+        radius = 25;
         width = radius * 2;
         height = radius * 2;
         speedX = 0;
@@ -132,7 +132,8 @@ public class Player extends GameObject
     @Override
     public void render(Graphics g, ImageManager im)
     {
-        g.setColor(Color.orange);
-        g.drawOval((int) getDiX() - radius, (int) getDiY() - radius, radius * 2, radius * 2);
+        /*g.setColor(Color.orange);
+        g.drawOval((int) getDiX() - radius, (int) getDiY() - radius, radius * 2, radius * 2);*/
+        im.drawPlayer(getDiX(), getDiY(), radius * 2, radius * 2);
     }
 }
