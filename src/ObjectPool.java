@@ -110,6 +110,7 @@ public class ObjectPool
     {
         //g.setLineWidth(1.5f);
 
+        //im.drawTree1(600, 600, 600, 600);
         renderObjects(joints, g, im);
         renderObjects(grounds, g, im);
         if (player.active)
