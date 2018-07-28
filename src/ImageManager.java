@@ -12,6 +12,8 @@ public class ImageManager
     private Image player;
     private Image joint;
     private Image tree1;
+    private Image ground;
+    private Image background;
 
     ImageManager()
     {
@@ -34,10 +36,28 @@ public class ImageManager
         {
             e.printStackTrace();
         }
+
+        try
+        {
+            ground = new Image("res/img/ground.png");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            background = new Image("res/img/background.png");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * playerの画像を表示する
+     * player の画像を表示する
      *
      * @param x      中心点のx座標
      * @param y      中心点のy座標
@@ -54,7 +74,7 @@ public class ImageManager
     }
 
     /**
-     * jointの画像を表示する
+     * joint の画像を表示する
      *
      * @param x      中心点のx座標
      * @param y      中心点のy座標
@@ -68,7 +88,7 @@ public class ImageManager
     }
 
     /**
-     * tree1の画像を表示する
+     * tree1 の画像を表示する
      *
      * @param x      中心点のx座標
      * @param y      中心点のy座標
@@ -79,5 +99,31 @@ public class ImageManager
     {
         tree1.setAlpha(0.8f);
         tree1.draw(x - width / 2, y - height / 2, width, height);
+    }
+
+    /**
+     * ground の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawGround(float x, float y, float width, float height)
+    {
+        ground.draw(x - width / 2, y - height / 2, width, height);
+    }
+
+    /**
+     * ground の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawBackGround(float x, float y, float width, float height)
+    {
+        background.draw(x - width / 2, y - height / 2, width, height);
     }
 }

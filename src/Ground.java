@@ -15,7 +15,7 @@ public class Ground extends GameObject
     /**
      * groundの縦幅，横幅
      */
-    static public final int WIDTH = 55;
+    static public final int WIDTH = 60;
 
     /**
      * groundの型
@@ -54,8 +54,9 @@ public class Ground extends GameObject
     @Override
     public void render(Graphics g, ImageManager im)
     {
-        g.setColor(Color.green);
-        g.drawRect(getDiX() - width / 2, getDiY() - height / 2, width, height);
+        /*g.setColor(Color.green);
+        g.drawRect(getDiX() - width / 2, getDiY() - height / 2, width, height);*/
+        im.drawGround(getDiX(), getDiY(), width, height);
         /*switch (type)
         {
             case NORMAL:

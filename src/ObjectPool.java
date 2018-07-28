@@ -13,6 +13,7 @@ public class ObjectPool
     Joint[] joints;
     Wire wire;
     Ground[] grounds;
+    BackObject tree;
     Camera camera;
 
     /**
@@ -47,6 +48,7 @@ public class ObjectPool
             grounds[i] = new Ground();
         }
         wire = new Wire();
+        tree = new BackObject();
         camera = new Camera();
         init();
     }
@@ -97,6 +99,8 @@ public class ObjectPool
         {
             wire.update(gc, player.getDiX(), player.getDiY(), joints[wire.jointLockedNum].getDiX(), joints[wire.jointLockedNum].getDiY());
         }
+        tree.update(gc, camera.getX(), camera.getY());
+
         if (camera.active)
         {
             camera.update(player.abX, player.abY);
@@ -110,7 +114,7 @@ public class ObjectPool
     {
         //g.setLineWidth(1.5f);
 
-        //im.drawTree1(600, 600, 600, 600);
+        tree.render(g, im);
         renderObjects(joints, g, im);
         renderObjects(grounds, g, im);
         if (player.active)
