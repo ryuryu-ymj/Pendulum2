@@ -114,6 +114,7 @@ public class ObjectPool
     {
         //g.setLineWidth(1.5f);
 
+        im.drawBackGround(Play.DISPLAY_WIDTH / 2, Play.DISPLAY_HEIGHT / 2, 4900 / 2, 1800 / 2);
         tree.render(g, im);
         renderObjects(joints, g, im);
         renderObjects(grounds, g, im);
@@ -206,7 +207,7 @@ public class ObjectPool
      * @param jointNum   1ステージにあるgroundの数
      * @param jointXs    groundの絶対座標（空の場合は-1）
      * @param jointYs    groundの絶対座標（空の場合は-1）
-     * @param jointTypes groundの型
+     //* @param jointTypes groundの型
      */
     public void moveJoints(int jointNum, int[] jointXs, int[] jointYs)
     {
