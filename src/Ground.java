@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 public class Ground extends GameObject
 {
     /**
-     * groundがステージ上のどの地面を演じているのか（groundXの番号）
+     * ground がステージ上のどの地面を演じているのか（groundX の配列番号）
      */
     private int num;
     /**
@@ -103,22 +103,6 @@ public class Ground extends GameObject
         this.num = num;
         active = true;
     }
-
-    /*public void changeAppearance()
-    {
-        if (type == Type.DISAPPEAR)
-        {
-            type = Type.APPEAR;
-            System.out.println(0);
-            return;
-        }
-        else if (type == Type.APPEAR)
-        {
-            type = Type.DISAPPEAR;
-            System.out.println(1);
-            return;
-        }
-    }*/
 
     public Type getType()
     {

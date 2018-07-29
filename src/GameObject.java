@@ -54,8 +54,8 @@ public abstract class GameObject
     /**
      * 絶対座標を画面座標に変換する
      *
-     * @param cameraX
-     * @param cameraY
+     * @param cameraX カメラ（画面）の中心座標
+     * @param cameraY カメラ（画面）の中心座標
      */
     public void changeToDisplayPoint(float cameraX, float cameraY)
     {
@@ -65,8 +65,8 @@ public abstract class GameObject
     /**
      * 絶対座標を画面座標に変換する
      *
-     * @param cameraX
-     * @param cameraY
+     * @param cameraX カメラ（画面）の中心座標
+     * @param cameraY カメラ（画面）の中心座標
      * @param pace    進み具合<br>
      *                LAYER0に対しての割合
      */

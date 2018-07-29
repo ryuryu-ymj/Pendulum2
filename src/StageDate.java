@@ -4,6 +4,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * ステージ上のオブジェクトの座標などのデータを管理するクラス
+ */
 public class StageDate
 {
     /**

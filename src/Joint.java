@@ -6,7 +6,7 @@ public class Joint extends GameObject
 {
 	public int radius;
 	/**
-	 * jointがステージ上のどのjointを演じているのか（jointXの番号）
+	 * joint がステージ上のどのjointを演じているのか（jointX の配列番号）
 	 */
 	int num;
 	/**
