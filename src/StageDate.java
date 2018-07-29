@@ -21,6 +21,7 @@ public class StageDate
      * 1ステージにあるgroundの数
      */
     private int groundNum;
+
     /**
      * jointの絶対座標（空の場合は-1）
      */
@@ -29,6 +30,22 @@ public class StageDate
      * 1ステージにあるjointの数
      */
     private int jointNum;
+
+    /**
+     * backObjectの絶対座標（空の場合は-1）
+     */
+    private int[] backObjectXs = {120, 300};
+    /**
+     * backObjectの絶対座標（空の場合は-1）
+     */
+    private int[] backObjectYs = {540, 540};
+    private BackObject.Layer[] backObjectLayers = {BackObject.Layer.LAYER1, BackObject.Layer.LAYER2};
+    private BackObject.Type[] backObjectTypes = {BackObject.Type.TREE, BackObject.Type.TREE};
+    /**
+     * 1ステージにあるbackObjectの数
+     */
+    private int backObjectNum = backObjectXs.length;
+
     /**
      * 時間制限
      */
@@ -200,6 +217,31 @@ public class StageDate
     public int getJointNum()
     {
         return jointNum;
+    }
+
+    public int[] getBackObjectXs()
+    {
+        return backObjectXs;
+    }
+
+    public int[] getBackObjectYs()
+    {
+        return backObjectYs;
+    }
+
+    public BackObject.Layer[] getBackObjectLayers()
+    {
+        return backObjectLayers;
+    }
+
+    public BackObject.Type[] getBackObjectTypes()
+    {
+        return backObjectTypes;
+    }
+
+    public int getBackObjectNum()
+    {
+        return backObjectNum;
     }
 
     public int getTimeLimit()

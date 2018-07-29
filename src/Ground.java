@@ -1,4 +1,3 @@
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -44,7 +43,7 @@ public class Ground extends GameObject
         if (checkLeaving(0))
         {
             active = false;
-            ObjectPool.isGroundDisplay[num] = false;
+            ObjectPool.isGroundDisplayed[num] = false;
             //System.out.println("delate " + num + " " + (int)abX / 55 + "," + (int)abY / 55);
         }
         changeToDisplayPoint(cameraX, cameraY);

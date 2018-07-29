@@ -1,4 +1,3 @@
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -42,7 +41,7 @@ public class Joint extends GameObject
         if (checkLeaving(0))
         {
             active = false;
-            ObjectPool.isJointDisplay[num] = false;
+            ObjectPool.isJointDisplayed[num] = false;
             //System.out.println("delate " + num + " " + (int)abX / 55 + "," + (int)abY / 55);
         }
         changeToDisplayPoint(cameraX, cameraY);

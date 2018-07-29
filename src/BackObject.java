@@ -59,6 +59,7 @@ public class BackObject extends GameObject
         abY = 660;
         layer = Layer.LAYER1;
         type = Type.TREE;
+        active = false;
     }
 
     @Override
@@ -70,7 +71,12 @@ public class BackObject extends GameObject
     @Override
     public void render(Graphics g, ImageManager im)
     {
-        im.drawTree1(getDiX(), getDiY() - height / 2, type.WIDTH, type.HEIGHT);
+        switch (type)
+        {
+            case TREE:
+                im.drawTree1(getDiX(), getDiY() - height / 2, type.WIDTH, type.HEIGHT);
+                break;
+        }
     }
 
     /**

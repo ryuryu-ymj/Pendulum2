@@ -13,30 +13,40 @@ public class ObjectPool
     Joint[] joints;
     Wire wire;
     Ground[] grounds;
-    BackObject tree;
+    BackObject[] backObjects;
     Camera camera;
 
     /**
-     * 画面上におけるgroundの数の最大値
+     * 画面上における ground の数の最大値
      */
     public static final int GROUND_MAX = 100;
     /**
-     * そのgroundが表示されたかどうか
+     * その ground が表示されたかどうか
      */
-    public static boolean[] isGroundDisplay = new boolean[StageDate.GROUND_MAX];
+    public static boolean[] isGroundDisplayed = new boolean[StageDate.GROUND_MAX];
 
     /**
-     * 画面上におけるjointの数の最大値
+     * 画面上における joint の数の最大値
      */
     public static final int JOINT_MAX = 10;
     /**
-     * そのジョイントが表示されたかどうか
+     * その joint が表示されたかどうか
      */
-    static boolean[] isJointDisplay = new boolean[StageDate.JOINT_MAX];
+    static boolean[] isJointDisplayed = new boolean[StageDate.JOINT_MAX];
+
+    /**
+     * 画面上における backObject の数の最大値
+     */
+    public static final int BACK_OBJECT_MAX = 20;
+    /**
+     * その backObject が表示されたかどうか
+     */
+    static boolean[] isBackObjectDisplayed = new boolean[StageDate.JOINT_MAX];
 
     ObjectPool()
     {
         player = new Player(200, 200);
+        wire = new Wire();
         joints = new Joint[JOINT_MAX];
         for (int i = 0; i < JOINT_MAX; i++)
         {
@@ -47,8 +57,11 @@ public class ObjectPool
         {
             grounds[i] = new Ground();
         }
-        wire = new Wire();
-        tree = new BackObject();
+        backObjects = new BackObject[BACK_OBJECT_MAX];
+        for (int i = 0; i < backObjects.length; i++)
+        {
+            backObjects[i] = new BackObject();
+        }
         camera = new Camera();
         init();
     }
@@ -61,17 +74,17 @@ public class ObjectPool
         player.active = true;
         wire.active = false;
         camera.active = true;
-        for (int i = 0; i < isJointDisplay.length; i++)
+        for (int i = 0; i < isJointDisplayed.length; i++)
         {
-            isJointDisplay[i] = false;
+            isJointDisplayed[i] = false;
         }
         for (int i = 0; i < joints.length; i++)
         {
             joints[i].active = false;
         }
-        for (int i = 0; i < isGroundDisplay.length; i++)
+        for (int i = 0; i < isGroundDisplayed.length; i++)
         {
-            isGroundDisplay[i] = false;
+            isGroundDisplayed[i] = false;
         }
         for (int i = 0; i < grounds.length; i++)
         {
@@ -84,6 +97,7 @@ public class ObjectPool
      */
     public void update(GameContainer gc)
     {
+        updateObjects(backObjects, gc);
         updateObjects(joints, gc);
         updateObjects(grounds, gc);
         if (player.active)
@@ -99,7 +113,6 @@ public class ObjectPool
         {
             wire.update(gc, player.getDiX(), player.getDiY(), joints[wire.jointLockedNum].getDiX(), joints[wire.jointLockedNum].getDiY());
         }
-        tree.update(gc, camera.getX(), camera.getY());
 
         if (camera.active)
         {
@@ -114,8 +127,8 @@ public class ObjectPool
     {
         //g.setLineWidth(1.5f);
 
-        im.drawBackGround(Play.DISPLAY_WIDTH / 2, Play.DISPLAY_HEIGHT / 2, 4900 / 2, 1800 / 2);
-        tree.render(g, im);
+        //im.drawBackGround(Play.DISPLAY_WIDTH / 2, Play.DISPLAY_HEIGHT / 2, 4900 / 2, 1800 / 2);
+        renderObjects(backObjects, g, im);
         renderObjects(joints, g, im);
         renderObjects(grounds, g, im);
         if (player.active)
@@ -129,12 +142,12 @@ public class ObjectPool
     }
 
     /**
-     * 新しくgroundをactivateする
+     * 新しく ground をactivateする
      *
-     * @param x    groundのx座標
-     * @param y    groundのy座標
-     * @param type groundのtype
-     * @return groundsの配列番号　なかったら-1
+     * @param x    ground のx座標
+     * @param y    ground のy座標
+     * @param type ground のtype
+     * @return grounds の配列番号　なかったら-1
      */
     public int newGround(int x, int y, Ground.Type type, int num)
     {
@@ -150,28 +163,28 @@ public class ObjectPool
     }
 
     /**
-     * 画面内にあるgroundsをnewGroundする
+     * 画面内にある grounds を newGround する
      *
-     * @param groundNum   1ステージにあるgroundの数
-     * @param groundXs    groundの絶対座標（空の場合は-1）
-     * @param groundYs    groundの絶対座標（空の場合は-1）
-     * @param groundTypes groundの型
+     * @param groundNum   1ステージにある ground の数
+     * @param groundXs    ground の絶対座標（空の場合は-1）
+     * @param groundYs    ground の絶対座標（空の場合は-1）
+     * @param groundTypes ground の型
      */
     public void moveGrounds(int groundNum, int[] groundXs, int[] groundYs, Ground.Type[] groundTypes)
     {
         for (int i = 0; i < groundNum; i++)
         {
-            if (checkEntering(groundXs[i], groundYs[i], (int) grounds[i].width, (int) grounds[i].height))
+            if (checkEntering(groundXs[i], groundYs[i], (int) grounds[0].width, (int) grounds[0].height))
             {
-                if (!isGroundDisplay[i])
+                if (!isGroundDisplayed[i])
                 {
                     if (newGround(groundXs[i], groundYs[i], groundTypes[i], i) != -1)
                     {
-                        isGroundDisplay[i] = true;
+                        isGroundDisplayed[i] = true;
                     }
                     else
                     {
-                        System.err.println("groundの数が足りません" + groundXs[i] + " " + groundYs[i] + " " + i);
+                        System.err.println("ground の数が足りません" + groundXs[i] + " " + groundYs[i] + " " + i);
                     }
                 }
             }
@@ -179,14 +192,14 @@ public class ObjectPool
     }
 
     /**
-     * 新しくjointをactivateする
+     * 新しく joint をactivateする
      *
-     * @param x          jointのx座標
-     * @param y          jointのy座標
-     * @param type       jointのtype
-     * @param lockRadius jointのlockRadius
-     * @param num        jointがステージ上のどのjointを演じているのか（stageDate.jointXsの配列番号）
-     * @return jointsの配列番号　なかったら-1
+     * @param x          joint のx座標
+     * @param y          joint のy座標
+     * @param type       joint のtype
+     * @param lockRadius joint のlockRadius
+     * @param num        joint がステージ上のどの joint を演じているのか（stageDate.jointXsの配列番号）
+     * @return joints の配列番号　なかったら-1
      */
     public int newJoint(int x, int y, int type, int lockRadius, int num)
     {
@@ -202,28 +215,79 @@ public class ObjectPool
     }
 
     /**
-     * 画面内にあるjointsをnewJointする
+     * 画面内にある joints を newJoint する
      *
-     * @param jointNum   1ステージにあるgroundの数
-     * @param jointXs    groundの絶対座標（空の場合は-1）
-     * @param jointYs    groundの絶対座標（空の場合は-1）
-     //* @param jointTypes groundの型
+     * @param jointNum 1ステージにある ground の数
+     * @param jointXs  ground の絶対座標（空の場合は-1）
+     * @param jointYs  ground の絶対座標（空の場合は-1）
+     *                 //* @param jointTypes ground の型
      */
     public void moveJoints(int jointNum, int[] jointXs, int[] jointYs)
     {
         for (int i = 0; i < jointNum; i++)
         {
-            if (!isJointDisplay[i])
+            if (!isJointDisplayed[i])
             {
                 if (checkEntering(jointXs[i], jointYs[i], joints[0].radius, joints[0].radius))
                 {
                     if (newJoint(jointXs[i], jointYs[i], 0, 0, i) != -1)
                     {
-                        isJointDisplay[i] = true;
+                        isJointDisplayed[i] = true;
                     }
                     else
                     {
-                        System.err.println("jointの数が足りません" + jointXs[i] + " " + jointYs[i] + " " + i);
+                        System.err.println("joint の数が足りません" + jointXs[i] + " " + jointYs[i] + " " + i);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 新しく backObject をactivateする
+     *
+     * @param x    backObject のx座標
+     * @param y    backObject のy座標
+     * @param type backObject のtype
+     * @param num  backObject がステージ上のどの backObject を演じているのか（stageDate.jointXsの配列番号）
+     * @return backObjects の配列番号　なかったら-1
+     */
+    public int newBackObject(int x, int y, BackObject.Layer layer, BackObject.Type type, int num)
+    {
+        for (int i = 0; i < BACK_OBJECT_MAX; i++)
+        {
+            if (!backObjects[i].active)
+            {
+                backObjects[i].activate(x, y, layer, type, num);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 画面内にある backObject を newBackObject する
+     *
+     * @param backObjectNum   1ステージにある backObject の数
+     * @param backObjectXs    backObject の絶対座標（空の場合は-1）
+     * @param backObjectYs    backObject の絶対座標（空の場合は-1）
+     * @param backObjectTypes backObject の型
+     */
+    public void moveBackObjects(int backObjectNum, int[] backObjectXs, int[] backObjectYs, BackObject.Layer[] backObjectLayers, BackObject.Type[] backObjectTypes)
+    {
+        for (int i = 0; i < backObjectNum; i++)
+        {
+            if (!isBackObjectDisplayed[i])
+            {
+                if (checkEntering(backObjectXs[i], backObjectYs[i], backObjectTypes[i].WIDTH, backObjectTypes[i].HEIGHT))
+                {
+                    if (newBackObject(backObjectXs[i], backObjectYs[i], backObjectLayers[i], backObjectTypes[i], i) != -1)
+                    {
+                        isBackObjectDisplayed[i] = true;
+                    }
+                    else
+                    {
+                        System.err.println("backObject の数が足りません" + backObjectXs[i] + " " + backObjectYs[i] + " " + i);
                     }
                 }
             }
