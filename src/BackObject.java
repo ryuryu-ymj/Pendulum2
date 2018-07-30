@@ -43,6 +43,8 @@ public class BackObject extends GameObject
         TREE(600, 600),
         GLASS1(120, 120),
         GLASS2(120, 120),
+        GLASS3(120, 120),
+        GLASS4(120, 120),
         ;
 
         public final int WIDTH;
@@ -85,6 +87,12 @@ public class BackObject extends GameObject
                 break;
             case GLASS2:
                 im.drawGlass2(getDiX(), getDiY() - height / 2 + 2, width, height);
+                break;
+            case GLASS3:
+                im.drawGlass3(getDiX(), getDiY() - height / 2 + 2, width, height);
+                break;
+            case GLASS4:
+                im.drawGlass4(getDiX(), getDiY() - height / 2 + 2, width, height);
                 break;
         }
     }

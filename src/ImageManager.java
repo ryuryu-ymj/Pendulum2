@@ -16,6 +16,8 @@ public class ImageManager
     private Image background;
     private Image glass1;
     private Image glass2;
+    private Image glass3;
+    private Image glass4;
 
     ImageManager()
     {
@@ -69,6 +71,24 @@ public class ImageManager
         try
         {
             glass2 = new Image("res/img/glass2.png");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            glass3 = new Image("res/img/glass3.png");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            glass4 = new Image("res/img/glass4.png");
         }
         catch (SlickException e)
         {
@@ -171,5 +191,31 @@ public class ImageManager
     public void drawGlass2(float x, float y, float width, float height)
     {
         glass2.draw(x - width / 2, y - height / 2, width, height);
+    }
+
+    /**
+     * glass3 の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawGlass3(float x, float y, float width, float height)
+    {
+        glass3.draw(x - width / 2, y - height / 2, width, height);
+    }
+
+    /**
+     * glass3 の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawGlass4(float x, float y, float width, float height)
+    {
+        glass4.draw(x - width / 2, y - height / 2, width, height);
     }
 }

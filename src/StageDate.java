@@ -34,13 +34,13 @@ public class StageDate
     /**
      * backObjectの絶対座標（空の場合は-1）
      */
-    private int[] backObjectXs = {120, 480};
+    private int[] backObjectXs = {120, 240, 360, 480};
     /**
      * backObjectの絶対座標（空の場合は-1）
      */
-    private int[] backObjectYs = {570, 570};
-    private BackObject.Layer[] backObjectLayers = {BackObject.Layer.LAYER0, BackObject.Layer.LAYER0};
-    private BackObject.Type[] backObjectTypes = {BackObject.Type.GLASS1, BackObject.Type.GLASS2};
+    private int[] backObjectYs = {570, 570, 570, 570};
+    private BackObject.Layer[] backObjectLayers = {BackObject.Layer.LAYER0, BackObject.Layer.LAYER0, BackObject.Layer.LAYER0, BackObject.Layer.LAYER0};
+    private BackObject.Type[] backObjectTypes = {BackObject.Type.GLASS1, BackObject.Type.GLASS2, BackObject.Type.GLASS3, BackObject.Type.GLASS4};
     /**
      * 1ステージにあるbackObjectの数
      */
