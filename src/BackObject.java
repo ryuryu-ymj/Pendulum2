@@ -19,8 +19,9 @@ public class BackObject extends GameObject
     public enum Layer
     {
         LAYER0(1),
-        LAYER1(0.5f),
-        LAYER2(0.3f),;
+        LAYER1(0.8f),
+        LAYER2(0.3f),
+        ;
 
         /**
          * 進み具合<br>

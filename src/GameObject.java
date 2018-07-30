@@ -67,13 +67,13 @@ public abstract class GameObject
      *
      * @param cameraX カメラ（画面）の中心座標
      * @param cameraY カメラ（画面）の中心座標
-     * @param pace    進み具合<br>
+     * @param pace    x軸方向の進み具合<br>
      *                LAYER0に対しての割合
      */
     public void changeToDisplayPoint(float cameraX, float cameraY, float pace)
     {
-        diX = (abX - cameraX + Play.DISPLAY_WIDTH / 2) * pace;
-        diY = (abY - cameraY + Play.DISPLAY_HEIGHT / 2) * pace;
+        diX = abX - cameraX * pace + Play.DISPLAY_WIDTH / 2;
+        diY = abY - cameraY + Play.DISPLAY_HEIGHT / 2;
     }
 
     /**

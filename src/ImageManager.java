@@ -97,7 +97,7 @@ public class ImageManager
      */
     public void drawTree1(float x, float y, float width, float height)
     {
-        tree1.setAlpha(0.8f);
+        //tree1.setAlpha(0.8f);
         tree1.draw(x - width / 2, y - height / 2, width, height);
     }
 
