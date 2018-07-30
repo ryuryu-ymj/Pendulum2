@@ -146,6 +146,10 @@ public class Player extends GameObject
         {
             deltaAngle = deltaAngle - Math.PI * 2;
         }
+        else if (deltaAngle < 0)
+        {
+            deltaAngle = deltaAngle + Math.PI * 2;
+        }
         if (deltaAngle > Math.PI)
         {
             deltaAngle = -(Math.PI * 2 - deltaAngle);

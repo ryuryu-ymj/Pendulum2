@@ -14,6 +14,8 @@ public class ImageManager
     private Image tree1;
     private Image ground;
     private Image background;
+    private Image glass1;
+    private Image glass2;
 
     ImageManager()
     {
@@ -49,6 +51,24 @@ public class ImageManager
         try
         {
             background = new Image("res/img/background.png");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            glass1 = new Image("res/img/glass1.png");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            glass2 = new Image("res/img/glass2.png");
         }
         catch (SlickException e)
         {
@@ -125,5 +145,31 @@ public class ImageManager
     public void drawBackGround(float x, float y, float width, float height)
     {
         background.draw(x - width / 2, y - height / 2, width, height);
+    }
+
+    /**
+     * glass1 の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawGlass1(float x, float y, float width, float height)
+    {
+        glass1.draw(x - width / 2, y - height / 2, width, height);
+    }
+
+    /**
+     * glass2 の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawGlass2(float x, float y, float width, float height)
+    {
+        glass2.draw(x - width / 2, y - height / 2, width, height);
     }
 }

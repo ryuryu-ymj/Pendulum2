@@ -40,7 +40,10 @@ public class BackObject extends GameObject
      */
     public enum Type
     {
-        TREE(600, 600),;
+        TREE(600, 600),
+        GLASS1(120, 120),
+        GLASS2(120, 120),
+        ;
 
         public final int WIDTH;
         public final int HEIGHT;
@@ -75,7 +78,13 @@ public class BackObject extends GameObject
         switch (type)
         {
             case TREE:
-                im.drawTree1(getDiX(), getDiY() - height / 2, type.WIDTH, type.HEIGHT);
+                im.drawTree1(getDiX(), getDiY() - height / 2 + 2, width, height);
+                break;
+            case GLASS1:
+                im.drawGlass1(getDiX(), getDiY() - height / 2 + 2, width, height);
+                break;
+            case GLASS2:
+                im.drawGlass2(getDiX(), getDiY() - height / 2 + 2, width, height);
                 break;
         }
     }
@@ -96,6 +105,8 @@ public class BackObject extends GameObject
         this.layer = layer;
         this.type = type;
         this.num = num;
+        width = type.WIDTH;
+        height = type.HEIGHT;
         active = true;
     }
 }
