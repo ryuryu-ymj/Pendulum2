@@ -9,17 +9,6 @@ import org.newdawn.slick.SlickException;
  */
 public abstract class GameState
 {
-	/** シーン移行フラグ */
-	public boolean nextState;
-
-	/**
-	 * コンストラクタ
-	 */
-	GameState()
-	{
-		nextState = false;
-	}
-
 	/**
 	 * 初期化を行う.
 	 */

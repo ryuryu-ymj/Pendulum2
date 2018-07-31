@@ -1,9 +1,4 @@
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 
 /**
  * メインクラス.
@@ -15,6 +10,7 @@ public class Main extends BasicGame
     Title title;
     /** プレイ画面 */
     Play play;
+    StageEditor stageEditor;
     /** ゲームシーン */
     private State state;
     ImageManager im;
@@ -22,7 +18,8 @@ public class Main extends BasicGame
     public enum State
     {
         Title,
-        Play
+        Play,
+        StageEditor,
     }
 
     /**
@@ -45,7 +42,8 @@ public class Main extends BasicGame
     {
         title = new Title();
         play = new Play();
-        state = State.Play;
+        stageEditor = new StageEditor();
+        state = State.Title;
         play.init(gc);
         im = new ImageManager();
     }
@@ -61,19 +59,22 @@ public class Main extends BasicGame
         {
             case Title:
                 title.update(gc, delta);
-                if (title.nextState)
+                if (gc.getInput().isKeyPressed(Input.KEY_P))
                 {
                     play.init(gc);
                     state = State.Play;
                 }
+                if (gc.getInput().isKeyPressed(Input.KEY_E))
+                {
+                    stageEditor.init(gc);
+                    state = State.StageEditor;
+                }
                 break;
             case Play:
                 play.update(gc, delta);
-                if (play.nextState)
-                {
-                    title.init(gc);
-                    state = State.Title;
-                }
+                break;
+            case StageEditor:
+                stageEditor.update(gc, delta);
                 break;
         }
     }
@@ -95,6 +96,9 @@ public class Main extends BasicGame
                 break;
             case Play:
                 play.render(gc, g, im);
+                break;
+            case StageEditor:
+                stageEditor.render(gc, g, im);
                 break;
         }
     }
