@@ -1,8 +1,6 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * ステージ上のオブジェクトの座標などのデータを管理するクラス
@@ -84,7 +82,7 @@ public class StageDate
 
         try
         {
-            File file = new File("res/stage/stage" + (stageNum + 1) + ".txt");
+            File file = new File("res/stage/stage" + (stageNum + 1) + ".csv");
             if (!file.exists())
             {
                 System.err.println("ファイルが存在しません stage" + (stageNum + 1));
@@ -94,7 +92,6 @@ public class StageDate
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             String line;
-            int lineCnt = 0;
             groundNum = 0;
             int groundCnt = 0;
             jointNum = 0;
@@ -111,70 +108,36 @@ public class StageDate
             }
             while ((line = br.readLine()) != null)
             {
-                //System.out.println(line);
-                if (lineCnt == 0)
+                StringTokenizer st = new StringTokenizer(line, ",");
+                switch (st.nextToken())
                 {
-                    try
-                    {
-                        timeLimit = Integer.valueOf(line);
-                    }
-                    catch (NumberFormatException e)
-                    {
-                        System.err.println("timeLimitの取得に失敗しました" + line);
-                        timeLimit = 100;
-                    }
-                }
-                else
-                {
-                    for (int letterCnt = 0; letterCnt < line.length(); letterCnt++)
-                    {
-                        switch (line.charAt(letterCnt))
+                    case "ground":
+                        try
                         {
-                            case '0':
-                            case '1':
-                            case '2':
-                            case '3':
-                                try
-                                {
-                                    groundXs[groundCnt] = letterCnt * Ground.WIDTH;
-                                    groundYs[groundCnt] = lineCnt * Ground.WIDTH;
-                                    switch (line.charAt(letterCnt))
-                                    {
-                                        case '0':
-                                            groundTypes[groundCnt] = Ground.Type.NORMAL;
-                                            break;
-                                        case '1':
-                                            groundTypes[groundCnt] = Ground.Type.SPINE;
-                                            break;
-                                    }
-                                    //System.out.println(groundCnt + " " + groundXs[groundCnt] + " " + groundYs[groundCnt]);
-                                    groundNum++;
-                                }
-                                catch (ArrayIndexOutOfBoundsException e)
-                                {
-                                    System.err.println("1ステージにあるground数が上限を超えました " + e.getMessage());
-                                }
-                                groundCnt++;
-                                //System.out.println(j + " " + i);
-                                break;
-                            case 'j':
-                                try
-                                {
-                                    jointXs[jointCnt] = letterCnt * Ground.WIDTH;
-                                    jointYs[jointCnt] = lineCnt * Ground.WIDTH;
-                                    jointNum++;
-                                }
-                                catch (ArrayIndexOutOfBoundsException e)
-                                {
-                                    System.err.println("1ステージにあるground数が上限を超えました " + e.getMessage());
-                                }
-                                jointCnt++;
-                                break;
+                            groundXs[groundCnt] = Integer.parseInt(st.nextToken());
+                            groundYs[groundCnt] = Integer.parseInt(st.nextToken());
+                            groundNum++;
                         }
-                    }
+                        catch (ArrayIndexOutOfBoundsException e)
+                        {
+                            System.err.println("1ステージにある ground 数が上限を超えました " + e.getMessage());
+                        }
+                        groundCnt++;
+                        break;
+                    case "joint":
+                        try
+                        {
+                            jointXs[jointCnt] = Integer.parseInt(st.nextToken());
+                            jointYs[jointCnt] = Integer.parseInt(st.nextToken());
+                            jointNum++;
+                        }
+                        catch (ArrayIndexOutOfBoundsException e)
+                        {
+                            System.err.println("1ステージにある joint 数が上限を超えました " + e.getMessage());
+                        }
+                        jointCnt++;
+                        break;
                 }
-
-                lineCnt++;
             }
             fr.close();
         }
@@ -182,6 +145,22 @@ public class StageDate
         {
             e.printStackTrace();
         }
+
+        /*try
+        {
+            FileWriter fw = new FileWriter("res/stage/stage" + (stageNum + 1) + ".csv");
+            PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+            for (int i = 0; i < groundNum; i++)
+            {
+                pw.println("ground," + groundXs[i] + "," + groundYs[i]);
+            }
+            pw.close();
+            fw.close();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }*/
     }
 
     public int[] getGroundXs()
