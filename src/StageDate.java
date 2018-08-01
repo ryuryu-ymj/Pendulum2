@@ -231,4 +231,20 @@ public class StageDate
     {
         return timeLimit;
     }
+
+    public void addGround(int groundX, int groundY, Ground.Type groundType)
+    {
+        for (int i = 0; i < groundNum; i++)
+        {
+            if (groundX == groundXs[i] && groundY == groundYs[i])
+            {
+                System.out.println(0);
+                break;
+            }
+        }
+        groundXs[groundNum] = groundX;
+        groundYs[groundNum] = groundY;
+        groundTypes[groundNum] = groundType;
+        groundNum++;
+    }
 }
