@@ -29,7 +29,16 @@ public class Player extends GameObject
         height = radius * 2;
         speedX = 0;
         speedY = 0;
+    }
+
+    public void init(int x, int y)
+    {
+        this.abX = x;
+        this.abY = y;
+        speedX = 0;
+        speedY = 0;
         angle = 0;
+        active = true;
     }
 
     /**

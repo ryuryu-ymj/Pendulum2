@@ -50,13 +50,17 @@ public class StageDate
     private int timeLimit;
 
     /**
-     * 1ステージにあるgroundの最大数
+     * 1ステージにある ground の最大数
      */
     public static final int GROUND_MAX = 150;
     /**
-     * 1ステージにあるjointの最大数
+     * 1ステージにある joint の最大数
      */
     public static final int JOINT_MAX = 50;
+    /**
+     * 1ステージにある backGround の最大数
+     */
+    public static final int BACK_OBJECT_MAX = 50;
     /**
      * ステージの最大数
      */

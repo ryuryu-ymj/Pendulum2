@@ -2,14 +2,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class StageEditor extends GameState
+public class Edit extends GameState
 {
     /**
      * フレームカウンタ
      */
     public static int counter;
-
-    ObjectPool objectPool;
+    ObjectPoolEditVer objectPool;
     StageDate stageDate;
 
     /**
@@ -20,17 +19,16 @@ public class StageEditor extends GameState
     /**
      * コンストラクタ
      */
-    StageEditor()
+    Edit()
     {
         super();
-        objectPool = new ObjectPool();
+        objectPool = new ObjectPoolEditVer();
         stageDate = new StageDate();
     }
 
     /**
      * 初期化処理.
      */
-    @Override
     public void init(GameContainer gc)
             throws SlickException
     {
@@ -42,7 +40,6 @@ public class StageEditor extends GameState
     /**
      * ステップごとの更新.
      */
-    @Override
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
@@ -50,7 +47,6 @@ public class StageEditor extends GameState
         objectPool.moveJoints(stageDate.getJointNum(), stageDate.getJointXs(), stageDate.getJointYs());
         objectPool.moveBackObjects(stageDate.getBackObjectNum(), stageDate.getBackObjectXs(), stageDate.getBackObjectYs()
                 , stageDate.getBackObjectLayers(), stageDate.getBackObjectTypes());
-        objectPool.collisionDetection(gc);
         objectPool.update(gc);
         counter++;
     }
@@ -58,7 +54,6 @@ public class StageEditor extends GameState
     /**
      * ステップごとの描画処理.
      */
-    @Override
     public void render(GameContainer gc, Graphics g, ImageManager im)
             throws SlickException
     {

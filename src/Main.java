@@ -10,7 +10,7 @@ public class Main extends BasicGame
     Title title;
     /** プレイ画面 */
     Play play;
-    StageEditor stageEditor;
+    Edit edit;
     /** ゲームシーン */
     private State state;
     ImageManager im;
@@ -19,7 +19,7 @@ public class Main extends BasicGame
     {
         Title,
         Play,
-        StageEditor,
+        Edit,
     }
 
     /**
@@ -42,7 +42,7 @@ public class Main extends BasicGame
     {
         title = new Title();
         play = new Play();
-        stageEditor = new StageEditor();
+        edit = new Edit();
         state = State.Title;
         play.init(gc);
         im = new ImageManager();
@@ -59,23 +59,23 @@ public class Main extends BasicGame
         {
             case Title:
                 title.update(gc, delta);
-                if (gc.getInput().isKeyPressed(Input.KEY_P))
-                {
-                    play.init(gc);
-                    state = State.Play;
-                }
-                if (gc.getInput().isKeyPressed(Input.KEY_E))
-                {
-                    stageEditor.init(gc);
-                    state = State.StageEditor;
-                }
                 break;
             case Play:
                 play.update(gc, delta);
                 break;
-            case StageEditor:
-                stageEditor.update(gc, delta);
+            case Edit:
+                edit.update(gc, delta);
                 break;
+        }
+        if (gc.getInput().isKeyPressed(Input.KEY_P))
+        {
+            play.init(gc);
+            state = State.Play;
+        }
+        if (gc.getInput().isKeyPressed(Input.KEY_E))
+        {
+            edit.init(gc);
+            state = State.Edit;
         }
     }
 
@@ -97,8 +97,8 @@ public class Main extends BasicGame
             case Play:
                 play.render(gc, g, im);
                 break;
-            case StageEditor:
-                stageEditor.render(gc, g, im);
+            case Edit:
+                edit.render(gc, g, im);
                 break;
         }
     }

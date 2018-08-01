@@ -1,4 +1,3 @@
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -42,7 +41,7 @@ public class ObjectPool
     /**
      * その backObject が表示されたかどうか
      */
-    static boolean[] isBackObjectDisplayed = new boolean[StageDate.JOINT_MAX];
+    static boolean[] isBackObjectDisplayed = new boolean[StageDate.BACK_OBJECT_MAX];
 
     ObjectPool()
     {
@@ -72,9 +71,9 @@ public class ObjectPool
      */
     public void init()
     {
-        player.active = true;
-        wire.active = false;
-        camera.active = true;
+        player.init(200, 200);
+        camera.init(200, 200);
+        wire.init();
         for (int i = 0; i < isJointDisplayed.length; i++)
         {
             isJointDisplayed[i] = false;
@@ -90,6 +89,14 @@ public class ObjectPool
         for (int i = 0; i < grounds.length; i++)
         {
             grounds[i].active = false;
+        }
+        for (int i = 0; i < isBackObjectDisplayed.length; i++)
+        {
+            isBackObjectDisplayed[i] = false;
+        }
+        for (int i = 0; i < backObjects.length; i++)
+        {
+            backObjects[i].active = false;
         }
     }
 
@@ -117,7 +124,7 @@ public class ObjectPool
 
         if (camera.active)
         {
-            camera.update(player.abX, player.abY);
+            camera.followPlayer(player.abX, player.abY);
         }
     }
 
@@ -322,12 +329,7 @@ public class ObjectPool
                 }
                 if (i == JOINT_MAX - 1)
                 {
-                    wire.jointLockedNum = -1;
-                    wire.active = false;
-                    for (int g = 0; g < wire.isPlayerPass.length; g++)
-                    {
-                        wire.isPlayerPass[g] = false;
-                    }
+                    wire.init();
                     //camera.active = false;
                 }
             }
@@ -389,7 +391,7 @@ public class ObjectPool
      *
      * @param object ゲームオブジェクトの配列
      */
-    private void updateObjects(GameObject[] object, GameContainer gc)
+    protected void updateObjects(GameObject[] object, GameContainer gc)
     {
         for (GameObject obj : object)
         {
@@ -405,7 +407,7 @@ public class ObjectPool
      *
      * @param object ゲームオブジェクトの配列
      */
-    private void renderObjects(GameObject[] object, Graphics g, ImageManager im)
+    protected void renderObjects(GameObject[] object, Graphics g, ImageManager im)
     {
         for (GameObject obj : object)
         {
