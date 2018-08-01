@@ -1,3 +1,4 @@
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -10,6 +11,7 @@ public class Edit extends GameState
     public static int counter;
     ObjectPoolEditVer objectPool;
     StageDate stageDate;
+    Grid grid;
 
     /**
      * プレイするステージの番号 0から
@@ -24,6 +26,7 @@ public class Edit extends GameState
         super();
         objectPool = new ObjectPoolEditVer();
         stageDate = new StageDate();
+        grid = new Grid();
     }
 
     /**
@@ -48,6 +51,7 @@ public class Edit extends GameState
         objectPool.moveBackObjects(stageDate.getBackObjectNum(), stageDate.getBackObjectXs(), stageDate.getBackObjectYs()
                 , stageDate.getBackObjectLayers(), stageDate.getBackObjectTypes());
         objectPool.update(gc);
+        grid.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
         counter++;
     }
 
@@ -58,5 +62,6 @@ public class Edit extends GameState
             throws SlickException
     {
         objectPool.render(g, im);
+        grid.render(g, im);
     }
 }
