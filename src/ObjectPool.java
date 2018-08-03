@@ -50,7 +50,7 @@ public class ObjectPool
         joints = new Joint[JOINT_MAX];
         for (int i = 0; i < JOINT_MAX; i++)
         {
-            joints[i] = new Joint(15);
+            joints[i] = new Joint();
         }
         grounds = new Ground[GROUND_MAX];
         for (int i = 0; i < grounds.length; i++)

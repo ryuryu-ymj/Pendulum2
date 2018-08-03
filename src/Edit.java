@@ -58,11 +58,28 @@ public class Edit extends GameState
         mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
         {
-            stageDate.addGround((int)mousePointer.abX, (int)mousePointer.abY, Ground.Type.NORMAL);
+            switch (mousePointer.type)
+            {
+                case GROUND:
+                    stageDate.addGround((int)mousePointer.abX, (int)mousePointer.abY, Ground.Type.NORMAL);
+                    break;
+                case JOINT:
+                    stageDate.addJoint((int)mousePointer.abX, (int)mousePointer.abY);
+                    break;
+            }
         }
+
         if (gc.getInput().isKeyPressed(Input.KEY_S))
         {
             stageDate.saveStageDate(stageNum);
+        }
+        else if (gc.getInput().isKeyPressed(Input.KEY_G))
+        {
+            mousePointer.type = MousePointer.Type.GROUND;
+        }
+        else if (gc.getInput().isKeyPressed(Input.KEY_J))
+        {
+            mousePointer.type = MousePointer.Type.JOINT;
         }
         counter++;
     }

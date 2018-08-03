@@ -3,6 +3,13 @@ import org.newdawn.slick.Graphics;
 
 public class MousePointer extends GameObject
 {
+    public enum Type{GROUND, JOINT}
+    public Type type;
+
+    MousePointer()
+    {
+        type = Type.GROUND;
+    }
 
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
@@ -13,7 +20,15 @@ public class MousePointer extends GameObject
     @Override
     public void render(Graphics g, ImageManager im)
     {
-        im.drawGround(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH);
+        switch (type)
+        {
+            case GROUND:
+                im.drawGround(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH);
+                break;
+            case JOINT:
+                im.drawJoint(getDiX(), getDiY(), Joint.radius * 2, Joint.radius * 2);
+                break;
+        }
     }
 
     public void setPointer(float abX, float abY)

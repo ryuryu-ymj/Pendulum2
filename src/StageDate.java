@@ -276,4 +276,18 @@ public class StageDate
         groundTypes[groundNum] = groundType;
         groundNum++;
     }
+
+    public void addJoint(int jointX, int jointY)
+    {
+        for (int i = 0; i < jointNum; i++)
+        {
+            if (jointX == jointXs[i] && jointY == jointYs[i])
+            {
+                return;
+            }
+        }
+        jointXs[jointNum] = jointX;
+        jointYs[jointNum] = jointY;
+        jointNum++;
+    }
 }
