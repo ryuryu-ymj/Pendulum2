@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 /**
@@ -78,12 +79,10 @@ public class StageDate
     /**
      * ステージのデータを読み込む
      *
-     * @param stageNum ステージ番号
+     * @param stageNum ステージ番号(0から)
      */
     public void loadStageDate(int stageNum)
     {
-        ArrayList<String> stageDate = new ArrayList<>();
-
         try
         {
             File file = new File("res/stage/stage" + (stageNum + 1) + ".csv");
@@ -112,35 +111,41 @@ public class StageDate
             }
             while ((line = br.readLine()) != null)
             {
-                StringTokenizer st = new StringTokenizer(line, ",");
-                switch (st.nextToken())
+                try
                 {
-                    case "ground":
-                        try
-                        {
-                            groundXs[groundCnt] = Integer.parseInt(st.nextToken());
-                            groundYs[groundCnt] = Integer.parseInt(st.nextToken());
-                            groundNum++;
-                        }
-                        catch (ArrayIndexOutOfBoundsException e)
-                        {
-                            System.err.println("1ステージにある ground 数が上限を超えました " + e.getMessage());
-                        }
-                        groundCnt++;
-                        break;
-                    case "joint":
-                        try
-                        {
-                            jointXs[jointCnt] = Integer.parseInt(st.nextToken());
-                            jointYs[jointCnt] = Integer.parseInt(st.nextToken());
-                            jointNum++;
-                        }
-                        catch (ArrayIndexOutOfBoundsException e)
-                        {
-                            System.err.println("1ステージにある joint 数が上限を超えました " + e.getMessage());
-                        }
-                        jointCnt++;
-                        break;
+                    StringTokenizer st = new StringTokenizer(line, ",");
+                    switch (st.nextToken())
+                    {
+                        case "ground":
+                            try
+                            {
+                                groundXs[groundCnt] = Integer.parseInt(st.nextToken());
+                                groundYs[groundCnt] = Integer.parseInt(st.nextToken());
+                                groundNum++;
+                            }
+                            catch (ArrayIndexOutOfBoundsException e)
+                            {
+                                System.err.println("1ステージにある ground 数が上限を超えました " + e.getMessage());
+                            }
+                            groundCnt++;
+                            break;
+                        case "joint":
+                            try
+                            {
+                                jointXs[jointCnt] = Integer.parseInt(st.nextToken());
+                                jointYs[jointCnt] = Integer.parseInt(st.nextToken());
+                                jointNum++;
+                            }
+                            catch (ArrayIndexOutOfBoundsException e)
+                            {
+                                System.err.println("1ステージにある joint 数が上限を超えました " + e.getMessage());
+                            }
+                            jointCnt++;
+                            break;
+                    }
+                }
+                catch (NoSuchElementException e)
+                {
                 }
             }
             fr.close();
@@ -165,6 +170,29 @@ public class StageDate
         {
             ex.printStackTrace();
         }*/
+    }
+
+    public void saveStageDate(int stageNum)
+    {
+        try
+        {
+            FileWriter fw = new FileWriter("res/stage/stage" + (stageNum + 1) + ".csv");
+            PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+            for (int i = 0; i < groundNum; i++)
+            {
+                pw.println("ground," + groundXs[i] + "," + groundYs[i]);
+            }
+            for (int i = 0; i < jointNum; i++)
+            {
+                pw.println("joint," + jointXs[i] + "," + jointYs[i]);
+            }
+            pw.close();
+            fw.close();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     public int[] getGroundXs()
@@ -238,10 +266,11 @@ public class StageDate
         {
             if (groundX == groundXs[i] && groundY == groundYs[i])
             {
-                System.out.println(0);
-                break;
+                //System.out.println("not add " + groundX + " " + groundY);
+                return;
             }
         }
+        //System.out.println("add " + groundX + " " + groundY + " " + groundXs[0] + " " + groundYs[0] + " " + groundNum);
         groundXs[groundNum] = groundX;
         groundYs[groundNum] = groundY;
         groundTypes[groundNum] = groundType;

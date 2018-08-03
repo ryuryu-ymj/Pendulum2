@@ -56,9 +56,13 @@ public class Edit extends GameState
         grid.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
         mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));
         mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
-        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
+        if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
         {
             stageDate.addGround((int)mousePointer.abX, (int)mousePointer.abY, Ground.Type.NORMAL);
+        }
+        if (gc.getInput().isKeyPressed(Input.KEY_S))
+        {
+            stageDate.saveStageDate(stageNum);
         }
         counter++;
     }
