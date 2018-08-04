@@ -48,8 +48,8 @@ public class Edit extends GameState
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
-        objectPool.moveGrounds(stageDate.getGroundNum(), stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes());
-        objectPool.moveJoints(stageDate.getJointNum(), stageDate.getJointXs(), stageDate.getJointYs());
+        objectPool.moveGrounds(stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes());
+        objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs());
         objectPool.moveBackObjects(stageDate.getBackObjectNum(), stageDate.getBackObjectXs(), stageDate.getBackObjectYs()
                 , stageDate.getBackObjectLayers(), stageDate.getBackObjectTypes());
         objectPool.update(gc);
@@ -69,9 +69,17 @@ public class Edit extends GameState
             }
         }
 
-        if (gc.getInput().isKeyPressed(Input.KEY_S))
+        if (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))
         {
-            stageDate.saveStageDate(stageNum);
+            if (gc.getInput().isKeyPressed(Input.KEY_S))
+            {
+                stageDate.saveStageDate(stageNum);
+                System.out.println("ステージデータをstage" + (stageNum + 1) + "を保存しました");
+            }
+            else if (gc.getInput().isKeyPressed(Input.KEY_DELETE))
+            {
+
+            }
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_G))
         {

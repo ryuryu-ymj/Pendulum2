@@ -173,14 +173,13 @@ public class ObjectPool
     /**
      * 画面内にある grounds を newGround する
      *
-     * @param groundNum   1ステージにある ground の数
      * @param groundXs    ground の絶対座標（空の場合は-1）
      * @param groundYs    ground の絶対座標（空の場合は-1）
      * @param groundTypes ground の型
      */
-    public void moveGrounds(int groundNum, int[] groundXs, int[] groundYs, Ground.Type[] groundTypes)
+    public void moveGrounds(int[] groundXs, int[] groundYs, Ground.Type[] groundTypes)
     {
-        for (int i = 0; i < groundNum; i++)
+        for (int i = 0; i < groundXs.length; i++)
         {
             if (checkEntering(groundXs[i], groundYs[i], (int) grounds[0].width, (int) grounds[0].height))
             {
@@ -225,14 +224,13 @@ public class ObjectPool
     /**
      * 画面内にある joints を newJoint する
      *
-     * @param jointNum 1ステージにある ground の数
      * @param jointXs  ground の絶対座標（空の場合は-1）
      * @param jointYs  ground の絶対座標（空の場合は-1）
      *                 //* @param jointTypes ground の型
      */
-    public void moveJoints(int jointNum, int[] jointXs, int[] jointYs)
+    public void moveJoints(int[] jointXs, int[] jointYs)
     {
-        for (int i = 0; i < jointNum; i++)
+        for (int i = 0; i < jointXs.length; i++)
         {
             if (!isJointDisplayed[i])
             {

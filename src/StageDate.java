@@ -11,24 +11,16 @@ public class StageDate
     /**
      * groundの絶対座標（空の場合は-1）
      */
-    private int[] groundXs, groundYs;
+    private ArrayList<Integer> groundXs, groundYs;
     /**
      * groundの型
      */
-    private Ground.Type[] groundTypes;
-    /**
-     * 1ステージにあるgroundの数
-     */
-    private int groundNum;
+    private ArrayList<Ground.Type> groundTypes;
 
     /**
      * jointの絶対座標（空の場合は-1）
      */
-    private int[] jointXs, jointYs;
-    /**
-     * 1ステージにあるjointの数
-     */
-    private int jointNum;
+    private ArrayList<Integer> jointXs, jointYs;
 
     /**
      * backObjectの絶対座標（空の場合は-1）
@@ -69,11 +61,11 @@ public class StageDate
 
     StageDate()
     {
-        groundXs = new int[GROUND_MAX];
-        groundYs = new int[GROUND_MAX];
-        groundTypes = new Ground.Type[GROUND_MAX];
-        jointXs = new int[JOINT_MAX];
-        jointYs = new int[JOINT_MAX];
+        groundXs = new ArrayList<>();
+        groundYs = new ArrayList<>();
+        groundTypes = new ArrayList<>();
+        jointXs = new ArrayList<>();
+        jointYs = new ArrayList<>();
     }
 
     /**
@@ -95,20 +87,11 @@ public class StageDate
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             String line;
-            groundNum = 0;
-            int groundCnt = 0;
-            jointNum = 0;
-            int jointCnt = 0;
-            for (int i = 0; i < groundXs.length; i++)
-            {
-                groundXs[i] = -1;
-                groundYs[i] = -1;
-            }
-            for (int i = 0; i < jointXs.length; i++)
-            {
-                jointXs[i] = -1;
-                jointYs[i] = -1;
-            }
+            groundXs.clear();
+            groundYs.clear();
+            groundTypes.clear();
+            jointXs.clear();
+            jointYs.clear();
             while ((line = br.readLine()) != null)
             {
                 try
@@ -119,28 +102,25 @@ public class StageDate
                         case "ground":
                             try
                             {
-                                groundXs[groundCnt] = Integer.parseInt(st.nextToken());
-                                groundYs[groundCnt] = Integer.parseInt(st.nextToken());
-                                groundNum++;
+                                groundXs.add(Integer.parseInt(st.nextToken()));
+                                groundYs.add(Integer.parseInt(st.nextToken()));
+                                groundTypes.add(Ground.Type.NORMAL);
                             }
                             catch (ArrayIndexOutOfBoundsException e)
                             {
                                 System.err.println("1ステージにある ground 数が上限を超えました " + e.getMessage());
                             }
-                            groundCnt++;
                             break;
                         case "joint":
                             try
                             {
-                                jointXs[jointCnt] = Integer.parseInt(st.nextToken());
-                                jointYs[jointCnt] = Integer.parseInt(st.nextToken());
-                                jointNum++;
+                                jointXs.add(Integer.parseInt(st.nextToken()));
+                                jointYs.add(Integer.parseInt(st.nextToken()));
                             }
                             catch (ArrayIndexOutOfBoundsException e)
                             {
                                 System.err.println("1ステージにある joint 数が上限を超えました " + e.getMessage());
                             }
-                            jointCnt++;
                             break;
                     }
                 }
@@ -172,19 +152,24 @@ public class StageDate
         }*/
     }
 
+    /**
+     * ステージデータを保存する
+     *
+     * @param stageNum 　ステージ番号(0から)
+     */
     public void saveStageDate(int stageNum)
     {
         try
         {
             FileWriter fw = new FileWriter("res/stage/stage" + (stageNum + 1) + ".csv");
             PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
-            for (int i = 0; i < groundNum; i++)
+            for (int i = 0; i < groundXs.size(); i++)
             {
-                pw.println("ground," + groundXs[i] + "," + groundYs[i]);
+                pw.println("ground," + groundXs.get(i) + "," + groundYs.get(i));
             }
-            for (int i = 0; i < jointNum; i++)
+            for (int i = 0; i < jointXs.size(); i++)
             {
-                pw.println("joint," + jointXs[i] + "," + jointYs[i]);
+                pw.println("joint," + jointXs.get(i) + "," + jointYs.get(i));
             }
             pw.close();
             fw.close();
@@ -197,37 +182,47 @@ public class StageDate
 
     public int[] getGroundXs()
     {
+        int[] groundXs = new int[this.groundXs.size()];
+        for (int i = 0; i < groundXs.length; i++)
+        {
+            groundXs[i] = this.groundXs.get(i);
+        }
         return groundXs;
     }
 
     public int[] getGroundYs()
     {
+        int[] groundYs = new int[this.groundYs.size()];
+        for (int i = 0; i < groundYs.length; i++)
+        {
+            groundYs[i] = this.groundYs.get(i);
+        }
         return groundYs;
     }
 
     public Ground.Type[] getGroundTypes()
     {
-        return groundTypes;
-    }
-
-    public int getGroundNum()
-    {
-        return groundNum;
+        return groundTypes.toArray(new Ground.Type[groundTypes.size()]);
     }
 
     public int[] getJointXs()
     {
+        int[] jointXs = new int[this.jointXs.size()];
+        for (int i = 0; i < jointXs.length; i++)
+        {
+            jointXs[i] = this.jointXs.get(i);
+        }
         return jointXs;
     }
 
     public int[] getJointYs()
     {
+        int[] jointYs = new int[this.jointYs.size()];
+        for (int i = 0; i < jointYs.length; i++)
+        {
+            jointYs[i] = this.jointYs.get(i);
+        }
         return jointYs;
-    }
-
-    public int getJointNum()
-    {
-        return jointNum;
     }
 
     public int[] getBackObjectXs()
@@ -262,32 +257,34 @@ public class StageDate
 
     public void addGround(int groundX, int groundY, Ground.Type groundType)
     {
-        for (int i = 0; i < groundNum; i++)
+        for (int i = 0; i < groundXs.size(); i++)
         {
-            if (groundX == groundXs[i] && groundY == groundYs[i])
+            if (groundX == groundXs.get(i) && groundY == groundYs.get(i))
             {
                 //System.out.println("not add " + groundX + " " + groundY);
                 return;
             }
         }
         //System.out.println("add " + groundX + " " + groundY + " " + groundXs[0] + " " + groundYs[0] + " " + groundNum);
-        groundXs[groundNum] = groundX;
-        groundYs[groundNum] = groundY;
-        groundTypes[groundNum] = groundType;
-        groundNum++;
+        groundXs.add(groundX);
+        groundYs.add(groundY);
+        groundTypes.add(groundType);
     }
 
     public void addJoint(int jointX, int jointY)
     {
-        for (int i = 0; i < jointNum; i++)
+        for (int i = 0; i < jointXs.size(); i++)
         {
-            if (jointX == jointXs[i] && jointY == jointYs[i])
+            if (jointX == jointXs.get(i) && jointY == jointYs.get(i))
             {
                 return;
             }
         }
-        jointXs[jointNum] = jointX;
-        jointYs[jointNum] = jointY;
-        jointNum++;
+        jointXs.add(jointX);
+        jointYs.add(jointY);
+    }
+
+    public void delateObject(int objectX, int objectY)
+    {
     }
 }
