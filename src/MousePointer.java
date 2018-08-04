@@ -1,9 +1,10 @@
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 public class MousePointer extends GameObject
 {
-    public enum Type{GROUND, JOINT}
+    public enum Type{DELETE, GROUND, JOINT}
     public Type type;
 
     MousePointer()
@@ -27,6 +28,10 @@ public class MousePointer extends GameObject
                 break;
             case JOINT:
                 im.drawJoint(getDiX(), getDiY(), Joint.radius * 2, Joint.radius * 2);
+                break;
+            case DELETE:
+                g.setColor(Color.red);
+                g.drawOval(getDiX() - Ground.WIDTH / 2, getDiY() - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
                 break;
         }
     }

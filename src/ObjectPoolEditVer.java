@@ -7,6 +7,11 @@ public class ObjectPoolEditVer extends ObjectPool
     public void init()
     {
         camera.init(200, 200);
+        reload();
+    }
+
+    public void reload()
+    {
         for (int i = 0; i < isJointDisplayed.length; i++)
         {
             isJointDisplayed[i] = false;

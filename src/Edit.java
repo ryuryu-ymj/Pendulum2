@@ -48,14 +48,6 @@ public class Edit extends GameState
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
-        objectPool.moveGrounds(stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes());
-        objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs());
-        objectPool.moveBackObjects(stageDate.getBackObjectNum(), stageDate.getBackObjectXs(), stageDate.getBackObjectYs()
-                , stageDate.getBackObjectLayers(), stageDate.getBackObjectTypes());
-        objectPool.update(gc);
-        grid.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
-        mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));
-        mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
         {
             switch (mousePointer.type)
@@ -65,6 +57,10 @@ public class Edit extends GameState
                     break;
                 case JOINT:
                     stageDate.addJoint((int)mousePointer.abX, (int)mousePointer.abY);
+                    break;
+                case DELETE:
+                    stageDate.deleteObject((int)mousePointer.abX, (int)mousePointer.abY);
+                    objectPool.reload();
                     break;
             }
         }
@@ -78,7 +74,8 @@ public class Edit extends GameState
             }
             else if (gc.getInput().isKeyPressed(Input.KEY_DELETE))
             {
-
+                stageDate.deleteAllObject();
+                objectPool.reload();
             }
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_G))
@@ -89,6 +86,18 @@ public class Edit extends GameState
         {
             mousePointer.type = MousePointer.Type.JOINT;
         }
+        else if (gc.getInput().isKeyPressed(Input.KEY_D))
+        {
+            mousePointer.type = MousePointer.Type.DELETE;
+        }
+        objectPool.moveGrounds(stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes());
+        objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs());
+        objectPool.moveBackObjects(stageDate.getBackObjectNum(), stageDate.getBackObjectXs(), stageDate.getBackObjectYs()
+                , stageDate.getBackObjectLayers(), stageDate.getBackObjectTypes());
+        objectPool.update(gc);
+        grid.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
+        mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));
+        mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
         counter++;
     }
 

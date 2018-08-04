@@ -284,7 +284,34 @@ public class StageDate
         jointYs.add(jointY);
     }
 
-    public void delateObject(int objectX, int objectY)
+    public void deleteObject(int objectX, int objectY)
     {
+        for (int i = 0; i < groundXs.size(); i++)
+        {
+            if (objectX == groundXs.get(i) && objectY == groundYs.get(i))
+            {
+                System.out.println(groundXs.get(i) + " " + groundYs.get(i));
+                groundXs.remove(i);
+                groundYs.remove(i);
+                groundTypes.remove(i);
+            }
+        }
+        for (int i = 0; i < jointXs.size(); i++)
+        {
+            if (objectX == jointXs.get(i) && objectY == jointYs.get(i))
+            {
+                jointXs.remove(i);
+                jointYs.remove(i);
+            }
+        }
+    }
+
+    public void deleteAllObject()
+    {
+        groundXs.clear();
+        groundYs.clear();
+        groundTypes.clear();
+        jointXs.clear();
+        jointYs.clear();
     }
 }
