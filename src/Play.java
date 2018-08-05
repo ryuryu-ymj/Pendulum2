@@ -26,7 +26,7 @@ public class Play extends GameState
     /**
      * プレイするステージの番号 0から
      */
-    private int stageNum;
+    public int stageNum;
 
     /**
      * コンストラクタ

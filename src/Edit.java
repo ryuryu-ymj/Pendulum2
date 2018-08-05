@@ -1,7 +1,5 @@
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
+import sun.text.normalizer.NormalizerBase;
 
 public class Edit extends GameState
 {
@@ -77,6 +75,15 @@ public class Edit extends GameState
                 stageDate.deleteAllObject();
                 objectPool.reload();
             }
+            for (int i = 0; i < StageDate.STAGE_MAX; i++)
+            {
+                if (gc.getInput().isKeyPressed(2 + i) || gc.getInput().isKeyPressed(79 + i))
+                {
+                    stageNum = i;
+                    stageDate.loadStageDate(stageNum);
+                    objectPool.reload();
+                }
+            }
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_G))
         {
@@ -90,6 +97,7 @@ public class Edit extends GameState
         {
             mousePointer.type = MousePointer.Type.DELETE;
         }
+
         objectPool.moveGrounds(stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes());
         objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs());
         objectPool.moveBackObjects(stageDate.getBackObjectNum(), stageDate.getBackObjectXs(), stageDate.getBackObjectYs()
@@ -110,5 +118,7 @@ public class Edit extends GameState
         objectPool.render(g, im);
         grid.render(g, im);
         mousePointer.render(g, im);
+        g.setColor(Color.black);
+        g.drawString("stage" + (stageNum + 1), 100, 100);
     }
 }

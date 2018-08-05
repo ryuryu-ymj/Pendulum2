@@ -59,6 +59,16 @@ public class Main extends BasicGame
         {
             case Title:
                 title.update(gc, delta);
+                if (gc.getInput().isKeyPressed(Input.KEY_P))
+                {
+                    play.init(gc);
+                    state = State.Play;
+                }
+                else if (gc.getInput().isKeyPressed(Input.KEY_E))
+                {
+                    edit.init(gc);
+                    state = State.Edit;
+                }
                 break;
             case Play:
                 play.update(gc, delta);
@@ -67,15 +77,18 @@ public class Main extends BasicGame
                 edit.update(gc, delta);
                 break;
         }
-        if (gc.getInput().isKeyPressed(Input.KEY_P))
+        if (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))
         {
-            play.init(gc);
-            state = State.Play;
-        }
-        if (gc.getInput().isKeyPressed(Input.KEY_E))
-        {
-            edit.init(gc);
-            state = State.Edit;
+            if (gc.getInput().isKeyPressed(Input.KEY_P))
+            {
+                play.init(gc);
+                state = State.Play;
+            }
+            else if (gc.getInput().isKeyPressed(Input.KEY_E))
+            {
+                edit.init(gc);
+                state = State.Edit;
+            }
         }
     }
 

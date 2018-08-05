@@ -25,6 +25,7 @@ public class Grid extends GameObject
         {
             g.drawLine(0, getDiY() + i * Ground.WIDTH, Play.DISPLAY_WIDTH, getDiY() + i * Ground.WIDTH);
         }
+        g.setColor(Color.red);
     }
 
     public int getGridCenterAbX(int diX)

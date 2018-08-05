@@ -81,6 +81,8 @@ public class StageDate
             if (!file.exists())
             {
                 System.err.println("ファイルが存在しません stage" + (stageNum + 1));
+                deleteAllObject();
+                saveStageDate(stageNum);
                 return;
             }
 
