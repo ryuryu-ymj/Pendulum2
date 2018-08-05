@@ -20,7 +20,7 @@ public class Wire
      * playerが1周回ったかどうかを判定するためのフラグ<p>
      * playerが(配列番号×60)度の角度を通ったらtrue
      */
-    public boolean[] isPlayerPass = new boolean[6];
+    private boolean[] isPlayerPass = new boolean[6];
     /**
      * ワイヤーがつながっているジョイントの数字　何もつながっていないと－1
      */
@@ -29,6 +29,16 @@ public class Wire
     Wire()
     {
         active = false;
+    }
+
+    public void init()
+    {
+        active = false;
+        jointLockedNum = -1;
+        for(int i = 0; i < isPlayerPass.length; i++)
+        {
+            isPlayerPass[i] = false;
+        }
     }
 
     public void update(GameContainer gc, double playerX, double playerY, double jointX, double jointY)

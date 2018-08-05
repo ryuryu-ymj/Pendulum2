@@ -3,7 +3,7 @@ import org.newdawn.slick.Graphics;
 
 public class Joint extends GameObject
 {
-	public int radius;
+	public static final int radius = 15;
 	/**
 	 * joint がステージ上のどのjointを演じているのか（jointX の配列番号）
 	 */
@@ -29,9 +29,8 @@ public class Joint extends GameObject
 	 */
 	int counter = 0;
 
-	Joint(int radius)
+	Joint()
 	{
-		this.radius = radius;
 		active = false;
 	}
 

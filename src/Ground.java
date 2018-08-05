@@ -14,7 +14,7 @@ public class Ground extends GameObject
     /**
      * groundの縦幅，横幅
      */
-    static public final int WIDTH = 60;
+    public static final int WIDTH = 60;
 
     /**
      * groundの型

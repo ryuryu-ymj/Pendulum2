@@ -1,4 +1,3 @@
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -42,7 +41,7 @@ public class ObjectPool
     /**
      * その backObject が表示されたかどうか
      */
-    static boolean[] isBackObjectDisplayed = new boolean[StageDate.JOINT_MAX];
+    static boolean[] isBackObjectDisplayed = new boolean[StageDate.BACK_OBJECT_MAX];
 
     ObjectPool()
     {
@@ -51,7 +50,7 @@ public class ObjectPool
         joints = new Joint[JOINT_MAX];
         for (int i = 0; i < JOINT_MAX; i++)
         {
-            joints[i] = new Joint(15);
+            joints[i] = new Joint();
         }
         grounds = new Ground[GROUND_MAX];
         for (int i = 0; i < grounds.length; i++)
@@ -72,9 +71,9 @@ public class ObjectPool
      */
     public void init()
     {
-        player.active = true;
-        wire.active = false;
-        camera.active = true;
+        player.init(200, 200);
+        camera.init(200, 200);
+        wire.init();
         for (int i = 0; i < isJointDisplayed.length; i++)
         {
             isJointDisplayed[i] = false;
@@ -90,6 +89,14 @@ public class ObjectPool
         for (int i = 0; i < grounds.length; i++)
         {
             grounds[i].active = false;
+        }
+        for (int i = 0; i < isBackObjectDisplayed.length; i++)
+        {
+            isBackObjectDisplayed[i] = false;
+        }
+        for (int i = 0; i < backObjects.length; i++)
+        {
+            backObjects[i].active = false;
         }
     }
 
@@ -117,7 +124,7 @@ public class ObjectPool
 
         if (camera.active)
         {
-            camera.update(player.abX, player.abY);
+            camera.followPlayer(player.abX, player.abY);
         }
     }
 
@@ -166,14 +173,13 @@ public class ObjectPool
     /**
      * 画面内にある grounds を newGround する
      *
-     * @param groundNum   1ステージにある ground の数
      * @param groundXs    ground の絶対座標（空の場合は-1）
      * @param groundYs    ground の絶対座標（空の場合は-1）
      * @param groundTypes ground の型
      */
-    public void moveGrounds(int groundNum, int[] groundXs, int[] groundYs, Ground.Type[] groundTypes)
+    public void moveGrounds(int[] groundXs, int[] groundYs, Ground.Type[] groundTypes)
     {
-        for (int i = 0; i < groundNum; i++)
+        for (int i = 0; i < groundXs.length; i++)
         {
             if (checkEntering(groundXs[i], groundYs[i], (int) grounds[0].width, (int) grounds[0].height))
             {
@@ -218,14 +224,13 @@ public class ObjectPool
     /**
      * 画面内にある joints を newJoint する
      *
-     * @param jointNum 1ステージにある ground の数
      * @param jointXs  ground の絶対座標（空の場合は-1）
      * @param jointYs  ground の絶対座標（空の場合は-1）
      *                 //* @param jointTypes ground の型
      */
-    public void moveJoints(int jointNum, int[] jointXs, int[] jointYs)
+    public void moveJoints(int[] jointXs, int[] jointYs)
     {
-        for (int i = 0; i < jointNum; i++)
+        for (int i = 0; i < jointXs.length; i++)
         {
             if (!isJointDisplayed[i])
             {
@@ -322,12 +327,7 @@ public class ObjectPool
                 }
                 if (i == JOINT_MAX - 1)
                 {
-                    wire.jointLockedNum = -1;
-                    wire.active = false;
-                    for (int g = 0; g < wire.isPlayerPass.length; g++)
-                    {
-                        wire.isPlayerPass[g] = false;
-                    }
+                    wire.init();
                     //camera.active = false;
                 }
             }
@@ -389,7 +389,7 @@ public class ObjectPool
      *
      * @param object ゲームオブジェクトの配列
      */
-    private void updateObjects(GameObject[] object, GameContainer gc)
+    protected void updateObjects(GameObject[] object, GameContainer gc)
     {
         for (GameObject obj : object)
         {
@@ -405,7 +405,7 @@ public class ObjectPool
      *
      * @param object ゲームオブジェクトの配列
      */
-    private void renderObjects(GameObject[] object, Graphics g, ImageManager im)
+    protected void renderObjects(GameObject[] object, Graphics g, ImageManager im)
     {
         for (GameObject obj : object)
         {
