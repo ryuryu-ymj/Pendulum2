@@ -9,18 +9,22 @@ import java.util.StringTokenizer;
 public class StageDate
 {
     /**
-     * groundの絶対座標（空の場合は-1）
+     * ground の絶対座標（空の場合は-1）
      */
     private ArrayList<Integer> groundXs, groundYs;
     /**
-     * groundの型
+     * ground の型
      */
     private ArrayList<Ground.Type> groundTypes;
 
     /**
-     * jointの絶対座標（空の場合は-1）
+     * joint の絶対座標（空の場合は-1）
      */
     private ArrayList<Integer> jointXs, jointYs;
+    /**
+     * joint の型
+     */
+    private ArrayList<Joint.Type> jointTypes;
 
     /**
      * backObjectの絶対座標（空の場合は-1）
@@ -66,6 +70,7 @@ public class StageDate
         groundTypes = new ArrayList<>();
         jointXs = new ArrayList<>();
         jointYs = new ArrayList<>();
+        jointTypes = new ArrayList<>();
     }
 
     /**
@@ -94,6 +99,7 @@ public class StageDate
             groundTypes.clear();
             jointXs.clear();
             jointYs.clear();
+            jointTypes.clear();
             while ((line = br.readLine()) != null)
             {
                 try
@@ -118,6 +124,7 @@ public class StageDate
                             {
                                 jointXs.add(Integer.parseInt(st.nextToken()));
                                 jointYs.add(Integer.parseInt(st.nextToken()));
+                                jointTypes.add(Joint.Type.valueOf(st.nextToken()));
                             }
                             catch (ArrayIndexOutOfBoundsException e)
                             {
@@ -171,7 +178,7 @@ public class StageDate
             }
             for (int i = 0; i < jointXs.size(); i++)
             {
-                pw.println("joint," + jointXs.get(i) + "," + jointYs.get(i));
+                pw.println("joint," + jointXs.get(i) + "," + jointYs.get(i) + "," + jointTypes.get(i));
             }
             pw.close();
             fw.close();
@@ -227,6 +234,11 @@ public class StageDate
         return jointYs;
     }
 
+    public Joint.Type[] getJointTypes()
+    {
+        return jointTypes.toArray(new Joint.Type[jointTypes.size()]);
+    }
+
     public int[] getBackObjectXs()
     {
         return backObjectXs;
@@ -273,7 +285,7 @@ public class StageDate
         groundTypes.add(groundType);
     }
 
-    public void addJoint(int jointX, int jointY)
+    public void addJoint(int jointX, int jointY, Joint.Type jointType)
     {
         for (int i = 0; i < jointXs.size(); i++)
         {
@@ -284,6 +296,7 @@ public class StageDate
         }
         jointXs.add(jointX);
         jointYs.add(jointY);
+        jointTypes.add(jointType);
     }
 
     public void deleteObject(int objectX, int objectY)
@@ -304,6 +317,7 @@ public class StageDate
             {
                 jointXs.remove(i);
                 jointYs.remove(i);
+                jointTypes.remove(i);
             }
         }
     }
@@ -315,5 +329,6 @@ public class StageDate
         groundTypes.clear();
         jointXs.clear();
         jointYs.clear();
+        jointTypes.clear();
     }
 }

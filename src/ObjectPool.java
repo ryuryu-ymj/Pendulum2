@@ -208,7 +208,7 @@ public class ObjectPool
      * @param num        joint がステージ上のどの joint を演じているのか（stageDate.jointXsの配列番号）
      * @return joints の配列番号　なかったら-1
      */
-    public int newJoint(int x, int y, int type, int lockRadius, int num)
+    public int newJoint(int x, int y, Joint.Type type, int lockRadius, int num)
     {
         for (int i = 0; i < JOINT_MAX; i++)
         {
@@ -228,7 +228,7 @@ public class ObjectPool
      * @param jointYs  ground の絶対座標（空の場合は-1）
      *                 //* @param jointTypes ground の型
      */
-    public void moveJoints(int[] jointXs, int[] jointYs)
+    public void moveJoints(int[] jointXs, int[] jointYs, Joint.Type[] jointTypes)
     {
         for (int i = 0; i < jointXs.length; i++)
         {
@@ -236,7 +236,7 @@ public class ObjectPool
             {
                 if (checkEntering(jointXs[i], jointYs[i], joints[0].radius, joints[0].radius))
                 {
-                    if (newJoint(jointXs[i], jointYs[i], 0, 0, i) != -1)
+                    if (newJoint(jointXs[i], jointYs[i], jointTypes[i], 0, i) != -1)
                     {
                         isJointDisplayed[i] = true;
                     }
@@ -316,7 +316,7 @@ public class ObjectPool
                     {
                         if (gc.getInput().getMouseY() < joints[i].getDiY() + joints[i].radius * 5 && gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].radius * 5)
                         {
-                            if (joints[i].lockRadius == 0 || getDistance(player, joints[i]) < joints[i].lockRadius)
+                            if (joints[i].getLockRadius() == 0 || getDistance(player, joints[i]) < joints[i].getLockRadius())
                             {
                                 wire.jointLockedNum = i;
                                 wire.active = true;
@@ -369,6 +369,19 @@ public class ObjectPool
                 }
             }
         }
+    }
+
+    /**
+     *
+     * @return playerがゴールしたかどうか
+     */
+    public boolean isPlayerGoal()
+    {
+        if (wire.jointLockedNum != -1)
+        {
+            return joints[wire.jointLockedNum].getType() == Joint.Type.GOAL;
+        }
+        return false;
     }
 
     /**

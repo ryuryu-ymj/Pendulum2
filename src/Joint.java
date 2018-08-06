@@ -1,38 +1,41 @@
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 public class Joint extends GameObject
 {
-	public static final int radius = 15;
-	/**
-	 * joint がステージ上のどのjointを演じているのか（jointX の配列番号）
-	 */
-	int num;
-	/**
-	 * 0:ノーマル 1:ゴール 2:ハート入り 3:弾うち(3方向) 4:弾うち(狙撃)
-	 */
-	int type;
-	/**
-	 * jointLock有効範囲半径　0なら有効範囲は無限(指定しない)
-	 */
-	int lockRadius;
-	/**
-	 * playerが一周したかどうか
-	 */
-	boolean isPlayerLoop;
-	/**
-	 * 弾うち型jointの向く方向の角度
-	 */
-	int angle;
-	/**
-	 * 生存時間（弾を撃つタイミングに使用）
-	 */
-	int counter = 0;
+    public static final int radius = 15;
+    /**
+     * joint がステージ上のどのjointを演じているのか（jointX の配列番号）
+     */
+    public int num;
+    /**
+     * 種類
+     */
+    private Type type;
+    /**
+     * jointLock有効範囲半径　0なら有効範囲は無限(指定しない)
+     */
+    private int lockRadius;
+    /**
+     * playerが一周したかどうか
+     */
+    public boolean isPlayerLoop;
+    /**
+     * 弾うち型jointの向く方向の角度
+     */
+    int angle;
+    /**
+     * 生存時間（弾を撃つタイミングに使用）
+     */
+    int counter = 0;
 
-	Joint()
-	{
-		active = false;
-	}
+    public enum Type {NORMAL, GOAL}
+
+    Joint()
+    {
+        active = false;
+    }
 
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
@@ -51,10 +54,19 @@ public class Joint extends GameObject
     {
         /*g.setColor(Color.blue);
         g.drawOval((int)getDiX() - radius, (int)getDiY() - radius, radius * 2, radius * 2);*/
-        im.drawJoint(getDiX(), getDiY(), radius * 2, radius * 2);
+        switch (type)
+        {
+            case NORMAL:
+                im.drawJoint(getDiX(), getDiY(), radius * 2, radius * 2);
+                break;
+            case GOAL:
+                g.setColor(Color.red);
+                g.drawOval(getDiX() - Joint.radius, getDiY() - Joint.radius, Joint.radius * 2, Joint.radius * 2);
+                break;
+        }
     }
 
-    public void activate(int abX, int abY, int type, int lockRadius, int num)
+    public void activate(int abX, int abY, Type type, int lockRadius, int num)
     {
         this.abX = abX;
         this.abY = abY;
@@ -62,5 +74,15 @@ public class Joint extends GameObject
         this.lockRadius = lockRadius;
         this.num = num;
         active = true;
+    }
+
+    public Type getType()
+    {
+        return type;
+    }
+
+    public int getLockRadius()
+    {
+        return lockRadius;
     }
 }

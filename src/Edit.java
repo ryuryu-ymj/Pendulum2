@@ -1,5 +1,4 @@
 import org.newdawn.slick.*;
-import sun.text.normalizer.NormalizerBase;
 
 public class Edit extends GameState
 {
@@ -53,8 +52,11 @@ public class Edit extends GameState
                 case GROUND:
                     stageDate.addGround((int)mousePointer.abX, (int)mousePointer.abY, Ground.Type.NORMAL);
                     break;
-                case JOINT:
-                    stageDate.addJoint((int)mousePointer.abX, (int)mousePointer.abY);
+                case JOINT_NORMAL:
+                    stageDate.addJoint((int)mousePointer.abX, (int)mousePointer.abY, Joint.Type.NORMAL);
+                    break;
+                case JOINT_GOAL:
+                    stageDate.addJoint((int)mousePointer.abX, (int)mousePointer.abY, Joint.Type.GOAL);
                     break;
                 case DELETE:
                     stageDate.deleteObject((int)mousePointer.abX, (int)mousePointer.abY);
@@ -85,21 +87,9 @@ public class Edit extends GameState
                 }
             }
         }
-        else if (gc.getInput().isKeyPressed(Input.KEY_G))
-        {
-            mousePointer.type = MousePointer.Type.GROUND;
-        }
-        else if (gc.getInput().isKeyPressed(Input.KEY_J))
-        {
-            mousePointer.type = MousePointer.Type.JOINT;
-        }
-        else if (gc.getInput().isKeyPressed(Input.KEY_D))
-        {
-            mousePointer.type = MousePointer.Type.DELETE;
-        }
 
         objectPool.moveGrounds(stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes());
-        objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs());
+        objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs(), stageDate.getJointTypes());
         objectPool.moveBackObjects(stageDate.getBackObjectNum(), stageDate.getBackObjectXs(), stageDate.getBackObjectYs()
                 , stageDate.getBackObjectLayers(), stageDate.getBackObjectTypes());
         objectPool.update(gc);

@@ -70,8 +70,7 @@ ground,930,330
 ground,930,270
 ground,930,210
 ground,930,150
-joint,150,390
-joint,510,390
-joint,330,270
-joint,870,450
-joint,630,690
+joint,270,330,NORMAL
+joint,630,330,NORMAL
+joint,450,330,GOAL
+joint,630,690,NORMAL
