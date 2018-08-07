@@ -16,6 +16,10 @@ public class StageDate
      * ground の型
      */
     private ArrayList<Ground.Type> groundTypes;
+    /**
+     * ground の位置
+     */
+    private ArrayList<Ground.Position> groundPositions;
 
     /**
      * joint の絶対座標（空の場合は-1）
@@ -68,6 +72,7 @@ public class StageDate
         groundXs = new ArrayList<>();
         groundYs = new ArrayList<>();
         groundTypes = new ArrayList<>();
+        groundPositions = new ArrayList<>();
         jointXs = new ArrayList<>();
         jointYs = new ArrayList<>();
         jointTypes = new ArrayList<>();
@@ -97,6 +102,7 @@ public class StageDate
             groundXs.clear();
             groundYs.clear();
             groundTypes.clear();
+            groundPositions.clear();
             jointXs.clear();
             jointYs.clear();
             jointTypes.clear();
@@ -112,7 +118,8 @@ public class StageDate
                             {
                                 groundXs.add(Integer.parseInt(st.nextToken()));
                                 groundYs.add(Integer.parseInt(st.nextToken()));
-                                groundTypes.add(Ground.Type.NORMAL);
+                                groundTypes.add(Ground.Type.valueOf(st.nextToken()));
+                                groundPositions.add(Ground.Position.valueOf(st.nextToken()));
                             }
                             catch (ArrayIndexOutOfBoundsException e)
                             {
@@ -174,7 +181,7 @@ public class StageDate
             PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
             for (int i = 0; i < groundXs.size(); i++)
             {
-                pw.println("ground," + groundXs.get(i) + "," + groundYs.get(i));
+                pw.println("ground," + groundXs.get(i) + "," + groundYs.get(i) + "," + groundTypes.get(i) + "," + groundPositions.get(i));
             }
             for (int i = 0; i < jointXs.size(); i++)
             {
@@ -212,6 +219,11 @@ public class StageDate
     public Ground.Type[] getGroundTypes()
     {
         return groundTypes.toArray(new Ground.Type[groundTypes.size()]);
+    }
+
+    public Ground.Position[] getGroundPositions()
+    {
+        return groundPositions.toArray(new Ground.Position[groundPositions.size()]);
     }
 
     public int[] getJointXs()

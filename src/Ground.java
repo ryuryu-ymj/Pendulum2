@@ -12,6 +12,10 @@ public class Ground extends GameObject
      */
     private Type type;
     /**
+     * groundの位置
+     */
+    private Position position;
+    /**
      * groundの縦幅，横幅
      */
     public static final int WIDTH = 60;
@@ -26,6 +30,13 @@ public class Ground extends GameObject
         /** トゲトゲ */
         SPINE,
     }
+    /**
+     * groundの位置
+     */
+    public enum Position
+    {
+        TOP, BOTTOM, LEFT, RIGHT, LEFT_TOP, RIGHT_TOP, LEFT_BOTTOM, RIGHT_BOTTOM, MIDDLE
+    }
 
     /**
      * コンストラクタ
@@ -35,6 +46,8 @@ public class Ground extends GameObject
         active = false;
         this.width = WIDTH;
         this.height = WIDTH;
+        type = Type.NORMAL;
+        position = Position.TOP;
     }
 
     @Override
@@ -94,11 +107,12 @@ public class Ground extends GameObject
      * @param y
      * @param type 0:ノーマル 1:トゲトゲ
      */
-    public void activate(int x, int y, Type type, int num)
+    public void activate(int x, int y, Type type, Position position, int num)
     {
         this.abX = x;
         this.abY = y;
         this.type = type;
+        this.position = position;
         this.num = num;
         active = true;
     }
