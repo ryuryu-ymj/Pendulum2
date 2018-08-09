@@ -26,11 +26,6 @@ public class ImageManager
     private Image glass3;
     private Image glass4;
 
-    public enum GroundType
-    {
-        GLASS, GLASS_TOP_LEFT_EDGE, GLASS_TOP_RIGHT_EDGE, GLASS_TOP_EDGE, GLASS_ALL_EDGE, NO_GLASS, NO_GLASS_BOTTOM_EDGE, NO_GLASS_BOTTOM_LEFT_EDGE, NO_GLASS_BOTTOM_RIGHT_EDGE
-    }
-
     ImageManager()
     {
         try
@@ -170,7 +165,7 @@ public class ImageManager
      * @param height 縦幅
      * @param type   種類
      */
-    public void drawGround(float x, float y, float width, float height, GroundType type)
+    public void drawGround(float x, float y, float width, float height, Ground.Position type)
     {
         switch (type)
         {
@@ -181,10 +176,16 @@ public class ImageManager
                 groundGlassTopEdge.draw(x - width / 2, y - height / 2, width, height);
                 break;
             case GLASS_TOP_LEFT_EDGE:
-                groundGlassConerEdge.draw(x - width / 2, y - height / 2, width, height);
+                groundGlassConerEdge.draw(x + width / 2, y - height / 2, -width, height);
                 break;
             case GLASS_TOP_RIGHT_EDGE:
-                groundGlassConerEdge.draw(x + width / 2, y - height / 2, -width, height);
+                groundGlassConerEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case GLASS_LEFT_EDGE:
+                groundGlassSideEdge.draw(x + width / 2, y - height / 2, -width, height);
+                break;
+            case GLASS_RIGHT_EDGE:
+                groundGlassSideEdge.draw(x + width / 2, y - height / 2, -width, height);
                 break;
             case GLASS_ALL_EDGE:
                 groundGlassAllEdge.draw(x - width / 2, y - height / 2, width, height);
@@ -196,10 +197,10 @@ public class ImageManager
                 groundNoGlassBottomEdge.draw(x - width / 2, y - height / 2, width, height);
                 break;
             case NO_GLASS_BOTTOM_LEFT_EDGE:
-                groundNoGlassConerEdge.draw(x - width / 2, y - height / 2, width, height);
+                groundNoGlassConerEdge.draw(x + width / 2, y - height / 2, -width, height);
                 break;
             case NO_GLASS_BOTTOM_RIGHT_EDGE:
-                groundNoGlassConerEdge.draw(x + width / 2, y - height / 2, -width, height);
+                groundNoGlassConerEdge.draw(x - width / 2, y - height / 2, width, height);
                 break;
         }
     }
