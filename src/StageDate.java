@@ -296,13 +296,16 @@ public class StageDate
         isTop = isBottom = isLeft = isRight = false;
         for (int i = 0; i < groundXs.size(); i++)
         {
-            if (groundX == groundXs.get(i))
+            if (groundXs.get(i) == groundX)
             {
-                if (groundY == groundYs.get(i) + Ground.WIDTH)
+                if (groundYs.get(i) == groundY + Ground.WIDTH)
                 {
-                    if (groundPositions.get(i) == Ground.Position.GLASS_TOP_EDGE ||
+                    //bottom
+                    if (groundPositions.get(i) == Ground.Position.GLASS ||
+                            groundPositions.get(i) == Ground.Position.GLASS_TOP_EDGE ||
                             groundPositions.get(i) == Ground.Position.GLASS_TOP_LEFT_EDGE ||
-                            groundPositions.get(i) == Ground.Position.GLASS_TOP_RIGHT_EDGE)
+                            groundPositions.get(i) == Ground.Position.GLASS_TOP_RIGHT_EDGE ||
+                            groundPositions.get(i) == Ground.Position.GLASS_ALL_EDGE)
                     {
                         groundPositions.set(i, Ground.Position.NO_GLASS);
                     }
@@ -316,14 +319,27 @@ public class StageDate
                     }
                     isBottom = true;
                 }
-                else if (groundY == groundYs.get(i) - Ground.WIDTH)
+                else if (groundYs.get(i) == groundY - Ground.WIDTH)
                 {
+                    //top
                     if (groundPositions.get(i) == Ground.Position.NO_GLASS ||
                             groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_EDGE ||
                             groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_LEFT_EDGE ||
                             groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_RIGHT_EDGE)
                     {
                         groundPositions.set(i, Ground.Position.NO_GLASS);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_ALL_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_TOP_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_RIGHT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_TOP_RIGHT_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_LEFT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_TOP_LEFT_EDGE);
                     }
                     else
                     {
@@ -332,17 +348,21 @@ public class StageDate
                     isTop = true;
                 }
             }
-            else if (groundX == groundXs.get(i) + Ground.WIDTH)
+            else if (groundXs.get(i) == groundX + Ground.WIDTH)
             {
-                if (groundY == groundYs.get(i))
+                if (groundYs.get(i) == groundY)
                 {
-                    if (groundPositions.get(i) == Ground.Position.GLASS_TOP_EDGE ||
-                            groundPositions.get(i) == Ground.Position.GLASS_TOP_LEFT_EDGE ||
+                    //right
+                    if (groundPositions.get(i) == Ground.Position.GLASS_TOP_LEFT_EDGE ||
                             groundPositions.get(i) == Ground.Position.GLASS_LEFT_EDGE)
                     {
                         groundPositions.set(i, Ground.Position.GLASS);
                     }
-                    else if (groundPositions.get(i) == Ground.Position.GLASS_TOP_RIGHT_EDGE)
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_ALL_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_RIGHT_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_TOP_EDGE)
                     {
                         groundPositions.set(i, Ground.Position.GLASS_TOP_RIGHT_EDGE);
                     }
@@ -358,17 +378,21 @@ public class StageDate
                     isRight = true;
                 }
             }
-            else if (groundX == groundXs.get(i) - Ground.WIDTH)
+            else if (groundXs.get(i) == groundX - Ground.WIDTH)
             {
-                if (groundY == groundYs.get(i))
+                if (groundYs.get(i) == groundY)
                 {
-                    if (groundPositions.get(i) == Ground.Position.GLASS_TOP_EDGE ||
-                            groundPositions.get(i) == Ground.Position.GLASS_TOP_RIGHT_EDGE ||
+                    //left
+                    if (groundPositions.get(i) == Ground.Position.GLASS_TOP_RIGHT_EDGE ||
                             groundPositions.get(i) == Ground.Position.GLASS_RIGHT_EDGE)
                     {
                         groundPositions.set(i, Ground.Position.GLASS);
                     }
-                    else if (groundPositions.get(i) == Ground.Position.GLASS_TOP_LEFT_EDGE)
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_ALL_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_LEFT_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_TOP_EDGE)
                     {
                         groundPositions.set(i, Ground.Position.GLASS_TOP_LEFT_EDGE);
                     }

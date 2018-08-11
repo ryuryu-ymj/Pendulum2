@@ -68,36 +68,7 @@ public class Ground extends GameObject
     {
         /*g.setColor(Color.green);
         g.drawRect(getDiX() - width / 2, getDiY() - height / 2, width, height);*/
-        im.drawGround(getDiX(), getDiY(), width, height, Position.NO_GLASS);
-        /*switch (type)
-        {
-            case NORMAL:
-                im.drawGround(displayX, displayY, width, height);
-                break;
-            case SPINE:
-                im.drawGroundSpine(displayX, displayY, width, height);
-                break;
-            case TO_APPEAR:
-                if (!isPlayerWarped)
-                {
-                    im.drawGroundDot(displayX, displayY, width, height);
-                }
-                else
-                {
-                    im.drawGroundDotHalf(displayX, displayY, width, height);
-                }
-                break;
-            case TO_DISAPPEAR:
-                if (!isPlayerWarped)
-                {
-                    im.drawGroundDotHalf(displayX, displayY, width, height);
-                }
-                else
-                {
-                    im.drawGroundDot(displayX, displayY, width, height);
-                }
-                break;
-        }*/
+        im.drawGround(getDiX(), getDiY(), width, height, position);
     }
 
     /**

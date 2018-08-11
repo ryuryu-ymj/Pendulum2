@@ -63,6 +63,7 @@ public class Edit extends GameState
                     objectPool.reload();
                     break;
             }
+            objectPool.reload();
         }
 
         if (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))

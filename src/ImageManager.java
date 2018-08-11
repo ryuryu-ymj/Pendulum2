@@ -185,7 +185,7 @@ public class ImageManager
                 groundGlassSideEdge.draw(x + width / 2, y - height / 2, -width, height);
                 break;
             case GLASS_RIGHT_EDGE:
-                groundGlassSideEdge.draw(x + width / 2, y - height / 2, -width, height);
+                groundGlassSideEdge.draw(x - width / 2, y - height / 2, width, height);
                 break;
             case GLASS_ALL_EDGE:
                 groundGlassAllEdge.draw(x - width / 2, y - height / 2, width, height);
