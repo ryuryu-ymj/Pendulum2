@@ -157,13 +157,13 @@ public class ObjectPool
      * @param type ground のtype
      * @return grounds の配列番号　なかったら-1
      */
-    public int newGround(int x, int y, Ground.Type type, Ground.Position position, int num)
+    public int newGround(int x, int y, Ground.Type type, Ground.Shape shape, int num)
     {
         for (int i = 0; i < GROUND_MAX; i++)
         {
             if (!grounds[i].active)
             {
-                grounds[i].activate(x, y, type, position, num);
+                grounds[i].activate(x, y, type, shape, num);
                 return i;
             }
         }
@@ -177,7 +177,7 @@ public class ObjectPool
      * @param groundYs    ground の絶対座標（空の場合は-1）
      * @param groundTypes ground の型
      */
-    public void moveGrounds(int[] groundXs, int[] groundYs, Ground.Type[] groundTypes, Ground.Position[] groundPositions)
+    public void moveGrounds(int[] groundXs, int[] groundYs, Ground.Type[] groundTypes, Ground.Shape[] groundShapes)
     {
         for (int i = 0; i < groundXs.length; i++)
         {
@@ -185,7 +185,7 @@ public class ObjectPool
             {
                 if (!isGroundDisplayed[i])
                 {
-                    if (newGround(groundXs[i], groundYs[i], groundTypes[i], groundPositions[i], i) != -1)
+                    if (newGround(groundXs[i], groundYs[i], groundTypes[i], groundShapes[i], i) != -1)
                     {
                         isGroundDisplayed[i] = true;
                     }
@@ -339,6 +339,7 @@ public class ObjectPool
             check:
             if (ground.active)
             {
+                if (ground.isCheckCollision())
                 if (player.abX > ground.abX - ground.width / 2
                         && player.abX < ground.abX + ground.width / 2
                         && player.abY + player.height / 2 > ground.abY - ground.height / 2

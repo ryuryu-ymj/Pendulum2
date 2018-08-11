@@ -49,7 +49,7 @@ public class MousePointer extends GameObject
         switch (type)
         {
             case GROUND:
-                im.drawGround(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH, Ground.Position.NO_GLASS);
+                im.drawGround(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH, Ground.Shape.NO_GLASS);
                 break;
             case JOINT_NORMAL:
                 im.drawJoint(getDiX(), getDiY(), Joint.radius * 2, Joint.radius * 2);

@@ -165,7 +165,7 @@ public class ImageManager
      * @param height 縦幅
      * @param type   種類
      */
-    public void drawGround(float x, float y, float width, float height, Ground.Position type)
+    public void drawGround(float x, float y, float width, float height, Ground.Shape type)
     {
         switch (type)
         {
