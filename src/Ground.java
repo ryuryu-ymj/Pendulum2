@@ -12,6 +12,10 @@ public class Ground extends GameObject
      */
     private Type type;
     /**
+     * groundの位置
+     */
+    private Position position;
+    /**
      * groundの縦幅，横幅
      */
     public static final int WIDTH = 60;
@@ -26,6 +30,13 @@ public class Ground extends GameObject
         /** トゲトゲ */
         SPINE,
     }
+    /**
+     * groundの位置
+     */
+    public enum Position
+    {
+        GLASS, GLASS_TOP_LEFT_EDGE, GLASS_TOP_RIGHT_EDGE, GLASS_TOP_EDGE, GLASS_LEFT_EDGE, GLASS_RIGHT_EDGE, GLASS_ALL_EDGE, NO_GLASS, NO_GLASS_BOTTOM_EDGE, NO_GLASS_BOTTOM_LEFT_EDGE, NO_GLASS_BOTTOM_RIGHT_EDGE
+    }
 
     /**
      * コンストラクタ
@@ -35,6 +46,8 @@ public class Ground extends GameObject
         active = false;
         this.width = WIDTH;
         this.height = WIDTH;
+        type = Type.NORMAL;
+        position = Position.NO_GLASS;
     }
 
     @Override
@@ -55,36 +68,7 @@ public class Ground extends GameObject
     {
         /*g.setColor(Color.green);
         g.drawRect(getDiX() - width / 2, getDiY() - height / 2, width, height);*/
-        im.drawGround(getDiX(), getDiY(), width, height);
-        /*switch (type)
-        {
-            case NORMAL:
-                im.drawGround(displayX, displayY, width, height);
-                break;
-            case SPINE:
-                im.drawGroundSpine(displayX, displayY, width, height);
-                break;
-            case TO_APPEAR:
-                if (!isPlayerWarped)
-                {
-                    im.drawGroundDot(displayX, displayY, width, height);
-                }
-                else
-                {
-                    im.drawGroundDotHalf(displayX, displayY, width, height);
-                }
-                break;
-            case TO_DISAPPEAR:
-                if (!isPlayerWarped)
-                {
-                    im.drawGroundDotHalf(displayX, displayY, width, height);
-                }
-                else
-                {
-                    im.drawGroundDot(displayX, displayY, width, height);
-                }
-                break;
-        }*/
+        im.drawGround(getDiX(), getDiY(), width, height, position);
     }
 
     /**
@@ -94,11 +78,12 @@ public class Ground extends GameObject
      * @param y
      * @param type 0:ノーマル 1:トゲトゲ
      */
-    public void activate(int x, int y, Type type, int num)
+    public void activate(int x, int y, Type type, Position position, int num)
     {
         this.abX = x;
         this.abY = y;
         this.type = type;
+        this.position = position;
         this.num = num;
         active = true;
     }

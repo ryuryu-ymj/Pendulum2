@@ -16,6 +16,10 @@ public class StageDate
      * ground の型
      */
     private ArrayList<Ground.Type> groundTypes;
+    /**
+     * ground の位置
+     */
+    private ArrayList<Ground.Position> groundPositions;
 
     /**
      * joint の絶対座標（空の場合は-1）
@@ -68,6 +72,7 @@ public class StageDate
         groundXs = new ArrayList<>();
         groundYs = new ArrayList<>();
         groundTypes = new ArrayList<>();
+        groundPositions = new ArrayList<>();
         jointXs = new ArrayList<>();
         jointYs = new ArrayList<>();
         jointTypes = new ArrayList<>();
@@ -97,6 +102,7 @@ public class StageDate
             groundXs.clear();
             groundYs.clear();
             groundTypes.clear();
+            groundPositions.clear();
             jointXs.clear();
             jointYs.clear();
             jointTypes.clear();
@@ -112,7 +118,8 @@ public class StageDate
                             {
                                 groundXs.add(Integer.parseInt(st.nextToken()));
                                 groundYs.add(Integer.parseInt(st.nextToken()));
-                                groundTypes.add(Ground.Type.NORMAL);
+                                groundTypes.add(Ground.Type.valueOf(st.nextToken()));
+                                groundPositions.add(Ground.Position.valueOf(st.nextToken()));
                             }
                             catch (ArrayIndexOutOfBoundsException e)
                             {
@@ -174,7 +181,7 @@ public class StageDate
             PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
             for (int i = 0; i < groundXs.size(); i++)
             {
-                pw.println("ground," + groundXs.get(i) + "," + groundYs.get(i));
+                pw.println("ground," + groundXs.get(i) + "," + groundYs.get(i) + "," + groundTypes.get(i) + "," + groundPositions.get(i));
             }
             for (int i = 0; i < jointXs.size(); i++)
             {
@@ -212,6 +219,11 @@ public class StageDate
     public Ground.Type[] getGroundTypes()
     {
         return groundTypes.toArray(new Ground.Type[groundTypes.size()]);
+    }
+
+    public Ground.Position[] getGroundPositions()
+    {
+        return groundPositions.toArray(new Ground.Position[groundPositions.size()]);
     }
 
     public int[] getJointXs()
@@ -279,10 +291,201 @@ public class StageDate
                 return;
             }
         }
+
+        boolean isTop, isBottom, isLeft, isRight;
+        isTop = isBottom = isLeft = isRight = false;
+        for (int i = 0; i < groundXs.size(); i++)
+        {
+            if (groundXs.get(i) == groundX)
+            {
+                if (groundYs.get(i) == groundY + Ground.WIDTH)
+                {
+                    //bottom
+                    if (groundPositions.get(i) == Ground.Position.GLASS ||
+                            groundPositions.get(i) == Ground.Position.GLASS_TOP_EDGE ||
+                            groundPositions.get(i) == Ground.Position.GLASS_TOP_LEFT_EDGE ||
+                            groundPositions.get(i) == Ground.Position.GLASS_TOP_RIGHT_EDGE ||
+                            groundPositions.get(i) == Ground.Position.GLASS_ALL_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.NO_GLASS);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_LEFT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.NO_GLASS_BOTTOM_LEFT_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_RIGHT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.NO_GLASS_BOTTOM_RIGHT_EDGE);
+                    }
+                    isBottom = true;
+                }
+                else if (groundYs.get(i) == groundY - Ground.WIDTH)
+                {
+                    //top
+                    if (groundPositions.get(i) == Ground.Position.NO_GLASS ||
+                            groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_EDGE ||
+                            groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_LEFT_EDGE ||
+                            groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_RIGHT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.NO_GLASS);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_ALL_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_TOP_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_RIGHT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_TOP_RIGHT_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_LEFT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_TOP_LEFT_EDGE);
+                    }
+                    else
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS);
+                    }
+                    isTop = true;
+                }
+            }
+            else if (groundXs.get(i) == groundX + Ground.WIDTH)
+            {
+                if (groundYs.get(i) == groundY)
+                {
+                    //right
+                    if (groundPositions.get(i) == Ground.Position.GLASS_TOP_LEFT_EDGE ||
+                            groundPositions.get(i) == Ground.Position.GLASS_LEFT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_ALL_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_RIGHT_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_TOP_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_TOP_RIGHT_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_LEFT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.NO_GLASS);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_RIGHT_EDGE ||
+                            groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.NO_GLASS_BOTTOM_RIGHT_EDGE);
+                    }
+                    isRight = true;
+                }
+            }
+            else if (groundXs.get(i) == groundX - Ground.WIDTH)
+            {
+                if (groundYs.get(i) == groundY)
+                {
+                    //left
+                    if (groundPositions.get(i) == Ground.Position.GLASS_TOP_RIGHT_EDGE ||
+                            groundPositions.get(i) == Ground.Position.GLASS_RIGHT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_ALL_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_LEFT_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.GLASS_TOP_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.GLASS_TOP_LEFT_EDGE);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_RIGHT_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.NO_GLASS);
+                    }
+                    else if (groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_LEFT_EDGE ||
+                            groundPositions.get(i) == Ground.Position.NO_GLASS_BOTTOM_EDGE)
+                    {
+                        groundPositions.set(i, Ground.Position.NO_GLASS_BOTTOM_LEFT_EDGE);
+                    }
+                    isLeft = true;
+                }
+            }
+        }
         //System.out.println("add " + groundX + " " + groundY + " " + groundXs[0] + " " + groundYs[0] + " " + groundNum);
         groundXs.add(groundX);
         groundYs.add(groundY);
         groundTypes.add(groundType);
+        if (isTop)
+        {
+            if (isBottom)
+            {
+                groundPositions.add(Ground.Position.NO_GLASS);
+            }
+            else if (isLeft)
+            {
+                if (isRight)
+                {
+                    groundPositions.add(Ground.Position.NO_GLASS);
+                }
+                else
+                {
+                    groundPositions.add(Ground.Position.NO_GLASS_BOTTOM_RIGHT_EDGE);
+                }
+            }
+            else if (isRight)
+            {
+                groundPositions.add(Ground.Position.NO_GLASS_BOTTOM_LEFT_EDGE);
+            }
+            else
+            {
+                groundPositions.add(Ground.Position.NO_GLASS_BOTTOM_EDGE);
+            }
+        }
+        else
+        {
+            if (isBottom)
+            {
+                if (isLeft)
+                {
+                    if (isRight)
+                    {
+                        groundPositions.add(Ground.Position.GLASS);
+                    }
+                    else
+                    {
+                        groundPositions.add(Ground.Position.GLASS_TOP_RIGHT_EDGE);
+                    }
+                }
+                else if (isRight)
+                {
+                    groundPositions.add(Ground.Position.GLASS_TOP_LEFT_EDGE);
+                }
+                else
+                {
+                    groundPositions.add(Ground.Position.GLASS_TOP_EDGE);
+                }
+            }
+            else
+            {
+                if (isLeft)
+                {
+                    if (isRight)
+                    {
+                        groundPositions.add(Ground.Position.GLASS);
+                    }
+                    else
+                    {
+                        groundPositions.add(Ground.Position.GLASS_RIGHT_EDGE);
+                    }
+                }
+                else if (isRight)
+                {
+                    groundPositions.add(Ground.Position.GLASS_LEFT_EDGE);
+                }
+                else
+                {
+                    groundPositions.add(Ground.Position.GLASS_ALL_EDGE);
+                }
+            }
+        }
     }
 
     public void addJoint(int jointX, int jointY, Joint.Type jointType)

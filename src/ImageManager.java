@@ -12,7 +12,14 @@ public class ImageManager
     private Image player;
     private Image joint;
     private Image tree1;
-    private Image ground;
+    private Image groundGlass;
+    private Image groundGlassSideEdge;
+    private Image groundGlassConerEdge;
+    private Image groundGlassAllEdge;
+    private Image groundGlassTopEdge;
+    private Image groundNoGlass;
+    private Image groundNoGlassBottomEdge;
+    private Image groundNoGlassConerEdge;
     private Image background;
     private Image glass1;
     private Image glass2;
@@ -43,7 +50,15 @@ public class ImageManager
 
         try
         {
-            ground = new Image("res/img/ground.png");
+            SpriteSheet ss = new SpriteSheet("res/img/grounds.png", 100, 100);
+            groundGlass = ss.getSubImage(0, 0);
+            groundGlassSideEdge = ss.getSubImage(1, 0);
+            groundGlassConerEdge = ss.getSubImage(2, 0);
+            groundGlassAllEdge = ss.getSubImage(3, 0);
+            groundGlassTopEdge = ss.getSubImage(4, 0);
+            groundNoGlass = ss.getSubImage(5, 0);
+            groundNoGlassBottomEdge = ss.getSubImage(6, 0);
+            groundNoGlassConerEdge = ss.getSubImage(7, 0);
         }
         catch (SlickException e)
         {
@@ -148,10 +163,46 @@ public class ImageManager
      * @param y      中心点のy座標
      * @param width  横幅
      * @param height 縦幅
+     * @param type   種類
      */
-    public void drawGround(float x, float y, float width, float height)
+    public void drawGround(float x, float y, float width, float height, Ground.Position type)
     {
-        ground.draw(x - width / 2, y - height / 2, width, height);
+        switch (type)
+        {
+            case GLASS:
+                groundGlass.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case GLASS_TOP_EDGE:
+                groundGlassTopEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case GLASS_TOP_LEFT_EDGE:
+                groundGlassConerEdge.draw(x + width / 2, y - height / 2, -width, height);
+                break;
+            case GLASS_TOP_RIGHT_EDGE:
+                groundGlassConerEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case GLASS_LEFT_EDGE:
+                groundGlassSideEdge.draw(x + width / 2, y - height / 2, -width, height);
+                break;
+            case GLASS_RIGHT_EDGE:
+                groundGlassSideEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case GLASS_ALL_EDGE:
+                groundGlassAllEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case NO_GLASS:
+                groundNoGlass.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case NO_GLASS_BOTTOM_EDGE:
+                groundNoGlassBottomEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case NO_GLASS_BOTTOM_LEFT_EDGE:
+                groundNoGlassConerEdge.draw(x + width / 2, y - height / 2, -width, height);
+                break;
+            case NO_GLASS_BOTTOM_RIGHT_EDGE:
+                groundNoGlassConerEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+        }
     }
 
     /**
