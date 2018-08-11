@@ -506,14 +506,46 @@ public class StageDate
     {
         for (int i = 0; i < groundXs.size(); i++)
         {
-            if (objectX == groundXs.get(i) && objectY == groundYs.get(i))
+            if (groundXs.get(i) == objectX && groundYs.get(i) == objectY)
             {
-                System.out.println(groundXs.get(i) + " " + groundYs.get(i));
+                //System.out.println(groundXs.get(i) + " " + groundYs.get(i));
                 groundXs.remove(i);
                 groundYs.remove(i);
                 groundTypes.remove(i);
+                groundPositions.remove(i);
+            }
+
+            if (groundXs.get(i) == objectX)
+            {
+                if (groundYs.get(i) == objectY + Ground.WIDTH)
+                {
+                    //bottom
+                    resetGround(i);
+                }
+                else if (groundYs.get(i) == objectY - Ground.WIDTH)
+                {
+                    //top
+                    resetGround(i);
+                }
+            }
+            else if (groundXs.get(i) == objectX + Ground.WIDTH)
+            {
+                if (groundYs.get(i) == objectY)
+                {
+                    //right
+                    resetGround(i);
+                }
+            }
+            else if (groundXs.get(i) == objectX - Ground.WIDTH)
+            {
+                if (groundYs.get(i) == objectY)
+                {
+                    //left
+                    resetGround(i);
+                }
             }
         }
+
         for (int i = 0; i < jointXs.size(); i++)
         {
             if (objectX == jointXs.get(i) && objectY == jointYs.get(i))
@@ -523,6 +555,18 @@ public class StageDate
                 jointTypes.remove(i);
             }
         }
+    }
+
+    private void resetGround(int index)
+    {
+        int groundX = groundXs.get(index);
+        int groundY = groundYs.get(index);
+        Ground.Type groundType = groundTypes.get(index);
+        groundXs.remove(index);
+        groundYs.remove(index);
+        groundTypes.remove(index);
+        groundPositions.remove(index);
+        addGround(groundX, groundY, groundType);
     }
 
     public void deleteAllObject()
