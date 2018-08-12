@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
@@ -20,6 +21,14 @@ public class StageDate
      * ground の位置
      */
     private ArrayList<Ground.Shape> groundShapes;
+    /**
+     * ground のあたり判定を行うかどうか
+     */
+    //private ArrayList<Boolean> groundIsCheckCollisions;
+    /**
+     * ground に接するgroundの数
+     */
+    private ArrayList<Integer> groundTouchNums;
 
     /**
      * joint の絶対座標（空の場合は-1）
@@ -53,7 +62,7 @@ public class StageDate
     /**
      * 1ステージにある ground の最大数
      */
-    public static final int GROUND_MAX = 150;
+    public static final int GROUND_MAX = 1000;
     /**
      * 1ステージにある joint の最大数
      */
@@ -73,6 +82,7 @@ public class StageDate
         groundYs = new ArrayList<>();
         groundTypes = new ArrayList<>();
         groundShapes = new ArrayList<>();
+        groundTouchNums = new ArrayList<>();
         jointXs = new ArrayList<>();
         jointYs = new ArrayList<>();
         jointTypes = new ArrayList<>();
@@ -103,6 +113,7 @@ public class StageDate
             groundYs.clear();
             groundTypes.clear();
             groundShapes.clear();
+            groundTouchNums.clear();
             jointXs.clear();
             jointYs.clear();
             jointTypes.clear();
@@ -120,10 +131,11 @@ public class StageDate
                                 groundYs.add(Integer.parseInt(st.nextToken()));
                                 groundTypes.add(Ground.Type.valueOf(st.nextToken()));
                                 groundShapes.add(Ground.Shape.valueOf(st.nextToken()));
+                                groundTouchNums.add(Integer.parseInt(st.nextToken()));
                             }
-                            catch (ArrayIndexOutOfBoundsException e)
+                            catch (EmptyStackException e)
                             {
-                                System.err.println("1ステージにある ground 数が上限を超えました " + e.getMessage());
+                                System.err.println(e.getMessage());
                             }
                             break;
                         case "joint":
@@ -133,15 +145,16 @@ public class StageDate
                                 jointYs.add(Integer.parseInt(st.nextToken()));
                                 jointTypes.add(Joint.Type.valueOf(st.nextToken()));
                             }
-                            catch (ArrayIndexOutOfBoundsException e)
+                            catch (EmptyStackException e)
                             {
-                                System.err.println("1ステージにある joint 数が上限を超えました " + e.getMessage());
+                                System.err.println(e.getMessage());
                             }
                             break;
                     }
                 }
                 catch (NoSuchElementException e)
                 {
+                    System.err.println(e.getMessage());
                 }
             }
             fr.close();
@@ -181,7 +194,7 @@ public class StageDate
             PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
             for (int i = 0; i < groundXs.size(); i++)
             {
-                pw.println("ground," + groundXs.get(i) + "," + groundYs.get(i) + "," + groundTypes.get(i) + "," + groundShapes.get(i));
+                pw.println("ground," + groundXs.get(i) + "," + groundYs.get(i) + "," + groundTypes.get(i) + "," + groundShapes.get(i) + "," + groundTouchNums.get(i));
             }
             for (int i = 0; i < jointXs.size(); i++)
             {
@@ -224,6 +237,16 @@ public class StageDate
     public Ground.Shape[] getGroundShapes()
     {
         return groundShapes.toArray(new Ground.Shape[groundShapes.size()]);
+    }
+
+    public boolean[] getGroundIsCheckCollisions()
+    {
+        boolean[] groundIsCheckCollision = new boolean[this.groundTouchNums.size()];
+        for (int i = 0; i < groundIsCheckCollision.length; i++)
+        {
+            groundIsCheckCollision[i] = this.groundTouchNums.get(i) != 4;
+        }
+        return groundIsCheckCollision;
     }
 
     public int[] getJointXs()
@@ -317,6 +340,7 @@ public class StageDate
                     {
                         groundShapes.set(i, Ground.Shape.NO_GLASS_BOTTOM_RIGHT_EDGE);
                     }
+                    groundTouchNums.set(i, groundTouchNums.get(i) + 1);
                     isBottom = true;
                 }
                 else if (groundYs.get(i) == groundY - Ground.WIDTH)
@@ -345,6 +369,7 @@ public class StageDate
                     {
                         groundShapes.set(i, Ground.Shape.GLASS);
                     }
+                    groundTouchNums.set(i, groundTouchNums.get(i) + 1);
                     isTop = true;
                 }
             }
@@ -375,6 +400,7 @@ public class StageDate
                     {
                         groundShapes.set(i, Ground.Shape.NO_GLASS_BOTTOM_RIGHT_EDGE);
                     }
+                    groundTouchNums.set(i, groundTouchNums.get(i) + 1);
                     isRight = true;
                 }
             }
@@ -405,6 +431,7 @@ public class StageDate
                     {
                         groundShapes.set(i, Ground.Shape.NO_GLASS_BOTTOM_LEFT_EDGE);
                     }
+                    groundTouchNums.set(i, groundTouchNums.get(i) + 1);
                     isLeft = true;
                 }
             }
@@ -486,6 +513,24 @@ public class StageDate
                 }
             }
         }
+        int touchNum = 0;
+        if (isBottom)
+        {
+            touchNum++;
+        }
+        if (isLeft)
+        {
+            touchNum++;
+        }
+        if (isRight)
+        {
+            touchNum++;
+        }
+        if (isTop)
+        {
+            touchNum++;
+        }
+        groundTouchNums.add(touchNum);
     }
 
     public void addJoint(int jointX, int jointY, Joint.Type jointType)
@@ -513,6 +558,7 @@ public class StageDate
                 groundYs.remove(i);
                 groundTypes.remove(i);
                 groundShapes.remove(i);
+                groundTouchNums.remove(i);
             }
         }
         for (int i = 0; i < groundXs.size(); i++)
@@ -568,6 +614,7 @@ public class StageDate
         groundYs.remove(index);
         groundTypes.remove(index);
         groundShapes.remove(index);
+        groundTouchNums.remove(index);
         addGround(groundX, groundY, groundType);
     }
 
@@ -576,6 +623,8 @@ public class StageDate
         groundXs.clear();
         groundYs.clear();
         groundTypes.clear();
+        groundShapes.clear();
+        groundTouchNums.clear();
         jointXs.clear();
         jointYs.clear();
         jointTypes.clear();

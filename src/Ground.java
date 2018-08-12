@@ -19,17 +19,26 @@ public class Ground extends GameObject
      * groundの縦幅，横幅
      */
     public static final int WIDTH = 60;
+    /**
+     * ground のあたり判定を行うかどうか
+     */
+    public boolean isCheckCollision;
 
     /**
      * groundの型
      */
     public enum Type
     {
-        /** 普通 */
+        /**
+         * 普通
+         */
         NORMAL,
-        /** トゲトゲ */
+        /**
+         * トゲトゲ
+         */
         SPINE,
     }
+
     /**
      * groundの形
      */
@@ -48,6 +57,7 @@ public class Ground extends GameObject
         this.height = WIDTH;
         type = Type.NORMAL;
         shape = Shape.NO_GLASS;
+        isCheckCollision = true;
     }
 
     @Override
@@ -69,22 +79,20 @@ public class Ground extends GameObject
         /*g.setColor(Color.green);
         g.drawRect(getDiX() - width / 2, getDiY() - height / 2, width, height);*/
         im.drawGround(getDiX(), getDiY(), width, height, shape);
+        //g.drawString(Boolean.toString(isCheckCollision), getDiX(), getDiY());
     }
 
     /**
      * 初期化処理
-     *
-     * @param x
-     * @param y
-     * @param type 0:ノーマル 1:トゲトゲ
      */
-    public void activate(int x, int y, Type type, Shape shape, int num)
+    public void activate(int x, int y, Type type, Shape shape, boolean isCheckCollision, int num)
     {
         this.abX = x;
         this.abY = y;
         this.type = type;
         this.shape = shape;
         this.num = num;
+        this.isCheckCollision = isCheckCollision;
         active = true;
     }
 
@@ -100,6 +108,6 @@ public class Ground extends GameObject
 
     public boolean isCheckCollision()
     {
-        return shape != Shape.NO_GLASS;
+        return isCheckCollision;
     }
 }
