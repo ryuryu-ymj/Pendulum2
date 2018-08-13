@@ -139,9 +139,17 @@ public class Player extends GameObject
         {
             speedX = speedMax;
         }
+        else if (speedX < -speedMax)
+        {
+            speedX = -speedMax;
+        }
         if (speedY > speedMax)
         {
             speedY = speedMax;
+        }
+        else if (speedY < -speedMax)
+        {
+            speedY = -speedMax;
         }
 
         abX = abX + speedX;

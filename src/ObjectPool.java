@@ -181,7 +181,7 @@ public class ObjectPool
     {
         for (int i = 0; i < groundXs.length; i++)
         {
-            if (checkEntering(groundXs[i], groundYs[i], (int) grounds[0].width, (int) grounds[0].height))
+            if (checkEntering(groundXs[i], groundYs[i], (int) grounds[0].width, (int) grounds[0].height, 60))
             {
                 if (!isGroundDisplayed[i])
                 {
@@ -224,9 +224,9 @@ public class ObjectPool
     /**
      * 画面内にある joints を newJoint する
      *
-     * @param jointXs  ground の絶対座標（空の場合は-1）
-     * @param jointYs  ground の絶対座標（空の場合は-1）
-     *                 //* @param jointTypes ground の型
+     * @param jointXs ground の絶対座標（空の場合は-1）
+     * @param jointYs ground の絶対座標（空の場合は-1）
+     *                //* @param jointTypes ground の型
      */
     public void moveJoints(int[] jointXs, int[] jointYs, Joint.Type[] jointTypes)
     {
@@ -234,7 +234,7 @@ public class ObjectPool
         {
             if (!isJointDisplayed[i])
             {
-                if (checkEntering(jointXs[i], jointYs[i], joints[0].radius, joints[0].radius))
+                if (checkEntering(jointXs[i], jointYs[i], joints[0].radius, joints[0].radius, 0))
                 {
                     if (newJoint(jointXs[i], jointYs[i], jointTypes[i], 0, i) != -1)
                     {
@@ -285,7 +285,7 @@ public class ObjectPool
         {
             if (!isBackObjectDisplayed[i])
             {
-                if (checkEntering(backObjectXs[i], backObjectYs[i], backObjectTypes[i].WIDTH, backObjectTypes[i].HEIGHT))
+                if (checkEntering(backObjectXs[i], backObjectYs[i], backObjectTypes[i].WIDTH, backObjectTypes[i].HEIGHT, 0))
                 {
                     if (newBackObject(backObjectXs[i], backObjectYs[i], backObjectLayers[i], backObjectTypes[i], i) != -1)
                     {
@@ -340,40 +340,39 @@ public class ObjectPool
             if (ground.active)
             {
                 if (ground.isCheckCollision())
-                if (player.abX > ground.abX - ground.width / 2
-                        && player.abX < ground.abX + ground.width / 2
-                        && player.abY + player.height / 2 > ground.abY - ground.height / 2
-                        && player.abY - player.height / 2 < ground.abY + ground.height / 2)
-                {
-                    if (player.abY > ground.abY)
+                    if (player.abX > ground.abX - ground.width / 2
+                            && player.abX < ground.abX + ground.width / 2
+                            && player.abY + player.height / 2 > ground.abY - ground.height / 2
+                            && player.abY - player.height / 2 < ground.abY + ground.height / 2)
                     {
-                        player.boundDown(ground.abY + ground.height / 2);
+                        if (player.abY > ground.abY)
+                        {
+                            player.boundDown(ground.abY + ground.height / 2);
+                        }
+                        else
+                        {
+                            player.boundUp(ground.abY - ground.height / 2);
+                        }
                     }
-                    else
+                    else if (player.abX + player.height / 2 > ground.abX - ground.width / 2
+                            && player.abX - player.height / 2 < ground.abX + ground.width / 2
+                            && player.abY > ground.abY - ground.height / 2
+                            && player.abY < ground.abY + ground.height / 2)
                     {
-                        player.boundUp(ground.abY - ground.height / 2);
+                        if (player.abX > ground.abX)
+                        {
+                            player.boundRight(ground.abX + ground.width / 2);
+                        }
+                        else
+                        {
+                            player.boundLeft(ground.abX - ground.width / 2);
+                        }
                     }
-                }
-                else if (player.abX + player.height / 2 > ground.abX - ground.width / 2
-                        && player.abX - player.height / 2 < ground.abX + ground.width / 2
-                        && player.abY > ground.abY - ground.height / 2
-                        && player.abY < ground.abY + ground.height / 2)
-                {
-                    if (player.abX > ground.abX)
-                    {
-                        player.boundRight(ground.abX + ground.width / 2);
-                    }
-                    else
-                    {
-                        player.boundLeft(ground.abX - ground.width / 2);
-                    }
-                }
             }
         }
     }
 
     /**
-     *
      * @return playerがゴールしたかどうか
      */
     public boolean isPlayerGoal()
@@ -452,14 +451,15 @@ public class ObjectPool
      * @param y      オブジェクトの中心点のy座標
      * @param width  オブジェクトの横幅
      * @param height オブジェクトの縦幅
+     * @param margin 余裕
      * @return オブジェクトが画面内に存在するか
      */
-    public boolean checkEntering(int x, int y, int width, int height)
+    public boolean checkEntering(int x, int y, int width, int height, int margin)
     {
-        if (x + width / 2 > camera.getX() - Play.DISPLAY_WIDTH / 2
-                && x - width / 2 < camera.getX() + Play.DISPLAY_WIDTH / 2
-                && y + height / 2 > camera.getY() - Play.DISPLAY_HEIGHT / 2
-                && y - height / 2 < camera.getY() + Play.DISPLAY_HEIGHT / 2)
+        if (x + width / 2 > camera.getX() - Play.DISPLAY_WIDTH / 2 - margin
+                && x - width / 2 < camera.getX() + Play.DISPLAY_WIDTH / 2 + margin
+                && y + height / 2 > camera.getY() - Play.DISPLAY_HEIGHT / 2 - margin
+                && y - height / 2 < camera.getY() + Play.DISPLAY_HEIGHT / 2 + margin)
             return true;
         return false;
     }

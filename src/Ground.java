@@ -63,7 +63,7 @@ public class Ground extends GameObject
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
-        if (checkLeaving(0))
+        if (checkLeaving(60))
         {
             active = false;
             ObjectPool.isGroundDisplayed[num] = false;

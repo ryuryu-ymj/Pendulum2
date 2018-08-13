@@ -80,14 +80,14 @@ public abstract class GameObject
      * オブジェクトがプレイ領域内にいるかどうかを確認し,
      * 領域外に出ている場合は,インスタンスを無効にする.
      *
-     * @param mergin 余裕
+     * @param margin 余裕
      */
-    public boolean checkLeaving(int mergin)
+    public boolean checkLeaving(int margin)
     {
-        return (diX < -width / 2 - mergin
-                || diX > Play.DISPLAY_WIDTH + width / 2 + mergin
-                || diY < -height / 2 - mergin
-                || diY > Play.DISPLAY_HEIGHT + height / 2 + mergin);
+        return (diX < -width / 2 - margin
+                || diX > Play.DISPLAY_WIDTH + width / 2 + margin
+                || diY < -height / 2 - margin
+                || diY > Play.DISPLAY_HEIGHT + height / 2 + margin);
     }
 
     public float getDiX()
