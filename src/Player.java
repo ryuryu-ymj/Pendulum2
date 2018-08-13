@@ -61,48 +61,56 @@ public class Player extends GameObject
 
     /**
      * 上方向への跳ね返り
+     *
+     * @param bound 反発係数
      */
-    public void boundUp(float groundY)
+    public void boundUp(float groundY, int bound)
     {
         if (speedY > 0)
         {
-            speedY = -speedY;
+            speedY = -speedY * bound;
         }
         abY = groundY - radius;
     }
 
     /**
      * 下方向への跳ね返り
+     *
+     * @param bound 反発係数
      */
-    public void boundDown(float groundY)
+    public void boundDown(float groundY, int bound)
     {
         if (speedY < 0)
         {
-            speedY = -speedY;
+            speedY = -speedY * bound;
         }
         abY = groundY + radius;
     }
 
     /**
      * 左方向への跳ね返り
+     *
+     * @param bound 反発係数
      */
-    public void boundLeft(float groundX)
+    public void boundLeft(float groundX, int bound)
     {
         if (speedX > 0)
         {
-            speedX = -speedX;
+            speedX = -speedX * bound;
         }
         abX = groundX - radius;
     }
 
     /**
      * 右方向への跳ね返り
+     *
+     * @param bound 反発係数
      */
-    public void boundRight(float groundX)
+    public void boundRight(float groundX, int bound)
     {
         if (speedX < 0)
         {
-            speedX = -speedX;
+            speedX = -speedX * bound;
         }
         abX = groundX + radius;
     }

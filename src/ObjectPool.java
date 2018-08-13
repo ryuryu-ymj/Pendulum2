@@ -334,12 +334,22 @@ public class ObjectPool
         }
 
         // playerとgroundの衝突
+        int bound;
         for (Ground ground : grounds)
         {
             check:
             if (ground.active)
             {
                 if (ground.isCheckCollision())
+                {
+                    if (ground.getType() == Ground.Type.NORMAL)
+                    {
+                        bound = 1;
+                    }
+                    else
+                    {
+                        bound = 0;
+                    }
                     if (player.abX > ground.abX - ground.width / 2
                             && player.abX < ground.abX + ground.width / 2
                             && player.abY + player.height / 2 > ground.abY - ground.height / 2
@@ -347,11 +357,11 @@ public class ObjectPool
                     {
                         if (player.abY > ground.abY)
                         {
-                            player.boundDown(ground.abY + ground.height / 2);
+                            player.boundDown(ground.abY + ground.height / 2, bound);
                         }
                         else
                         {
-                            player.boundUp(ground.abY - ground.height / 2);
+                            player.boundUp(ground.abY - ground.height / 2, bound);
                         }
                     }
                     else if (player.abX + player.height / 2 > ground.abX - ground.width / 2
@@ -361,13 +371,14 @@ public class ObjectPool
                     {
                         if (player.abX > ground.abX)
                         {
-                            player.boundRight(ground.abX + ground.width / 2);
+                            player.boundRight(ground.abX + ground.width / 2, bound);
                         }
                         else
                         {
-                            player.boundLeft(ground.abX - ground.width / 2);
+                            player.boundLeft(ground.abX - ground.width / 2, bound);
                         }
                     }
+                }
             }
         }
     }
