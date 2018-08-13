@@ -122,7 +122,7 @@ public class Main extends BasicGame
      */
     public static void main(String[] args)
     {
-        Main main = new Main("The Past Myself");
+        Main main = new Main("Pendulum2");
         try
         {
             AppGameContainer agc = new AppGameContainer(main);

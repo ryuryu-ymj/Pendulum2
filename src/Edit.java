@@ -49,8 +49,11 @@ public class Edit extends GameState
         {
             switch (mousePointer.type)
             {
-                case GROUND:
+                case GROUND_NORMAL:
                     stageDate.addGround((int)mousePointer.abX, (int)mousePointer.abY, Ground.Type.NORMAL);
+                    break;
+                case GROUND_INVISIBLE:
+                    stageDate.addGround((int)mousePointer.abX, (int)mousePointer.abY, Ground.Type.INVISIBLE);
                     break;
                 case JOINT_NORMAL:
                     stageDate.addJoint((int)mousePointer.abX, (int)mousePointer.abY, Joint.Type.NORMAL);
@@ -106,8 +109,8 @@ public class Edit extends GameState
     public void render(GameContainer gc, Graphics g, ImageManager im)
             throws SlickException
     {
-        objectPool.render(g, im);
         grid.render(g, im);
+        objectPool.render(g, im);
         mousePointer.render(g, im);
         g.setColor(Color.black);
         g.drawString("stage" + (stageNum + 1), 100, 100);

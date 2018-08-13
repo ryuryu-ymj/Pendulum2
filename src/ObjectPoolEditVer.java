@@ -56,6 +56,12 @@ public class ObjectPoolEditVer extends ObjectPool
     {
         renderObjects(backObjects, g, im);
         renderObjects(joints, g, im);
-        renderObjects(grounds, g, im);
+        for (Ground ground : grounds)
+        {
+            if (ground.active)
+            {
+                ground.renderEditVer(g, im);
+            }
+        }
     }
 }

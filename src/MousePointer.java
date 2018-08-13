@@ -5,12 +5,12 @@ import org.newdawn.slick.Input;
 
 public class MousePointer extends GameObject
 {
-    public enum Type{DELETE, GROUND, JOINT_NORMAL, JOINT_GOAL}
+    public enum Type{DELETE, GROUND_NORMAL, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL}
     public Type type;
 
     MousePointer()
     {
-        type = Type.GROUND;
+        type = Type.GROUND_NORMAL;
     }
 
     @Override
@@ -18,7 +18,7 @@ public class MousePointer extends GameObject
     {
         if (gc.getInput().isKeyPressed(Input.KEY_G))
         {
-            type = Type.GROUND;
+            type = Type.GROUND_NORMAL;
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_J))
         {
@@ -38,6 +38,15 @@ public class MousePointer extends GameObject
             {
                 type = Type.JOINT_NORMAL;
             }
+
+            if (type == Type.GROUND_NORMAL)
+            {
+                type = Type.GROUND_INVISIBLE;
+            }
+            else if (type == Type.GROUND_INVISIBLE)
+            {
+                type = Type.GROUND_NORMAL;
+            }
         }
 
         changeToDisplayPoint(cameraX, cameraY);
@@ -48,8 +57,12 @@ public class MousePointer extends GameObject
     {
         switch (type)
         {
-            case GROUND:
+            case GROUND_NORMAL:
                 im.drawGround(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH, Ground.Shape.NO_GLASS);
+                break;
+            case GROUND_INVISIBLE:
+                g.setColor(Color.red);
+                g.drawRect(getDiX() - Ground.WIDTH / 2, getDiY() - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
                 break;
             case JOINT_NORMAL:
                 im.drawJoint(getDiX(), getDiY(), Joint.radius * 2, Joint.radius * 2);

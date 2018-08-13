@@ -1,3 +1,4 @@
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -37,6 +38,10 @@ public class Ground extends GameObject
          * トゲトゲ
          */
         SPINE,
+        /**
+         * 見えない　あたり判定のみ行う
+         */
+        INVISIBLE;
     }
 
     /**
@@ -78,8 +83,30 @@ public class Ground extends GameObject
     {
         /*g.setColor(Color.green);
         g.drawRect(getDiX() - width / 2, getDiY() - height / 2, width, height);*/
-        im.drawGround(getDiX(), getDiY(), width, height, shape);
+        switch (type)
+        {
+            case NORMAL:
+                im.drawGround(getDiX(), getDiY(), width, height, shape);
+                break;
+            case INVISIBLE:
+                break;
+        }
+
         //g.drawString(Boolean.toString(isCheckCollision), getDiX(), getDiY());
+    }
+
+    public void renderEditVer(Graphics g, ImageManager im)
+    {
+        switch (type)
+        {
+            case NORMAL:
+                im.drawGround(getDiX(), getDiY(), width, height, shape);
+                break;
+            case INVISIBLE:
+                g.setColor(Color.red);
+                g.drawRect(getDiX() - Ground.WIDTH / 2, getDiY() - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
+                break;
+        }
     }
 
     /**
