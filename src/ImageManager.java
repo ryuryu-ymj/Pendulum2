@@ -228,7 +228,7 @@ public class ImageManager
      */
     public void drawGlass1(float x, float y, float width, float height)
     {
-        glass1.draw(x - width / 2, y - height / 2, width, height);
+        glass1.draw(x - width / 4 * 3, y - height / 4 * 3, width, height);
     }
 
     /**
@@ -241,7 +241,7 @@ public class ImageManager
      */
     public void drawGlass2(float x, float y, float width, float height)
     {
-        glass2.draw(x - width / 2, y - height / 2, width, height);
+        glass2.draw(x - width / 4 * 3, y - height / 4 * 3, width, height);
     }
 
     /**
@@ -254,7 +254,7 @@ public class ImageManager
      */
     public void drawGlass3(float x, float y, float width, float height)
     {
-        glass3.draw(x - width / 2, y - height / 2, width, height);
+        glass3.draw(x - width / 4 * 3, y - height / 4 * 3, width, height);
     }
 
     /**
@@ -267,6 +267,6 @@ public class ImageManager
      */
     public void drawGlass4(float x, float y, float width, float height)
     {
-        glass4.draw(x - width / 2, y - height / 2, width, height);
+        glass4.draw(x - width / 4 * 3, y - height / 4 * 3, width, height);
     }
 }

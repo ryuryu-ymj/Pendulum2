@@ -61,6 +61,18 @@ public class Edit extends GameState
                 case JOINT_GOAL:
                     stageDate.addJoint((int)mousePointer.abX, (int)mousePointer.abY, Joint.Type.GOAL);
                     break;
+                case GLASS1:
+                    stageDate.addBackObject((int)mousePointer.abX, (int)mousePointer.abY, BackObject.Type.GLASS1, BackObject.Layer.LAYER0);
+                    break;
+                case GLASS2:
+                    stageDate.addBackObject((int)mousePointer.abX, (int)mousePointer.abY, BackObject.Type.GLASS2, BackObject.Layer.LAYER0);
+                    break;
+                case GLASS3:
+                    stageDate.addBackObject((int)mousePointer.abX, (int)mousePointer.abY, BackObject.Type.GLASS3, BackObject.Layer.LAYER0);
+                    break;
+                case GLASS4:
+                    stageDate.addBackObject((int)mousePointer.abX, (int)mousePointer.abY, BackObject.Type.GLASS4, BackObject.Layer.LAYER0);
+                    break;
                 case DELETE:
                     stageDate.deleteObject((int)mousePointer.abX, (int)mousePointer.abY);
                     objectPool.reload();
@@ -94,8 +106,8 @@ public class Edit extends GameState
 
         objectPool.moveGrounds(stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes(), stageDate.getGroundShapes(), stageDate.getGroundIsCheckCollisions());
         objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs(), stageDate.getJointTypes());
-        objectPool.moveBackObjects(stageDate.getBackObjectNum(), stageDate.getBackObjectXs(), stageDate.getBackObjectYs()
-                , stageDate.getBackObjectLayers(), stageDate.getBackObjectTypes());
+        objectPool.moveBackObjects(stageDate.getBackObjectXs(), stageDate.getBackObjectYs(), stageDate.getBackObjectTypes()
+                , stageDate.getBackObjectLayers());
         objectPool.update(gc);
         grid.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
         mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));

@@ -63,9 +63,11 @@ public class Wire
 
     public void render(Graphics g, ImageManager im)
     {
-        Color c = new Color(0, 240, 240);
-        g.setColor(c);
+        //g.setColor(new Color(0, 240, 240));
+        g.setLineWidth(2);
+        g.setColor(Color.white);
         g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
+        g.setLineWidth(1);
     }
 
     /**

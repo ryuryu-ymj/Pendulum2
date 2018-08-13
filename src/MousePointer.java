@@ -2,10 +2,14 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.tests.states.TestState3;
 
 public class MousePointer extends GameObject
 {
-    public enum Type{DELETE, GROUND_NORMAL, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL}
+    public enum Type
+    {
+        DELETE, GROUND_NORMAL, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL, GLASS1, GLASS2, GLASS3, GLASS4;
+    }
     public Type type;
 
     MousePointer()
@@ -28,6 +32,10 @@ public class MousePointer extends GameObject
         {
             type = Type.DELETE;
         }
+        else if (gc.getInput().isKeyPressed(Input.KEY_B))
+        {
+            type = Type.GLASS1;
+        }
         else if (gc.getInput().isKeyPressed(Input.KEY_ENTER))
         {
             if (type == Type.JOINT_NORMAL)
@@ -46,6 +54,23 @@ public class MousePointer extends GameObject
             else if (type == Type.GROUND_INVISIBLE)
             {
                 type = Type.GROUND_NORMAL;
+            }
+
+            if (type == Type.GLASS1)
+            {
+                type = Type.GLASS2;
+            }
+            else if (type == Type.GLASS2)
+            {
+                type = Type.GLASS3;
+            }
+            else if (type == Type.GLASS3)
+            {
+                type = Type.GLASS4;
+            }
+            else if (type == Type.GLASS4)
+            {
+                type = Type.GLASS1;
             }
         }
 
@@ -70,6 +95,18 @@ public class MousePointer extends GameObject
             case JOINT_GOAL:
                 g.setColor(Color.red);
                 g.drawOval(getDiX() - Joint.radius, getDiY() - Joint.radius, Joint.radius * 2, Joint.radius * 2);
+                break;
+            case GLASS1:
+                im.drawGlass1(getDiX(), getDiY(), BackObject.Type.GLASS1.WIDTH, BackObject.Type.GLASS1.HEIGHT);
+                break;
+            case GLASS2:
+                im.drawGlass2(getDiX(), getDiY(), BackObject.Type.GLASS2.WIDTH, BackObject.Type.GLASS2.HEIGHT);
+                break;
+            case GLASS3:
+                im.drawGlass3(getDiX(), getDiY(), BackObject.Type.GLASS3.WIDTH, BackObject.Type.GLASS3.HEIGHT);
+                break;
+            case GLASS4:
+                im.drawGlass4(getDiX(), getDiY(), BackObject.Type.GLASS4.WIDTH, BackObject.Type.GLASS4.HEIGHT);
                 break;
             case DELETE:
                 g.setColor(Color.red);

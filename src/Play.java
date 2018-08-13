@@ -57,8 +57,8 @@ public class Play extends GameState
     {
         objectPool.moveGrounds(stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes(), stageDate.getGroundShapes(), stageDate.getGroundIsCheckCollisions());
         objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs(), stageDate.getJointTypes());
-        objectPool.moveBackObjects(stageDate.getBackObjectNum(), stageDate.getBackObjectXs(), stageDate.getBackObjectYs()
-                , stageDate.getBackObjectLayers(), stageDate.getBackObjectTypes());
+        objectPool.moveBackObjects(stageDate.getBackObjectXs(), stageDate.getBackObjectYs(), stageDate.getBackObjectTypes()
+                , stageDate.getBackObjectLayers());
         objectPool.collisionDetection(gc);
         objectPool.update(gc);
         if (objectPool.isPlayerGoal())

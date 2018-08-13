@@ -80,19 +80,19 @@ public class BackObject extends GameObject
         switch (type)
         {
             case TREE:
-                im.drawTree1(getDiX(), getDiY() - height / 2 + 2, width, height);
+                im.drawTree1(getDiX(), getDiY() + 2, width, height);
                 break;
             case GLASS1:
-                im.drawGlass1(getDiX(), getDiY() - height / 2 + 2, width, height);
+                im.drawGlass1(getDiX(), getDiY() + 2, width, height);
                 break;
             case GLASS2:
-                im.drawGlass2(getDiX(), getDiY() - height / 2 + 2, width, height);
+                im.drawGlass2(getDiX(), getDiY() + 2, width, height);
                 break;
             case GLASS3:
-                im.drawGlass3(getDiX(), getDiY() - height / 2 + 2, width, height);
+                im.drawGlass3(getDiX(), getDiY() + 2, width, height);
                 break;
             case GLASS4:
-                im.drawGlass4(getDiX(), getDiY() - height / 2 + 2, width, height);
+                im.drawGlass4(getDiX(), getDiY() + 2, width, height);
                 break;
         }
     }
@@ -106,7 +106,7 @@ public class BackObject extends GameObject
      * @param type  種類
      * @param num   backObject がステージ上のどの地面を演じているのか（backObjectX の配列番号）
      */
-    public void activate(int x, int y, Layer layer, Type type, int num)
+    public void activate(int x, int y, Type type, Layer layer, int num)
     {
         this.abX = x;
         this.abY = y;

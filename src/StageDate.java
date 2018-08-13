@@ -42,17 +42,13 @@ public class StageDate
     /**
      * backObjectの絶対座標（空の場合は-1）
      */
-    private int[] backObjectXs = {120, 240, 360, 480};
+    private ArrayList<Integer> backObjectXs;
     /**
      * backObjectの絶対座標（空の場合は-1）
      */
-    private int[] backObjectYs = {570, 570, 570, 570};
-    private BackObject.Layer[] backObjectLayers = {BackObject.Layer.LAYER0, BackObject.Layer.LAYER0, BackObject.Layer.LAYER0, BackObject.Layer.LAYER0};
-    private BackObject.Type[] backObjectTypes = {BackObject.Type.GLASS1, BackObject.Type.GLASS2, BackObject.Type.GLASS3, BackObject.Type.GLASS4};
-    /**
-     * 1ステージにあるbackObjectの数
-     */
-    private int backObjectNum = backObjectXs.length;
+    private ArrayList<Integer> backObjectYs;
+    private ArrayList<BackObject.Layer> backObjectLayers;
+    private ArrayList<BackObject.Type> backObjectTypes;
 
     /**
      * 時間制限
@@ -86,6 +82,10 @@ public class StageDate
         jointXs = new ArrayList<>();
         jointYs = new ArrayList<>();
         jointTypes = new ArrayList<>();
+        backObjectXs = new ArrayList<>();
+        backObjectYs = new ArrayList<>();
+        backObjectLayers = new ArrayList<>();
+        backObjectTypes = new ArrayList<>();
     }
 
     /**
@@ -117,6 +117,10 @@ public class StageDate
             jointXs.clear();
             jointYs.clear();
             jointTypes.clear();
+            backObjectXs.clear();
+            backObjectYs.clear();
+            backObjectTypes.clear();
+            backObjectLayers.clear();
             while ((line = br.readLine()) != null)
             {
                 try
@@ -144,6 +148,19 @@ public class StageDate
                                 jointXs.add(Integer.parseInt(st.nextToken()));
                                 jointYs.add(Integer.parseInt(st.nextToken()));
                                 jointTypes.add(Joint.Type.valueOf(st.nextToken()));
+                            }
+                            catch (EmptyStackException e)
+                            {
+                                System.err.println(e.getMessage());
+                            }
+                            break;
+                        case "backobject":
+                            try
+                            {
+                                backObjectXs.add(Integer.parseInt(st.nextToken()));
+                                backObjectYs.add(Integer.parseInt(st.nextToken()));
+                                backObjectTypes.add(BackObject.Type.valueOf(st.nextToken()));
+                                backObjectLayers.add(BackObject.Layer.valueOf(st.nextToken()));
                             }
                             catch (EmptyStackException e)
                             {
@@ -199,6 +216,10 @@ public class StageDate
             for (int i = 0; i < jointXs.size(); i++)
             {
                 pw.println("joint," + jointXs.get(i) + "," + jointYs.get(i) + "," + jointTypes.get(i));
+            }
+            for (int i = 0; i < backObjectXs.size(); i++)
+            {
+                pw.println("backObject," + backObjectXs.get(i) + "," + backObjectYs.get(i) + "," + backObjectTypes.get(i) + "," + backObjectLayers.get(i));
             }
             pw.close();
             fw.close();
@@ -276,27 +297,32 @@ public class StageDate
 
     public int[] getBackObjectXs()
     {
+        int[] backObjectXs = new int[this.backObjectXs.size()];
+        for (int i = 0; i < backObjectXs.length; i++)
+        {
+            backObjectXs[i] = this.backObjectXs.get(i);
+        }
         return backObjectXs;
     }
 
     public int[] getBackObjectYs()
     {
+        int[] backObjectYs = new int[this.backObjectYs.size()];
+        for (int i = 0; i < backObjectYs.length; i++)
+        {
+            backObjectYs[i] = this.backObjectYs.get(i);
+        }
         return backObjectYs;
     }
 
     public BackObject.Layer[] getBackObjectLayers()
     {
-        return backObjectLayers;
+        return backObjectLayers.toArray(new BackObject.Layer[backObjectLayers.size()]);
     }
 
     public BackObject.Type[] getBackObjectTypes()
     {
-        return backObjectTypes;
-    }
-
-    public int getBackObjectNum()
-    {
-        return backObjectNum;
+        return backObjectTypes.toArray(new BackObject.Type[backObjectTypes.size()]);
     }
 
     public int getTimeLimit()
@@ -559,6 +585,21 @@ public class StageDate
         jointTypes.add(jointType);
     }
 
+    public void addBackObject(int x, int y, BackObject.Type type, BackObject.Layer layer)
+    {
+        for (int i = 0; i < backObjectXs.size(); i++)
+        {
+            if (x == backObjectXs.get(i) && y == backObjectYs.get(i))
+            {
+                return;
+            }
+        }
+        backObjectXs.add(x);
+        backObjectYs.add(y);
+        backObjectTypes.add(type);
+        backObjectLayers.add(layer);
+    }
+
     public void deleteObject(int objectX, int objectY)
     {
         for (int i = 0; i < groundXs.size(); i++)
@@ -615,6 +656,16 @@ public class StageDate
                 jointTypes.remove(i);
             }
         }
+
+        for (int i = 0; i < backObjectXs.size(); i++)
+        {
+            if (objectX == backObjectXs.get(i) && objectY == backObjectYs.get(i))
+            {
+                backObjectXs.remove(i);
+                backObjectYs.remove(i);
+                backObjectTypes.remove(i);
+            }
+        }
     }
 
     private void resetGround(int index)
@@ -640,5 +691,9 @@ public class StageDate
         jointXs.clear();
         jointYs.clear();
         jointTypes.clear();
+        backObjectXs.clear();
+        backObjectYs.clear();
+        backObjectTypes.clear();
+        backObjectLayers.clear();
     }
 }

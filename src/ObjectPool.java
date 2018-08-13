@@ -1,3 +1,4 @@
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -136,16 +137,18 @@ public class ObjectPool
         //g.setLineWidth(1.5f);
 
         //im.drawBackGround(Play.DISPLAY_WIDTH / 2, Play.DISPLAY_HEIGHT / 2, 4900 / 2, 1800 / 2);
+        g.setColor(new Color(189, 226, 14));
+        g.fillRect(0, 0, Play.DISPLAY_WIDTH, Play.DISPLAY_HEIGHT);
         renderObjects(backObjects, g, im);
         renderObjects(joints, g, im);
         renderObjects(grounds, g, im);
-        if (player.active)
-        {
-            player.render(g, im);
-        }
         if (wire.active)
         {
             wire.render(g, im);
+        }
+        if (player.active)
+        {
+            player.render(g, im);
         }
     }
 
@@ -258,13 +261,13 @@ public class ObjectPool
      * @param num  backObject がステージ上のどの backObject を演じているのか（stageDate.jointXsの配列番号）
      * @return backObjects の配列番号　なかったら-1
      */
-    public int newBackObject(int x, int y, BackObject.Layer layer, BackObject.Type type, int num)
+    public int newBackObject(int x, int y, BackObject.Type type, BackObject.Layer layer, int num)
     {
         for (int i = 0; i < BACK_OBJECT_MAX; i++)
         {
             if (!backObjects[i].active)
             {
-                backObjects[i].activate(x, y, layer, type, num);
+                backObjects[i].activate(x, y, type, layer, num);
                 return i;
             }
         }
@@ -273,21 +276,20 @@ public class ObjectPool
 
     /**
      * 画面内にある backObject を newBackObject する
-     *
-     * @param backObjectNum   1ステージにある backObject の数
+
      * @param backObjectXs    backObject の絶対座標（空の場合は-1）
      * @param backObjectYs    backObject の絶対座標（空の場合は-1）
      * @param backObjectTypes backObject の型
      */
-    public void moveBackObjects(int backObjectNum, int[] backObjectXs, int[] backObjectYs, BackObject.Layer[] backObjectLayers, BackObject.Type[] backObjectTypes)
+    public void moveBackObjects(int[] backObjectXs, int[] backObjectYs, BackObject.Type[] backObjectTypes, BackObject.Layer[] backObjectLayers)
     {
-        for (int i = 0; i < backObjectNum; i++)
+        for (int i = 0; i < backObjectXs.length; i++)
         {
             if (!isBackObjectDisplayed[i])
             {
                 if (checkEntering(backObjectXs[i], backObjectYs[i], backObjectTypes[i].WIDTH, backObjectTypes[i].HEIGHT, 0))
                 {
-                    if (newBackObject(backObjectXs[i], backObjectYs[i], backObjectLayers[i], backObjectTypes[i], i) != -1)
+                    if (newBackObject(backObjectXs[i], backObjectYs[i], backObjectTypes[i], backObjectLayers[i], i) != -1)
                     {
                         isBackObjectDisplayed[i] = true;
                     }
