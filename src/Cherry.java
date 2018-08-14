@@ -18,6 +18,11 @@ public class Cherry extends GameObject
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
+        if (checkLeaving(0))
+        {
+            active = false;
+            ObjectPool.isCherryDisplayed[num] = false;
+        }
         changeToDisplayPoint(cameraX, cameraY);
     }
 

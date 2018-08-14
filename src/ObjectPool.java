@@ -53,6 +53,10 @@ public class ObjectPool
      * その cherry が表示されたかどうか
      */
     static boolean[] isCherryDisplayed = new boolean[StageDate.CHERRY_MAX];
+    /**
+     * その cherry が取られたかどうか
+     */
+    private boolean[] isCherryTaked = new boolean[StageDate.CHERRY_MAX];
 
     ObjectPool()
     {
@@ -117,6 +121,10 @@ public class ObjectPool
         for (int i = 0; i < isCherryDisplayed.length; i++)
         {
             isCherryDisplayed[i] = false;
+        }
+        for (int i = 0; i < isCherryTaked.length; i++)
+        {
+            isCherryTaked[i] = false;
         }
         for (int i = 0; i < cherries.length; i++)
         {
@@ -308,7 +316,7 @@ public class ObjectPool
     {
         for (int i = 0; i < cherryXs.length; i++)
         {
-            if (!isCherryDisplayed[i])
+            if (!isCherryDisplayed[i] && !isCherryTaked[i])
             {
                 if (checkEntering(cherryXs[i], cherryYs[i], Cherry.RADIUS * 2, Cherry.RADIUS * 2, 0))
                 {
@@ -453,6 +461,20 @@ public class ObjectPool
                             player.boundLeft(ground.abX - ground.width / 2, bound);
                         }
                     }
+                }
+            }
+        }
+
+        // playerとcherry
+        for (Cherry cherry : cherries)
+        {
+            if (cherry.active)
+            {
+                if (getDistance(player, cherry) < player.width / 2 + cherry.width / 2)
+                {
+                    cherry.active = false;
+                    isCherryDisplayed[cherry.num] = false;
+                    isCherryTaked[cherry.num] = true;
                 }
             }
         }
