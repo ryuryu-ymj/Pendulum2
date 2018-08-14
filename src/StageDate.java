@@ -50,6 +50,12 @@ public class StageDate
     private ArrayList<BackObject.Layer> backObjectLayers;
     private ArrayList<BackObject.Type> backObjectTypes;
 
+
+    /**
+     * cherry の絶対座標（空の場合は-1）
+     */
+    private ArrayList<Integer> cherryXs, cherryYs;
+
     /**
      * 時間制限
      */
@@ -67,6 +73,10 @@ public class StageDate
      * 1ステージにある backGround の最大数
      */
     public static final int BACK_OBJECT_MAX = 50;
+    /**
+     * 1ステージにある cherry の最大数
+     */
+    public static final int CHERRY_MAX = 50;
     /**
      * ステージの最大数
      */
@@ -86,6 +96,8 @@ public class StageDate
         backObjectYs = new ArrayList<>();
         backObjectLayers = new ArrayList<>();
         backObjectTypes = new ArrayList<>();
+        cherryXs = new ArrayList<>();
+        cherryYs = new ArrayList<>();
     }
 
     /**
@@ -121,6 +133,8 @@ public class StageDate
             backObjectYs.clear();
             backObjectTypes.clear();
             backObjectLayers.clear();
+            cherryXs.clear();
+            cherryYs.clear();
             while ((line = br.readLine()) != null)
             {
                 try
@@ -167,6 +181,16 @@ public class StageDate
                                 System.err.println(e.getMessage());
                             }
                             break;
+                        case "cherry":
+                            try
+                            {
+                                cherryXs.add(Integer.parseInt(st.nextToken()));
+                                cherryYs.add(Integer.parseInt(st.nextToken()));
+                            }
+                            catch (EmptyStackException e)
+                            {
+                                System.err.println(e.getMessage());
+                            }
                     }
                 }
                 catch (NoSuchElementException e)
@@ -204,6 +228,10 @@ public class StageDate
             for (int i = 0; i < backObjectXs.size(); i++)
             {
                 pw.println("backObject," + backObjectXs.get(i) + "," + backObjectYs.get(i) + "," + backObjectTypes.get(i) + "," + backObjectLayers.get(i));
+            }
+            for (int i = 0; i < cherryXs.size(); i++)
+            {
+                pw.println("cherry," + cherryXs.get(i) + "," + cherryYs.get(i));
             }
             pw.close();
             fw.close();
@@ -307,6 +335,26 @@ public class StageDate
     public BackObject.Type[] getBackObjectTypes()
     {
         return backObjectTypes.toArray(new BackObject.Type[backObjectTypes.size()]);
+    }
+
+    public int[] getCherryXs()
+    {
+        int[] cherryXs = new int[this.cherryXs.size()];
+        for (int i = 0; i < cherryXs.length; i++)
+        {
+            cherryXs[i] = this.cherryXs.get(i);
+        }
+        return cherryXs;
+    }
+
+    public int[] getCherryYs()
+    {
+        int[] cherryYs = new int[this.cherryYs.size()];
+        for (int i = 0; i < cherryYs.length; i++)
+        {
+            cherryYs[i] = this.cherryYs.get(i);
+        }
+        return cherryYs;
     }
 
     public int getTimeLimit()
@@ -569,6 +617,19 @@ public class StageDate
         jointTypes.add(jointType);
     }
 
+    public void addCherry(int cherryX, int cherryY)
+    {
+        for (int i = 0; i < cherryXs.size(); i++)
+        {
+            if (cherryX == cherryXs.get(i) && cherryY == cherryYs.get(i))
+            {
+                return;
+            }
+        }
+        cherryXs.add(cherryX);
+        cherryYs.add(cherryY);
+    }
+
     public void addBackObject(int x, int y, BackObject.Type type, BackObject.Layer layer)
     {
         for (int i = 0; i < backObjectXs.size(); i++)
@@ -650,6 +711,15 @@ public class StageDate
                 backObjectTypes.remove(i);
             }
         }
+
+        for (int i = 0; i < cherryXs.size(); i++)
+        {
+            if (objectX == cherryXs.get(i) && objectY == cherryYs.get(i))
+            {
+                cherryXs.remove(i);
+                cherryYs.remove(i);
+            }
+        }
     }
 
     private void resetGround(int index)
@@ -679,5 +749,7 @@ public class StageDate
         backObjectYs.clear();
         backObjectTypes.clear();
         backObjectLayers.clear();
+        cherryXs.clear();
+        cherryYs.clear();
     }
 }

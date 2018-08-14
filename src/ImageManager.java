@@ -14,17 +14,18 @@ public class ImageManager
     private Image tree1;
     private Image groundGlass;
     private Image groundGlassSideEdge;
-    private Image groundGlassConerEdge;
+    private Image groundGlassCornerEdge;
     private Image groundGlassAllEdge;
     private Image groundGlassTopEdge;
     private Image groundNoGlass;
     private Image groundNoGlassBottomEdge;
-    private Image groundNoGlassConerEdge;
+    private Image groundNoGlassCornerEdge;
     private Image background;
     private Image glass1;
     private Image glass2;
     private Image glass3;
     private Image glass4;
+    private Image cherry;
 
     ImageManager()
     {
@@ -53,12 +54,12 @@ public class ImageManager
             SpriteSheet ss = new SpriteSheet("res/img/grounds.png", 100, 100);
             groundGlass = ss.getSubImage(0, 0);
             groundGlassSideEdge = ss.getSubImage(1, 0);
-            groundGlassConerEdge = ss.getSubImage(2, 0);
+            groundGlassCornerEdge = ss.getSubImage(2, 0);
             groundGlassAllEdge = ss.getSubImage(3, 0);
             groundGlassTopEdge = ss.getSubImage(4, 0);
             groundNoGlass = ss.getSubImage(5, 0);
             groundNoGlassBottomEdge = ss.getSubImage(6, 0);
-            groundNoGlassConerEdge = ss.getSubImage(7, 0);
+            groundNoGlassCornerEdge = ss.getSubImage(7, 0);
         }
         catch (SlickException e)
         {
@@ -104,6 +105,15 @@ public class ImageManager
         try
         {
             glass4 = new Image("res/img/glass4.png");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            cherry = new Image("res/img/cherry.png");
         }
         catch (SlickException e)
         {
@@ -176,10 +186,10 @@ public class ImageManager
                 groundGlassTopEdge.draw(x - width / 2, y - height / 2, width, height);
                 break;
             case GLASS_TOP_LEFT_EDGE:
-                groundGlassConerEdge.draw(x + width / 2, y - height / 2, -width, height);
+                groundGlassCornerEdge.draw(x + width / 2, y - height / 2, -width, height);
                 break;
             case GLASS_TOP_RIGHT_EDGE:
-                groundGlassConerEdge.draw(x - width / 2, y - height / 2, width, height);
+                groundGlassCornerEdge.draw(x - width / 2, y - height / 2, width, height);
                 break;
             case GLASS_LEFT_EDGE:
                 groundGlassSideEdge.draw(x + width / 2, y - height / 2, -width, height);
@@ -197,10 +207,10 @@ public class ImageManager
                 groundNoGlassBottomEdge.draw(x - width / 2, y - height / 2, width, height);
                 break;
             case NO_GLASS_BOTTOM_LEFT_EDGE:
-                groundNoGlassConerEdge.draw(x + width / 2, y - height / 2, -width, height);
+                groundNoGlassCornerEdge.draw(x + width / 2, y - height / 2, -width, height);
                 break;
             case NO_GLASS_BOTTOM_RIGHT_EDGE:
-                groundNoGlassConerEdge.draw(x - width / 2, y - height / 2, width, height);
+                groundNoGlassCornerEdge.draw(x - width / 2, y - height / 2, width, height);
                 break;
         }
     }
@@ -268,5 +278,19 @@ public class ImageManager
     public void drawGlass4(float x, float y, float width, float height)
     {
         glass4.draw(x - width / 4 * 3, y - height / 4 * 3, width, height);
+    }
+
+    /**
+     * cherry の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawCherry(float x, float y, float width, float height)
+    {
+        float margin = 10 * width / 50;
+        cherry.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
     }
 }

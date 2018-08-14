@@ -4,7 +4,7 @@ import org.newdawn.slick.Graphics;
 
 public class Joint extends GameObject
 {
-    public static final int radius = 15;
+    public static final int RADIUS = 15;
     /**
      * joint がステージ上のどのjointを演じているのか（jointX の配列番号）
      */
@@ -53,15 +53,15 @@ public class Joint extends GameObject
     public void render(Graphics g, ImageManager im)
     {
         /*g.setColor(Color.blue);
-        g.drawOval((int)getDiX() - radius, (int)getDiY() - radius, radius * 2, radius * 2);*/
+        g.drawOval((int)getDiX() - RADIUS, (int)getDiY() - RADIUS, RADIUS * 2, RADIUS * 2);*/
         switch (type)
         {
             case NORMAL:
-                im.drawJoint(getDiX(), getDiY(), radius * 2, radius * 2);
+                im.drawJoint(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2);
                 break;
             case GOAL:
                 g.setColor(Color.red);
-                g.drawOval(getDiX() - Joint.radius, getDiY() - Joint.radius, Joint.radius * 2, Joint.radius * 2);
+                g.drawOval(getDiX() - Joint.RADIUS, getDiY() - Joint.RADIUS, Joint.RADIUS * 2, Joint.RADIUS * 2);
                 break;
         }
     }

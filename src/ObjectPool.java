@@ -15,6 +15,7 @@ public class ObjectPool
     Wire wire;
     Ground[] grounds;
     BackObject[] backObjects;
+    Cherry[] cherries;
     Camera camera;
 
     /**
@@ -44,6 +45,15 @@ public class ObjectPool
      */
     static boolean[] isBackObjectDisplayed = new boolean[StageDate.BACK_OBJECT_MAX];
 
+    /**
+     * 画面上における cherry の数の最大値
+     */
+    public static final int CHERRY_MAX = 20;
+    /**
+     * その cherry が表示されたかどうか
+     */
+    static boolean[] isCherryDisplayed = new boolean[StageDate.CHERRY_MAX];
+
     ObjectPool()
     {
         player = new Player(200, 200);
@@ -62,6 +72,11 @@ public class ObjectPool
         for (int i = 0; i < backObjects.length; i++)
         {
             backObjects[i] = new BackObject();
+        }
+        cherries = new Cherry[CHERRY_MAX];
+        for (int i = 0; i < cherries.length; i++)
+        {
+            cherries[i] = new Cherry();
         }
         camera = new Camera();
         init();
@@ -99,6 +114,14 @@ public class ObjectPool
         {
             backObjects[i].active = false;
         }
+        for (int i = 0; i < isCherryDisplayed.length; i++)
+        {
+            isCherryDisplayed[i] = false;
+        }
+        for (int i = 0; i < cherries.length; i++)
+        {
+            cherries[i].active = false;
+        }
     }
 
     /**
@@ -108,6 +131,7 @@ public class ObjectPool
     {
         updateObjects(backObjects, gc);
         updateObjects(joints, gc);
+        updateObjects(cherries, gc);
         updateObjects(grounds, gc);
         if (player.active)
         {
@@ -141,6 +165,7 @@ public class ObjectPool
         g.fillRect(0, 0, Play.DISPLAY_WIDTH, Play.DISPLAY_HEIGHT);
         renderObjects(backObjects, g, im);
         renderObjects(joints, g, im);
+        renderObjects(cherries, g, im);
         renderObjects(grounds, g, im);
         if (wire.active)
         {
@@ -237,7 +262,7 @@ public class ObjectPool
         {
             if (!isJointDisplayed[i])
             {
-                if (checkEntering(jointXs[i], jointYs[i], joints[0].radius, joints[0].radius, 0))
+                if (checkEntering(jointXs[i], jointYs[i], joints[0].RADIUS * 2, joints[0].RADIUS * 2, 0))
                 {
                     if (newJoint(jointXs[i], jointYs[i], jointTypes[i], 0, i) != -1)
                     {
@@ -246,6 +271,54 @@ public class ObjectPool
                     else
                     {
                         System.err.println("joint の数が足りません" + jointXs[i] + " " + jointYs[i] + " " + i);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 新しく cherry をactivateする
+     *
+     * @param x          cherry のx座標
+     * @param y          cherry のy座標
+     * @param num        cherry がステージ上のどの cherry を演じているのか（stageDate.cherryXsの配列番号）
+     * @return cherries の配列番号　なかったら-1
+     */
+    public int newCherry(int x, int y, int num)
+    {
+        for (int i = 0; i < CHERRY_MAX; i++)
+        {
+            if (!cherries[i].active)
+            {
+                cherries[i].activate(x, y, num);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 画面内にある cherries を newCherry する
+     *
+     * @param cherryXs cherry の絶対座標（空の場合は-1）
+     * @param cherryYs cherry の絶対座標（空の場合は-1）
+     */
+    public void moveCherries(int[] cherryXs, int[] cherryYs)
+    {
+        for (int i = 0; i < cherryXs.length; i++)
+        {
+            if (!isCherryDisplayed[i])
+            {
+                if (checkEntering(cherryXs[i], cherryYs[i], Cherry.RADIUS * 2, Cherry.RADIUS * 2, 0))
+                {
+                    if (newCherry(cherryXs[i], cherryYs[i], i) != -1)
+                    {
+                        isCherryDisplayed[i] = true;
+                    }
+                    else
+                    {
+                        System.err.println("cherry の数が足りません" + cherryXs[i] + " " + cherryYs[i] + " " + i);
                     }
                 }
             }
@@ -314,9 +387,9 @@ public class ObjectPool
             {
                 if (joints[i].active && player.active)
                 {
-                    if (gc.getInput().getMouseX() < joints[i].getDiX() + joints[i].radius * 5 && gc.getInput().getMouseX() > joints[i].getDiX() - joints[i].radius * 5)
+                    if (gc.getInput().getMouseX() < joints[i].getDiX() + joints[i].RADIUS * 5 && gc.getInput().getMouseX() > joints[i].getDiX() - joints[i].RADIUS * 5)
                     {
-                        if (gc.getInput().getMouseY() < joints[i].getDiY() + joints[i].radius * 5 && gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].radius * 5)
+                        if (gc.getInput().getMouseY() < joints[i].getDiY() + joints[i].RADIUS * 5 && gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].RADIUS * 5)
                         {
                             if (joints[i].getLockRadius() == 0 || getDistance(player, joints[i]) < joints[i].getLockRadius())
                             {

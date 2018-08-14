@@ -188,7 +188,7 @@ public class Player extends GameObject
     public void render(Graphics g, ImageManager im)
     {
         /*g.setColor(Color.orange);
-        g.drawOval((int) getDiX() - radius, (int) getDiY() - radius, radius * 2, radius * 2);*/
+        g.drawOval((int) getDiX() - RADIUS, (int) getDiY() - RADIUS, RADIUS * 2, RADIUS * 2);*/
         im.drawPlayer(getDiX(), getDiY(), radius * 2, radius * 2, (float) Math.toDegrees(angle));
     }
 }

@@ -36,6 +36,14 @@ public class ObjectPoolEditVer extends ObjectPool
         {
             backObjects[i].active = false;
         }
+        for (int i = 0; i < isCherryDisplayed.length; i++)
+        {
+            isCherryDisplayed[i] = false;
+        }
+        for (int i = 0; i < cherries.length; i++)
+        {
+            cherries[i].active = false;
+        }
     }
 
     @Override
@@ -43,6 +51,7 @@ public class ObjectPoolEditVer extends ObjectPool
     {
         updateObjects(backObjects, gc);
         updateObjects(joints, gc);
+        updateObjects(cherries, gc);
         updateObjects(grounds, gc);
 
         if (camera.active)
@@ -56,6 +65,7 @@ public class ObjectPoolEditVer extends ObjectPool
     {
         renderObjects(backObjects, g, im);
         renderObjects(joints, g, im);
+        renderObjects(cherries, g, im);
         for (Ground ground : grounds)
         {
             if (ground.active)

@@ -73,6 +73,9 @@ public class Edit extends GameState
                 case GLASS4:
                     stageDate.addBackObject((int)mousePointer.abX, (int)mousePointer.abY, BackObject.Type.GLASS4, BackObject.Layer.LAYER0);
                     break;
+                case CHERRY:
+                    stageDate.addCherry((int)mousePointer.abX, (int)mousePointer.abY);
+                    break;
                 case DELETE:
                     stageDate.deleteObject((int)mousePointer.abX, (int)mousePointer.abY);
                     objectPool.reload();
@@ -106,6 +109,7 @@ public class Edit extends GameState
 
         objectPool.moveGrounds(stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes(), stageDate.getGroundShapes(), stageDate.getGroundIsCheckCollisions());
         objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs(), stageDate.getJointTypes());
+        objectPool.moveCherries(stageDate.getCherryXs(), stageDate.getCherryYs());
         objectPool.moveBackObjects(stageDate.getBackObjectXs(), stageDate.getBackObjectYs(), stageDate.getBackObjectTypes()
                 , stageDate.getBackObjectLayers());
         objectPool.update(gc);

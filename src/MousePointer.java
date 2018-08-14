@@ -2,13 +2,12 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.tests.states.TestState3;
 
 public class MousePointer extends GameObject
 {
     public enum Type
     {
-        DELETE, GROUND_NORMAL, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL, GLASS1, GLASS2, GLASS3, GLASS4;
+        DELETE, GROUND_NORMAL, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL, GLASS1, GLASS2, GLASS3, GLASS4, CHERRY
     }
     public Type type;
 
@@ -35,6 +34,10 @@ public class MousePointer extends GameObject
         else if (gc.getInput().isKeyPressed(Input.KEY_B))
         {
             type = Type.GLASS1;
+        }
+        else if (gc.getInput().isKeyPressed(Input.KEY_C))
+        {
+            type = Type.CHERRY;
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_ENTER))
         {
@@ -90,11 +93,11 @@ public class MousePointer extends GameObject
                 g.drawRect(getDiX() - Ground.WIDTH / 2, getDiY() - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
                 break;
             case JOINT_NORMAL:
-                im.drawJoint(getDiX(), getDiY(), Joint.radius * 2, Joint.radius * 2);
+                im.drawJoint(getDiX(), getDiY(), Joint.RADIUS * 2, Joint.RADIUS * 2);
                 break;
             case JOINT_GOAL:
                 g.setColor(Color.red);
-                g.drawOval(getDiX() - Joint.radius, getDiY() - Joint.radius, Joint.radius * 2, Joint.radius * 2);
+                g.drawOval(getDiX() - Joint.RADIUS, getDiY() - Joint.RADIUS, Joint.RADIUS * 2, Joint.RADIUS * 2);
                 break;
             case GLASS1:
                 im.drawGlass1(getDiX(), getDiY(), BackObject.Type.GLASS1.WIDTH, BackObject.Type.GLASS1.HEIGHT);
@@ -107,6 +110,9 @@ public class MousePointer extends GameObject
                 break;
             case GLASS4:
                 im.drawGlass4(getDiX(), getDiY(), BackObject.Type.GLASS4.WIDTH, BackObject.Type.GLASS4.HEIGHT);
+                break;
+            case CHERRY:
+                im.drawCherry(getDiX(), getDiY(), Cherry.RADIUS * 2, Cherry.RADIUS * 2);
                 break;
             case DELETE:
                 g.setColor(Color.red);
