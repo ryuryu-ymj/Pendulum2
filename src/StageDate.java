@@ -154,7 +154,7 @@ public class StageDate
                                 System.err.println(e.getMessage());
                             }
                             break;
-                        case "backobject":
+                        case "backObject":
                             try
                             {
                                 backObjectXs.add(Integer.parseInt(st.nextToken()));
@@ -180,22 +180,6 @@ public class StageDate
         {
             e.printStackTrace();
         }
-
-        /*try
-        {
-            FileWriter fw = new FileWriter("res/stage/stage" + (stageNum + 1) + ".csv");
-            PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
-            for (int i = 0; i < groundNum; i++)
-            {
-                pw.println("ground," + groundXs[i] + "," + groundYs[i]);
-            }
-            pw.close();
-            fw.close();
-        }
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }*/
     }
 
     /**
