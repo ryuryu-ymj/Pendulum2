@@ -9,10 +9,16 @@ public class Cherry extends GameObject
      */
     public int num;
 
+    /**
+     * 取られた cherry の数
+     */
+    private static int score;
+
     Cherry()
     {
         width = RADIUS * 2;
         height = RADIUS * 2;
+        score = 0;
     }
 
     @Override

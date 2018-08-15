@@ -17,6 +17,7 @@ public class ObjectPool
     BackObject[] backObjects;
     Cherry[] cherries;
     Camera camera;
+    Score score;
 
     /**
      * 画面上における ground の数の最大値
@@ -56,7 +57,7 @@ public class ObjectPool
     /**
      * その cherry が取られたかどうか
      */
-    private boolean[] isCherryTaked = new boolean[StageDate.CHERRY_MAX];
+    private boolean[] isCherryTook = new boolean[StageDate.CHERRY_MAX];
 
     ObjectPool()
     {
@@ -83,6 +84,7 @@ public class ObjectPool
             cherries[i] = new Cherry();
         }
         camera = new Camera();
+        score = new Score();
         init();
     }
 
@@ -94,6 +96,7 @@ public class ObjectPool
         player.init(200, 200);
         camera.init(200, 200);
         wire.init();
+        score.initScore();
         for (int i = 0; i < isJointDisplayed.length; i++)
         {
             isJointDisplayed[i] = false;
@@ -122,9 +125,9 @@ public class ObjectPool
         {
             isCherryDisplayed[i] = false;
         }
-        for (int i = 0; i < isCherryTaked.length; i++)
+        for (int i = 0; i < isCherryTook.length; i++)
         {
-            isCherryTaked[i] = false;
+            isCherryTook[i] = false;
         }
         for (int i = 0; i < cherries.length; i++)
         {
@@ -183,6 +186,7 @@ public class ObjectPool
         {
             player.render(g, im);
         }
+        score.render(g, im);
     }
 
     /**
@@ -316,7 +320,7 @@ public class ObjectPool
     {
         for (int i = 0; i < cherryXs.length; i++)
         {
-            if (!isCherryDisplayed[i] && !isCherryTaked[i])
+            if (!isCherryDisplayed[i] && !isCherryTook[i])
             {
                 if (checkEntering(cherryXs[i], cherryYs[i], Cherry.RADIUS * 2, Cherry.RADIUS * 2, 0))
                 {
@@ -474,7 +478,8 @@ public class ObjectPool
                 {
                     cherry.active = false;
                     isCherryDisplayed[cherry.num] = false;
-                    isCherryTaked[cherry.num] = true;
+                    isCherryTook[cherry.num] = true;
+                    score.addCherry();
                 }
             }
         }
