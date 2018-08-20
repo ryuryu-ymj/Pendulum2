@@ -21,7 +21,7 @@ public class Play extends GameState
     public static int counter;
 
     ObjectPool objectPool;
-    StageDate stageDate;
+    StageData stageData;
 
     /**
      * プレイするステージの番号 0から
@@ -35,7 +35,7 @@ public class Play extends GameState
     {
         super();
         objectPool = new ObjectPool();
-        stageDate = new StageDate();
+        stageData = new StageData();
     }
 
     /**
@@ -45,7 +45,7 @@ public class Play extends GameState
             throws SlickException
     {
         stageNum = 0;
-        stageDate.loadStageDate(stageNum);
+        stageData.loadStageDate(stageNum);
         objectPool.init();
     }
 
@@ -55,18 +55,18 @@ public class Play extends GameState
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
-        objectPool.moveGrounds(stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes(), stageDate.getGroundShapes(), stageDate.getGroundIsCheckCollisions());
-        objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs(), stageDate.getJointTypes());
-        objectPool.moveCherries(stageDate.getCherryXs(), stageDate.getCherryYs());
-        objectPool.moveHearts(stageDate.getHeartXs(), stageDate.getHeartYs());
-        objectPool.moveBackObjects(stageDate.getBackObjectXs(), stageDate.getBackObjectYs(), stageDate.getBackObjectTypes()
-                , stageDate.getBackObjectLayers());
+        objectPool.moveGrounds(stageData.getGroundXs(), stageData.getGroundYs(), stageData.getGroundTypes(), stageData.getGroundShapes(), stageData.getGroundIsCheckCollisions());
+        objectPool.moveJoints(stageData.getJointXs(), stageData.getJointYs(), stageData.getJointTypes());
+        objectPool.moveCherries(stageData.getCherryXs(), stageData.getCherryYs());
+        objectPool.moveHearts(stageData.getHeartXs(), stageData.getHeartYs());
+        objectPool.moveBackObjects(stageData.getBackObjectXs(), stageData.getBackObjectYs(), stageData.getBackObjectTypes()
+                , stageData.getBackObjectLayers());
         objectPool.collisionDetection(gc);
         objectPool.update(gc);
         if (objectPool.isPlayerGoal())
         {
             objectPool.init();
-            stageDate.loadStageDate(++stageNum);
+            stageData.loadStageDate(++stageNum);
         }
         counter++;
     }

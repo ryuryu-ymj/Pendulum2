@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 /**
  * ステージ上のオブジェクトの座標などのデータを管理するクラス
  */
-public class StageDate
+public class StageData
 {
     /**
      * ground の絶対座標（空の場合は-1）
@@ -91,7 +91,7 @@ public class StageDate
      */
     public static final int STAGE_MAX = 5;
 
-    StageDate()
+    StageData()
     {
         groundXs = new ArrayList<>();
         groundYs = new ArrayList<>();

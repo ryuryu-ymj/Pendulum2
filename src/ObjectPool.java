@@ -27,7 +27,7 @@ public class ObjectPool
     /**
      * その ground が表示されたかどうか
      */
-    public static boolean[] isGroundDisplayed = new boolean[StageDate.GROUND_MAX];
+    public static boolean[] isGroundDisplayed = new boolean[StageData.GROUND_MAX];
 
     /**
      * 画面上における joint の数の最大値
@@ -36,11 +36,11 @@ public class ObjectPool
     /**
      * その joint が表示されたかどうか
      */
-    static boolean[] isJointDisplayed = new boolean[StageDate.JOINT_MAX];
+    static boolean[] isJointDisplayed = new boolean[StageData.JOINT_MAX];
     /**
      * そのジョイントがプレイヤーに一周されているかどうか
      */
-    private boolean[] isJointLoopeds = new boolean[StageDate.JOINT_MAX];
+    private boolean[] isJointLoopeds = new boolean[StageData.JOINT_MAX];
 
     /**
      * 画面上における backObject の数の最大値
@@ -49,7 +49,7 @@ public class ObjectPool
     /**
      * その backObject が表示されたかどうか
      */
-    static boolean[] isBackObjectDisplayed = new boolean[StageDate.BACK_OBJECT_MAX];
+    static boolean[] isBackObjectDisplayed = new boolean[StageData.BACK_OBJECT_MAX];
 
     /**
      * 画面上における cherry の数の最大値
@@ -58,11 +58,11 @@ public class ObjectPool
     /**
      * その cherry が表示されたかどうか
      */
-    static boolean[] isCherryDisplayed = new boolean[StageDate.CHERRY_MAX];
+    static boolean[] isCherryDisplayed = new boolean[StageData.CHERRY_MAX];
     /**
      * その cherry が取られたかどうか
      */
-    private boolean[] isCherryTook = new boolean[StageDate.CHERRY_MAX];
+    private boolean[] isCherryTook = new boolean[StageData.CHERRY_MAX];
 
     /**
      * 画面上における heart の数の最大値
@@ -71,11 +71,11 @@ public class ObjectPool
     /**
      * その heart が表示されたかどうか
      */
-    static boolean[] isHeartDisplayed = new boolean[StageDate.HEART_MAX];
+    static boolean[] isHeartDisplayed = new boolean[StageData.HEART_MAX];
     /**
      * その heart が取られたかどうか
      */
-    private boolean[] isHeartTook = new boolean[StageDate.HEART_MAX];
+    private boolean[] isHeartTook = new boolean[StageData.HEART_MAX];
 
     ObjectPool()
     {
@@ -286,7 +286,7 @@ public class ObjectPool
      * @param y          joint のy座標
      * @param type       joint のtype
      * @param lockRadius joint のlockRadius
-     * @param num        joint がステージ上のどの joint を演じているのか（stageDate.jointXsの配列番号）
+     * @param num        joint がステージ上のどの joint を演じているのか（stageData.jointXsの配列番号）
      * @return joints の配列番号　なかったら-1
      */
     public int newJoint(int x, int y, Joint.Type type, int lockRadius, boolean isPlayerLoop, int num)
@@ -335,7 +335,7 @@ public class ObjectPool
      *
      * @param x          cherry のx座標
      * @param y          cherry のy座標
-     * @param num        cherry がステージ上のどの cherry を演じているのか（stageDate.cherryXsの配列番号）
+     * @param num        cherry がステージ上のどの cherry を演じているのか（stageData.cherryXsの配列番号）
      * @return cherries の配列番号　なかったら-1
      */
     public int newCherry(int x, int y, int num)
@@ -383,7 +383,7 @@ public class ObjectPool
      *
      * @param x          heart のx座標
      * @param y          heart のy座標
-     * @param num        heart がステージ上のどの cherry を演じているのか（stageDate.cherryXsの配列番号）
+     * @param num        heart がステージ上のどの cherry を演じているのか（stageData.cherryXsの配列番号）
      * @return hearts の配列番号　なかったら-1
      */
     public int newHeart(int x, int y, int num)
@@ -432,7 +432,7 @@ public class ObjectPool
      * @param x    backObject のx座標
      * @param y    backObject のy座標
      * @param type backObject のtype
-     * @param num  backObject がステージ上のどの backObject を演じているのか（stageDate.jointXsの配列番号）
+     * @param num  backObject がステージ上のどの backObject を演じているのか（stageData.jointXsの配列番号）
      * @return backObjects の配列番号　なかったら-1
      */
     public int newBackObject(int x, int y, BackObject.Type type, BackObject.Layer layer, int num)
