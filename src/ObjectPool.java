@@ -37,6 +37,10 @@ public class ObjectPool
      * その joint が表示されたかどうか
      */
     static boolean[] isJointDisplayed = new boolean[StageDate.JOINT_MAX];
+    /**
+     * そのジョイントがプレイヤーに一周されているかどうか
+     */
+    private boolean[] isJointLoopeds = new boolean[StageDate.JOINT_MAX];
 
     /**
      * 画面上における backObject の数の最大値
@@ -119,6 +123,10 @@ public class ObjectPool
         for (int i = 0; i < isJointDisplayed.length; i++)
         {
             isJointDisplayed[i] = false;
+        }
+        for (int i = 0; i < isJointLoopeds.length; i++)
+        {
+            isJointLoopeds[i] = false;
         }
         for (int i = 0; i < joints.length; i++)
         {
@@ -281,13 +289,13 @@ public class ObjectPool
      * @param num        joint がステージ上のどの joint を演じているのか（stageDate.jointXsの配列番号）
      * @return joints の配列番号　なかったら-1
      */
-    public int newJoint(int x, int y, Joint.Type type, int lockRadius, int num)
+    public int newJoint(int x, int y, Joint.Type type, int lockRadius, boolean isPlayerLoop, int num)
     {
         for (int i = 0; i < JOINT_MAX; i++)
         {
             if (!joints[i].active)
             {
-                joints[i].activate(x, y, type, lockRadius, num);
+                joints[i].activate(x, y, type, lockRadius, isPlayerLoop, num);
                 return i;
             }
         }
@@ -309,7 +317,7 @@ public class ObjectPool
             {
                 if (checkEntering(jointXs[i], jointYs[i], joints[0].RADIUS * 2, joints[0].RADIUS * 2, 0))
                 {
-                    if (newJoint(jointXs[i], jointYs[i], jointTypes[i], 0, i) != -1)
+                    if (newJoint(jointXs[i], jointYs[i], jointTypes[i], 0, isJointLoopeds[i], i) != -1)
                     {
                         isJointDisplayed[i] = true;
                     }
@@ -578,6 +586,14 @@ public class ObjectPool
                     score.addHeart();
                 }
             }
+        }
+
+        //playerが一周したとき
+        if(wire.playerLoop())
+        {
+            joints[wire.jointLockedNum].isPlayerLoop = true;
+            isJointLoopeds[joints[wire.jointLockedNum].num] = true;
+            wire.initIsPlayerPass();
         }
     }
 

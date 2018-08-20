@@ -30,7 +30,10 @@ public class Joint extends GameObject
      */
     int counter = 0;
 
-    public enum Type {NORMAL, GOAL, BEE}
+    public enum Type
+    {
+        NORMAL, GOAL, BEE
+    }
 
     Joint()
     {
@@ -64,17 +67,25 @@ public class Joint extends GameObject
                 g.drawOval(getDiX() - Joint.RADIUS, getDiY() - Joint.RADIUS, Joint.RADIUS * 2, Joint.RADIUS * 2);
                 break;
             case BEE:
-                im.drawBee(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2);
+                if (isPlayerLoop)
+                {
+                    im.drawJoint(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2);
+                }
+                else
+                {
+                    im.drawBee(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2);
+                }
                 break;
         }
     }
 
-    public void activate(int abX, int abY, Type type, int lockRadius, int num)
+    public void activate(int abX, int abY, Type type, int lockRadius, boolean isPlayerLoop, int num)
     {
         this.abX = abX;
         this.abY = abY;
         this.type = type;
         this.lockRadius = lockRadius;
+        this.isPlayerLoop = isPlayerLoop;
         this.num = num;
         active = true;
     }

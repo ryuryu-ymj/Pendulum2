@@ -11,7 +11,7 @@ public class MousePointer extends GameObject
 
         public Type next()
         {
-            if (ordinal() + 1 > values().length)
+            if (ordinal() + 1 >= values().length)
             {
                 return values()[0];
             }

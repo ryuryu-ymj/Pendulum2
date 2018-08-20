@@ -35,6 +35,11 @@ public class Wire
     {
         active = false;
         jointLockedNum = -1;
+        initIsPlayerPass();
+    }
+
+    public void initIsPlayerPass()
+    {
         for(int i = 0; i < isPlayerPass.length; i++)
         {
             isPlayerPass[i] = false;
