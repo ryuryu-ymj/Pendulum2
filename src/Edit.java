@@ -76,12 +76,14 @@ public class Edit extends GameState
                 case CHERRY:
                     stageDate.addCherry((int)mousePointer.abX, (int)mousePointer.abY);
                     break;
+                case HEART:
+                    stageDate.addHeart((int)mousePointer.abX, (int)mousePointer.abY);
+                    break;
                 case DELETE:
                     stageDate.deleteObject((int)mousePointer.abX, (int)mousePointer.abY);
-                    objectPool.reload();
                     break;
             }
-            objectPool.reload();
+            objectPool.init();
         }
 
         if (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))
@@ -94,7 +96,7 @@ public class Edit extends GameState
             else if (gc.getInput().isKeyPressed(Input.KEY_DELETE))
             {
                 stageDate.deleteAllObject();
-                objectPool.reload();
+                objectPool.init();
             }
             for (int i = 0; i < StageDate.STAGE_MAX; i++)
             {
@@ -102,7 +104,7 @@ public class Edit extends GameState
                 {
                     stageNum = i;
                     stageDate.loadStageDate(stageNum);
-                    objectPool.reload();
+                    objectPool.init();
                 }
             }
         }
@@ -110,6 +112,7 @@ public class Edit extends GameState
         objectPool.moveGrounds(stageDate.getGroundXs(), stageDate.getGroundYs(), stageDate.getGroundTypes(), stageDate.getGroundShapes(), stageDate.getGroundIsCheckCollisions());
         objectPool.moveJoints(stageDate.getJointXs(), stageDate.getJointYs(), stageDate.getJointTypes());
         objectPool.moveCherries(stageDate.getCherryXs(), stageDate.getCherryYs());
+        objectPool.moveHearts(stageDate.getHeartXs(), stageDate.getHeartYs());
         objectPool.moveBackObjects(stageDate.getBackObjectXs(), stageDate.getBackObjectYs(), stageDate.getBackObjectTypes()
                 , stageDate.getBackObjectLayers());
         objectPool.update(gc);

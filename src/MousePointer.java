@@ -7,7 +7,7 @@ public class MousePointer extends GameObject
 {
     public enum Type
     {
-        DELETE, GROUND_NORMAL, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL, GLASS1, GLASS2, GLASS3, GLASS4, CHERRY
+        DELETE, GROUND_NORMAL, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL, GLASS1, GLASS2, GLASS3, GLASS4, CHERRY, HEART
     }
     public Type type;
 
@@ -38,6 +38,10 @@ public class MousePointer extends GameObject
         else if (gc.getInput().isKeyPressed(Input.KEY_C))
         {
             type = Type.CHERRY;
+        }
+        else if (gc.getInput().isKeyPressed(Input.KEY_H))
+        {
+            type = Type.HEART;
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_ENTER))
         {
@@ -113,6 +117,9 @@ public class MousePointer extends GameObject
                 break;
             case CHERRY:
                 im.drawCherry(getDiX(), getDiY(), Cherry.RADIUS * 2, Cherry.RADIUS * 2);
+                break;
+            case HEART:
+                im.drawHeart(getDiX(), getDiY(), Heart.RADIUS * 2, Heart.RADIUS * 2);
                 break;
             case DELETE:
                 g.setColor(Color.red);

@@ -26,6 +26,7 @@ public class ImageManager
     private Image glass3;
     private Image glass4;
     private Image cherry;
+    private Image heart;
 
     ImageManager()
     {
@@ -113,7 +114,9 @@ public class ImageManager
 
         try
         {
-            cherry = new Image("res/img/cherry.png");
+            SpriteSheet ss = new SpriteSheet("res/img/item.png", 50, 50);
+            cherry = ss.getSubImage(0, 0);
+            heart = ss.getSubImage(1, 0);
         }
         catch (SlickException e)
         {
@@ -292,5 +295,19 @@ public class ImageManager
     {
         float margin = 10 * width / 50;
         cherry.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
+    }
+
+    /**
+     * heart の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawHeart(float x, float y, float width, float height)
+    {
+        float margin = 10 * width / 50;
+        heart.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
     }
 }

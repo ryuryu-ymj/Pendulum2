@@ -16,6 +16,7 @@ public class ObjectPool
     Ground[] grounds;
     BackObject[] backObjects;
     Cherry[] cherries;
+    Heart[] hearts;
     Camera camera;
     Score score;
 
@@ -59,6 +60,19 @@ public class ObjectPool
      */
     private boolean[] isCherryTook = new boolean[StageDate.CHERRY_MAX];
 
+    /**
+     * 画面上における heart の数の最大値
+     */
+    public static final int HEART_MAX = 5;
+    /**
+     * その heart が表示されたかどうか
+     */
+    static boolean[] isHeartDisplayed = new boolean[StageDate.HEART_MAX];
+    /**
+     * その heart が取られたかどうか
+     */
+    private boolean[] isHeartTook = new boolean[StageDate.HEART_MAX];
+
     ObjectPool()
     {
         player = new Player(200, 200);
@@ -82,6 +96,11 @@ public class ObjectPool
         for (int i = 0; i < cherries.length; i++)
         {
             cherries[i] = new Cherry();
+        }
+        hearts = new Heart[HEART_MAX];
+        for (int i = 0; i < hearts.length; i++)
+        {
+            hearts[i] = new Heart();
         }
         camera = new Camera();
         score = new Score();
@@ -133,6 +152,18 @@ public class ObjectPool
         {
             cherries[i].active = false;
         }
+        for (int i = 0; i < isHeartDisplayed.length; i++)
+        {
+            isHeartDisplayed[i] = false;
+        }
+        for (int i = 0; i < isHeartTook.length; i++)
+        {
+            isHeartTook[i] = false;
+        }
+        for (int i = 0; i < hearts.length; i++)
+        {
+            hearts[i].active = false;
+        }
     }
 
     /**
@@ -143,6 +174,7 @@ public class ObjectPool
         updateObjects(backObjects, gc);
         updateObjects(joints, gc);
         updateObjects(cherries, gc);
+        updateObjects(hearts, gc);
         updateObjects(grounds, gc);
         if (player.active)
         {
@@ -177,6 +209,7 @@ public class ObjectPool
         renderObjects(backObjects, g, im);
         renderObjects(joints, g, im);
         renderObjects(cherries, g, im);
+        renderObjects(hearts, g, im);
         renderObjects(grounds, g, im);
         if (wire.active)
         {
@@ -331,6 +364,54 @@ public class ObjectPool
                     else
                     {
                         System.err.println("cherry の数が足りません" + cherryXs[i] + " " + cherryYs[i] + " " + i);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 新しく heart をactivateする
+     *
+     * @param x          heart のx座標
+     * @param y          heart のy座標
+     * @param num        heart がステージ上のどの cherry を演じているのか（stageDate.cherryXsの配列番号）
+     * @return hearts の配列番号　なかったら-1
+     */
+    public int newHeart(int x, int y, int num)
+    {
+        for (int i = 0; i < HEART_MAX; i++)
+        {
+            if (!hearts[i].active)
+            {
+                hearts[i].activate(x, y, num);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 画面内にある hearts を newHeart する
+     *
+     * @param heartXs heart の絶対座標（空の場合は-1）
+     * @param heartYs heart の絶対座標（空の場合は-1）
+     */
+    public void moveHearts(int[] heartXs, int[] heartYs)
+    {
+        for (int i = 0; i < heartXs.length; i++)
+        {
+            if (!isHeartDisplayed[i] && !isHeartTook[i])
+            {
+                if (checkEntering(heartXs[i], heartYs[i], Heart.RADIUS * 2, Heart.RADIUS * 2, 0))
+                {
+                    if (newHeart(heartXs[i], heartYs[i], i) != -1)
+                    {
+                        isHeartDisplayed[i] = true;
+                    }
+                    else
+                    {
+                        System.err.println("heart の数が足りません" + heartXs[i] + " " + heartYs[i] + " " + i);
                     }
                 }
             }

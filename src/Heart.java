@@ -1,15 +1,15 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-public class Cherry extends GameObject
+public class Heart extends GameObject
 {
     public static final int RADIUS = 20;
     /**
-     * cherry がステージ上のどの cherry を演じているのか（cherryX の配列番号）
+     * heart がステージ上のどの heart を演じているのか（heartX の配列番号）
      */
     public int num;
 
-    Cherry()
+    Heart()
     {
         width = RADIUS * 2;
         height = RADIUS * 2;
@@ -21,7 +21,7 @@ public class Cherry extends GameObject
         if (checkLeaving(0))
         {
             active = false;
-            ObjectPool.isCherryDisplayed[num] = false;
+            ObjectPool.isHeartDisplayed[num] = false;
         }
         changeToDisplayPoint(cameraX, cameraY);
     }
@@ -29,7 +29,7 @@ public class Cherry extends GameObject
     @Override
     public void render(Graphics g, ImageManager im)
     {
-        im.drawCherry(getDiX(), getDiY(), width, height);
+        im.drawHeart(getDiX(), getDiY(), width, height);
     }
 
     public void activate(int abX, int abY, int num)

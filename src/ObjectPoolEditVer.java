@@ -4,54 +4,12 @@ import org.newdawn.slick.Graphics;
 public class ObjectPoolEditVer extends ObjectPool
 {
     @Override
-    public void init()
-    {
-        camera.init(200, 200);
-        reload();
-    }
-
-    public void reload()
-    {
-        for (int i = 0; i < isJointDisplayed.length; i++)
-        {
-            isJointDisplayed[i] = false;
-        }
-        for (int i = 0; i < joints.length; i++)
-        {
-            joints[i].active = false;
-        }
-        for (int i = 0; i < isGroundDisplayed.length; i++)
-        {
-            isGroundDisplayed[i] = false;
-        }
-        for (int i = 0; i < grounds.length; i++)
-        {
-            grounds[i].active = false;
-        }
-        for (int i = 0; i < isBackObjectDisplayed.length; i++)
-        {
-            isBackObjectDisplayed[i] = false;
-        }
-        for (int i = 0; i < backObjects.length; i++)
-        {
-            backObjects[i].active = false;
-        }
-        for (int i = 0; i < isCherryDisplayed.length; i++)
-        {
-            isCherryDisplayed[i] = false;
-        }
-        for (int i = 0; i < cherries.length; i++)
-        {
-            cherries[i].active = false;
-        }
-    }
-
-    @Override
     public void update(GameContainer gc)
     {
         updateObjects(backObjects, gc);
         updateObjects(joints, gc);
         updateObjects(cherries, gc);
+        updateObjects(hearts, gc);
         updateObjects(grounds, gc);
 
         if (camera.active)
@@ -66,6 +24,7 @@ public class ObjectPoolEditVer extends ObjectPool
         renderObjects(backObjects, g, im);
         renderObjects(joints, g, im);
         renderObjects(cherries, g, im);
+        renderObjects(hearts, g, im);
         for (Ground ground : grounds)
         {
             if (ground.active)

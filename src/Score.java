@@ -7,11 +7,13 @@ public class Score
 {
     private int cherryScore;
     private final int CHERRY_MAX = 10;
+    private int heartScore;
     private Font font;
 
     Score()
     {
         cherryScore = 0;
+        heartScore = 0;
         font = new Font("res/font/fontSmall");
         font.setColor(1, 1, 1);
     }
@@ -33,6 +35,22 @@ public class Score
         if (cherryScore >= CHERRY_MAX)
         {
             cherryScore = 0;
+            heartScore++;
         }
+    }
+
+    public void subtractHeart()
+    {
+        heartScore--;
+    }
+
+    public void addHeart()
+    {
+        heartScore++;
+    }
+
+    public boolean isHeartZero()
+    {
+        return heartScore == 0;
     }
 }

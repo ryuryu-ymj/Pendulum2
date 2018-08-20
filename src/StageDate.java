@@ -57,6 +57,11 @@ public class StageDate
     private ArrayList<Integer> cherryXs, cherryYs;
 
     /**
+     * heart の絶対座標（空の場合は-1）
+     */
+    private ArrayList<Integer> heartXs, heartYs;
+
+    /**
      * 時間制限
      */
     private int timeLimit;
@@ -78,6 +83,10 @@ public class StageDate
      */
     public static final int CHERRY_MAX = 50;
     /**
+     * 1ステージにある heart の最大数
+     */
+    public static final int HEART_MAX = 10;
+    /**
      * ステージの最大数
      */
     public static final int STAGE_MAX = 5;
@@ -98,6 +107,8 @@ public class StageDate
         backObjectTypes = new ArrayList<>();
         cherryXs = new ArrayList<>();
         cherryYs = new ArrayList<>();
+        heartXs = new ArrayList<>();
+        heartYs = new ArrayList<>();
     }
 
     /**
@@ -135,6 +146,8 @@ public class StageDate
             backObjectLayers.clear();
             cherryXs.clear();
             cherryYs.clear();
+            heartXs.clear();
+            heartYs.clear();
             while ((line = br.readLine()) != null)
             {
                 try
@@ -189,7 +202,17 @@ public class StageDate
                             }
                             catch (EmptyStackException e)
                             {
-                                System.err.println(e.getMessage());
+                                System.err.println("cherry" + e.getMessage());
+                            }
+                        case "heart":
+                            try
+                            {
+                                heartXs.add(Integer.parseInt(st.nextToken()));
+                                heartYs.add(Integer.parseInt(st.nextToken()));
+                            }
+                            catch (EmptyStackException e)
+                            {
+                                System.err.println("heart" + e.getMessage());
                             }
                     }
                 }
@@ -232,6 +255,10 @@ public class StageDate
             for (int i = 0; i < cherryXs.size(); i++)
             {
                 pw.println("cherry," + cherryXs.get(i) + "," + cherryYs.get(i));
+            }
+            for (int i = 0; i < heartXs.size(); i++)
+            {
+                pw.println("heart," + heartXs.get(i) + "," + heartYs.get(i));
             }
             pw.close();
             fw.close();
@@ -355,6 +382,26 @@ public class StageDate
             cherryYs[i] = this.cherryYs.get(i);
         }
         return cherryYs;
+    }
+
+    public int[] getHeartXs()
+    {
+        int[] heartXs = new int[this.heartXs.size()];
+        for (int i = 0; i < heartXs.length; i++)
+        {
+            heartXs[i] = this.heartXs.get(i);
+        }
+        return heartXs;
+    }
+
+    public int[] getHeartYs()
+    {
+        int[] heartYs = new int[this.heartYs.size()];
+        for (int i = 0; i < heartYs.length; i++)
+        {
+            heartYs[i] = this.heartYs.get(i);
+        }
+        return heartYs;
     }
 
     public int getTimeLimit()
@@ -630,6 +677,19 @@ public class StageDate
         cherryYs.add(cherryY);
     }
 
+    public void addHeart(int heartX, int heartY)
+    {
+        for (int i = 0; i < heartXs.size(); i++)
+        {
+            if (heartX == heartXs.get(i) && heartY == heartYs.get(i))
+            {
+                return;
+            }
+        }
+        heartXs.add(heartX);
+        heartYs.add(heartY);
+    }
+
     public void addBackObject(int x, int y, BackObject.Type type, BackObject.Layer layer)
     {
         for (int i = 0; i < backObjectXs.size(); i++)
@@ -720,6 +780,15 @@ public class StageDate
                 cherryYs.remove(i);
             }
         }
+
+        for (int i = 0; i < heartXs.size(); i++)
+        {
+            if (objectX == heartXs.get(i) && objectY == heartYs.get(i))
+            {
+                heartXs.remove(i);
+                heartYs.remove(i);
+            }
+        }
     }
 
     private void resetGround(int index)
@@ -751,5 +820,7 @@ public class StageDate
         backObjectLayers.clear();
         cherryXs.clear();
         cherryYs.clear();
+        heartXs.clear();
+        heartYs.clear();
     }
 }
