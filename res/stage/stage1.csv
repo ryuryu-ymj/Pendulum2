@@ -370,6 +370,7 @@ joint,330,330,NORMAL
 joint,1230,630,NORMAL
 joint,1650,150,GOAL
 joint,750,150,NORMAL
+joint,-30,30,BEE
 backObject,30,690,GLASS2,LAYER0
 backObject,-90,690,GLASS2,LAYER0
 backObject,150,690,GLASS2,LAYER0
@@ -388,5 +389,4 @@ cherry,750,-30
 cherry,630,30
 cherry,150,330
 cherry,-210,330
-heart,-30,150
-heart,-30,510
+heart,1290,90

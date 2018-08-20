@@ -27,6 +27,8 @@ public class ImageManager
     private Image glass4;
     private Image cherry;
     private Image heart;
+    private Image bee;
+    private Image sting;
 
     ImageManager()
     {
@@ -35,6 +37,8 @@ public class ImageManager
             SpriteSheet ss = new SpriteSheet("res/img/object.png", 295, 295);
             player = ss.getSubImage(0, 0);
             joint = ss.getSubImage(1, 0);
+            bee = ss.getSubImage(2, 0);
+            sting = ss.getSubImage(3, 0);
         }
         catch (SlickException e)
         {
@@ -151,8 +155,22 @@ public class ImageManager
      */
     public void drawJoint(float x, float y, float width, float height)
     {
-        float mergin = 108.56f * width / (player.getWidth() - 108.56f * 2);
-        joint.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
+        float margin = 108.56f * width / (player.getWidth() - 108.56f * 2);
+        joint.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
+    }
+
+    /**
+     * bee の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  中心のjointの横幅
+     * @param height 中心のjointの縦幅
+     */
+    public void drawBee(float x, float y, float width, float height)
+    {
+        float margin = 108.56f * width / (player.getWidth() - 108.56f * 2);
+        bee.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
     }
 
     /**

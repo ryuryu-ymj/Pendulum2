@@ -61,6 +61,9 @@ public class Edit extends GameState
                 case JOINT_GOAL:
                     stageDate.addJoint((int)mousePointer.abX, (int)mousePointer.abY, Joint.Type.GOAL);
                     break;
+                case JOINT_BEE:
+                    stageDate.addJoint((int)mousePointer.abX, (int)mousePointer.abY, Joint.Type.BEE);
+                    break;
                 case GLASS1:
                     stageDate.addBackObject((int)mousePointer.abX, (int)mousePointer.abY, BackObject.Type.GLASS1, BackObject.Layer.LAYER0);
                     break;

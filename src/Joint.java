@@ -30,7 +30,7 @@ public class Joint extends GameObject
      */
     int counter = 0;
 
-    public enum Type {NORMAL, GOAL}
+    public enum Type {NORMAL, GOAL, BEE}
 
     Joint()
     {
@@ -62,6 +62,9 @@ public class Joint extends GameObject
             case GOAL:
                 g.setColor(Color.red);
                 g.drawOval(getDiX() - Joint.RADIUS, getDiY() - Joint.RADIUS, Joint.RADIUS * 2, Joint.RADIUS * 2);
+                break;
+            case BEE:
+                im.drawBee(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2);
                 break;
         }
     }

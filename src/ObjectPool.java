@@ -550,7 +550,7 @@ public class ObjectPool
             }
         }
 
-        // playerとcherry
+        // player vs cherry
         for (Cherry cherry : cherries)
         {
             if (cherry.active)
@@ -561,6 +561,21 @@ public class ObjectPool
                     isCherryDisplayed[cherry.num] = false;
                     isCherryTook[cherry.num] = true;
                     score.addCherry();
+                }
+            }
+        }
+
+        // player vs heart
+        for (Heart heart : hearts)
+        {
+            if (heart.active)
+            {
+                if (getDistance(player, heart) < player.width / 2 + heart.width / 2)
+                {
+                    heart.active = false;
+                    isHeartDisplayed[heart.num] = false;
+                    isHeartTook[heart.num] = true;
+                    score.addHeart();
                 }
             }
         }
