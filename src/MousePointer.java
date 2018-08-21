@@ -84,7 +84,7 @@ public class MousePointer extends GameObject
                 g.drawOval(getDiX() - Joint.RADIUS, getDiY() - Joint.RADIUS, Joint.RADIUS * 2, Joint.RADIUS * 2);
                 break;
             case JOINT_BEE:
-                im.drawBee(getDiX(), getDiY(), Joint.RADIUS * 2, Joint.RADIUS * 2);
+                im.drawBee(getDiX(), getDiY(), Joint.RADIUS * 2, Joint.RADIUS * 2, 0);
                 break;
             case GLASS1:
                 im.drawGlass1(getDiX(), getDiY(), BackObject.Type.GLASS1.WIDTH, BackObject.Type.GLASS1.HEIGHT);

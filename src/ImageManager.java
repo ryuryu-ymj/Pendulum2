@@ -139,10 +139,10 @@ public class ImageManager
      */
     public void drawPlayer(float x, float y, float width, float height, float angle)
     {
-        float mergin = 59 * width / (player.getWidth() - 59 * 2);
-        player.setCenterOfRotation(width / 2 + mergin, height / 2 + mergin);
+        float margin = 59 * width / (player.getWidth() - 59 * 2);
+        player.setCenterOfRotation(width / 2 + margin, height / 2 + margin);
         player.setRotation(angle);
-        player.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
+        player.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
     }
 
     /**
@@ -167,9 +167,11 @@ public class ImageManager
      * @param width  中心のjointの横幅
      * @param height 中心のjointの縦幅
      */
-    public void drawBee(float x, float y, float width, float height)
+    public void drawBee(float x, float y, float width, float height, float angle)
     {
         float margin = 108.56f * width / (player.getWidth() - 108.56f * 2);
+        bee.setCenterOfRotation(width / 2 + margin, height / 2 + margin);
+        bee.setRotation(angle);
         bee.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
     }
 

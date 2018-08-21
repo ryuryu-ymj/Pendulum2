@@ -31,32 +31,53 @@ public class Joint extends GameObject
     /**
      * 弾うち型jointの向く方向の角度
      */
-    int angle;
+    private float angle;
     /**
      * 生存時間（弾を撃つタイミングに使用）
      */
-    int counter = 0;
+    private int counter = 0;
+    private Player player;
 
     public enum Type
     {
         NORMAL, GOAL, BEE
     }
 
-    Joint()
+    Joint(Player player)
     {
+        this.player = player;
         active = false;
     }
 
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
-        if (checkLeaving(0))
+        switch (type)
+        {
+            case BEE:
+                angle = (float) Math.toDegrees(Math.atan2(player.abY - abY, player.abX - abX)) - 90;
+
+                if (counter % 10 == 0)
+                {
+
+                }
+                break;
+        }
+
+        if (checkLeaving(20))
         {
             active = false;
             ObjectPool.isJointDisplayed[num] = false;
             //System.out.println("delate " + num + " " + (int)abX / 55 + "," + (int)abY / 55);
         }
         changeToDisplayPoint(cameraX, cameraY);
+
+        counter++;
+    }
+
+    private void fireBullet()
+    {
+
     }
 
     @Override
@@ -80,7 +101,7 @@ public class Joint extends GameObject
                 }
                 else
                 {
-                    im.drawBee(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2);
+                    im.drawBee(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2, angle);
                 }
                 break;
         }
@@ -95,6 +116,7 @@ public class Joint extends GameObject
         this.isPlayerLoop = isPlayerLoop;
         this.num = num;
         active = true;
+        angle = 0;
     }
 
     public Type getType()

@@ -84,7 +84,7 @@ public class ObjectPool
         joints = new Joint[JOINT_MAX];
         for (int i = 0; i < JOINT_MAX; i++)
         {
-            joints[i] = new Joint();
+            joints[i] = new Joint(player);
         }
         grounds = new Ground[GROUND_MAX];
         for (int i = 0; i < grounds.length; i++)
@@ -315,7 +315,7 @@ public class ObjectPool
         {
             if (!isJointDisplayed[i])
             {
-                if (checkEntering(jointXs[i], jointYs[i], joints[0].RADIUS * 2, joints[0].RADIUS * 2, 0))
+                if (checkEntering(jointXs[i], jointYs[i], joints[0].RADIUS * 2, joints[0].RADIUS * 2, 20))
                 {
                     if (newJoint(jointXs[i], jointYs[i], jointTypes[i], 0, isJointLoopeds[i], i) != -1)
                     {
