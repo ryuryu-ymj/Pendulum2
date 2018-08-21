@@ -1,8 +1,15 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+/**
+ * ハートクラス<br>
+ * アイテム
+ */
 public class Heart extends GameObject
 {
+    /**
+     * 半径
+     */
     public static final int RADIUS = 20;
     /**
      * heart がステージ上のどの heart を演じているのか（heartX の配列番号）

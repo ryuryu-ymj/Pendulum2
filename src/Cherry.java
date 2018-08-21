@@ -1,8 +1,15 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+/**
+ * チェリークラス<br>
+ * アイテム
+ */
 public class Cherry extends GameObject
 {
+    /**
+     * 半径
+     */
     public static final int RADIUS = 20;
     /**
      * cherry がステージ上のどの cherry を演じているのか（cherryX の配列番号）

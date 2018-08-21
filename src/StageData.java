@@ -166,7 +166,7 @@ public class StageData
                             }
                             catch (EmptyStackException e)
                             {
-                                System.err.println(e.getMessage());
+                                System.err.println("ground" + e.getMessage());
                             }
                             break;
                         case "joint":
@@ -178,7 +178,7 @@ public class StageData
                             }
                             catch (EmptyStackException e)
                             {
-                                System.err.println(e.getMessage());
+                                System.err.println("joint" + e.getMessage());
                             }
                             break;
                         case "backObject":
@@ -191,7 +191,7 @@ public class StageData
                             }
                             catch (EmptyStackException e)
                             {
-                                System.err.println(e.getMessage());
+                                System.err.println("backObject" + e.getMessage());
                             }
                             break;
                         case "cherry":
@@ -199,11 +199,13 @@ public class StageData
                             {
                                 cherryXs.add(Integer.parseInt(st.nextToken()));
                                 cherryYs.add(Integer.parseInt(st.nextToken()));
+                                //System.out.println("cherryのデータを取得しました");
                             }
                             catch (EmptyStackException e)
                             {
                                 System.err.println("cherry" + e.getMessage());
                             }
+                            break;
                         case "heart":
                             try
                             {
@@ -214,11 +216,12 @@ public class StageData
                             {
                                 System.err.println("heart" + e.getMessage());
                             }
+                            break;
                     }
                 }
                 catch (NoSuchElementException e)
                 {
-                    System.err.println(e.getMessage());
+                    System.err.println("読み込みに失敗しました　" + line);
                 }
             }
             fr.close();

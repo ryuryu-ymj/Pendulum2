@@ -3,6 +3,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
+/**
+ * マウスポインタ<br>
+ * Editクラスにおいて，マウスのカーソルに合わせたオブジェクトの表示，管理など
+ */
 public class MousePointer extends GameObject
 {
     public enum Type

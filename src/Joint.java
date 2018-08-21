@@ -2,8 +2,15 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+/**
+ * ジョイント<br>
+ * ワイヤーをつなぐことができる接続節
+ */
 public class Joint extends GameObject
 {
+    /**
+     * 半径
+     */
     public static final int RADIUS = 15;
     /**
      * joint がステージ上のどのjointを演じているのか（jointX の配列番号）

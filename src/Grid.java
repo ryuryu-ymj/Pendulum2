@@ -2,6 +2,9 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+/**
+ * グリッド線を引くクラス
+ */
 public class Grid extends GameObject
 {
     @Override

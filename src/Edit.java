@@ -1,5 +1,8 @@
 import org.newdawn.slick.*;
 
+/**
+ * 編集画面の更新,描画を行うクラス.
+ */
 public class Edit extends GameState
 {
     /**
@@ -50,40 +53,40 @@ public class Edit extends GameState
             switch (mousePointer.type)
             {
                 case GROUND_NORMAL:
-                    stageData.addGround((int)mousePointer.abX, (int)mousePointer.abY, Ground.Type.NORMAL);
+                    stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, Ground.Type.NORMAL);
                     break;
                 case GROUND_INVISIBLE:
-                    stageData.addGround((int)mousePointer.abX, (int)mousePointer.abY, Ground.Type.INVISIBLE);
+                    stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, Ground.Type.INVISIBLE);
                     break;
                 case JOINT_NORMAL:
-                    stageData.addJoint((int)mousePointer.abX, (int)mousePointer.abY, Joint.Type.NORMAL);
+                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, Joint.Type.NORMAL);
                     break;
                 case JOINT_GOAL:
-                    stageData.addJoint((int)mousePointer.abX, (int)mousePointer.abY, Joint.Type.GOAL);
+                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, Joint.Type.GOAL);
                     break;
                 case JOINT_BEE:
-                    stageData.addJoint((int)mousePointer.abX, (int)mousePointer.abY, Joint.Type.BEE);
+                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, Joint.Type.BEE);
                     break;
                 case GLASS1:
-                    stageData.addBackObject((int)mousePointer.abX, (int)mousePointer.abY, BackObject.Type.GLASS1, BackObject.Layer.LAYER0);
+                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, BackObject.Type.GLASS1, BackObject.Layer.LAYER0);
                     break;
                 case GLASS2:
-                    stageData.addBackObject((int)mousePointer.abX, (int)mousePointer.abY, BackObject.Type.GLASS2, BackObject.Layer.LAYER0);
+                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, BackObject.Type.GLASS2, BackObject.Layer.LAYER0);
                     break;
                 case GLASS3:
-                    stageData.addBackObject((int)mousePointer.abX, (int)mousePointer.abY, BackObject.Type.GLASS3, BackObject.Layer.LAYER0);
+                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, BackObject.Type.GLASS3, BackObject.Layer.LAYER0);
                     break;
                 case GLASS4:
-                    stageData.addBackObject((int)mousePointer.abX, (int)mousePointer.abY, BackObject.Type.GLASS4, BackObject.Layer.LAYER0);
+                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, BackObject.Type.GLASS4, BackObject.Layer.LAYER0);
                     break;
                 case CHERRY:
-                    stageData.addCherry((int)mousePointer.abX, (int)mousePointer.abY);
+                    stageData.addCherry((int) mousePointer.abX, (int) mousePointer.abY);
                     break;
                 case HEART:
-                    stageData.addHeart((int)mousePointer.abX, (int)mousePointer.abY);
+                    stageData.addHeart((int) mousePointer.abX, (int) mousePointer.abY);
                     break;
                 case DELETE:
-                    stageData.deleteObject((int)mousePointer.abX, (int)mousePointer.abY);
+                    stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY);
                     break;
             }
             objectPool.init();

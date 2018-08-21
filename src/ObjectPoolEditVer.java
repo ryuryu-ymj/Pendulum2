@@ -3,6 +3,11 @@ import org.newdawn.slick.Graphics;
 
 public class ObjectPoolEditVer extends ObjectPool
 {
+    ObjectPoolEditVer()
+    {
+        super();
+    }
+
     @Override
     public void update(GameContainer gc)
     {
