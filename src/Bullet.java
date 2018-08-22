@@ -18,6 +18,8 @@ public class Bullet extends GameObject
 	{
 	    super(objectPool);
 		active = false;
+		width = RADIUS * 2;
+		height = RADIUS * 2;
 	}
 
     @Override

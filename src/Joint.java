@@ -40,7 +40,7 @@ public class Joint extends GameObject
 
     public enum Type
     {
-        NORMAL, GOAL, BEE
+        NORMAL, GOAL, BEE_AIM
     }
 
     Joint(Player player, ObjectPool objectPool)
@@ -57,9 +57,8 @@ public class Joint extends GameObject
         {
             switch (type)
             {
-                case BEE:
+                case BEE_AIM:
                     angle = (float) Math.toDegrees(Math.atan2(player.abY - abY, player.abX - abX));
-
                     if (counter % 50 == 0)
                     {
                         fireBullet(angle);
@@ -68,11 +67,19 @@ public class Joint extends GameObject
             }
         }
 
+        b:
         if (checkLeaving(20))
         {
+            if (objectPool.wire.jointLockedNum != -1)
+            {
+                if (this == objectPool.joints[objectPool.wire.jointLockedNum])
+                {
+                    break b;// ワイヤーがつながっているジョイントは消さない
+                }
+            }
             active = false;
             objectPool.isJointDisplayed[num] = false;
-            //System.out.println("delate " + num + " " + (int)abX / 55 + "," + (int)abY / 55);
+            //System.out.println("delete " + num + " " + objectPool.wire.jointLockedNum);
         }
         changeToDisplayPoint(cameraX, cameraY);
 
@@ -103,7 +110,7 @@ public class Joint extends GameObject
                 g.setColor(Color.red);
                 g.drawOval(getDiX() - Joint.RADIUS, getDiY() - Joint.RADIUS, Joint.RADIUS * 2, Joint.RADIUS * 2);
                 break;
-            case BEE:
+            case BEE_AIM:
                 if (isPlayerLoop)
                 {
                     im.drawJoint(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2);

@@ -38,8 +38,12 @@ public class Score
         }
     }
 
-    public void subtractHeart()
+    public void subHeart()
     {
+        if (heartScore == 0)
+        {
+            return;
+        }
         heartScore--;
     }
 

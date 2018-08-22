@@ -85,6 +85,7 @@ public class ObjectPool
 
     /**
      * コンストラクタの代わり
+     *
      * @param objectPool
      */
     public void create(ObjectPool objectPool)
@@ -249,273 +250,6 @@ public class ObjectPool
     }
 
     /**
-     * 新しく ground をactivateする
-     *
-     * @param x    ground のx座標
-     * @param y    ground のy座標
-     * @param type ground のtype
-     * @return grounds の配列番号　なかったら-1
-     */
-    public int newGround(int x, int y, Ground.Type type, Ground.Shape shape, boolean isCheckCollision, int num)
-    {
-        for (int i = 0; i < GROUND_MAX; i++)
-        {
-            if (!grounds[i].active)
-            {
-                grounds[i].activate(x, y, type, shape, isCheckCollision, num);
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * 画面内にある grounds を newGround する
-     *
-     * @param groundXs    ground の絶対座標（空の場合は-1）
-     * @param groundYs    ground の絶対座標（空の場合は-1）
-     * @param groundTypes ground の型
-     */
-    public void moveGrounds(int[] groundXs, int[] groundYs, Ground.Type[] groundTypes, Ground.Shape[] groundShapes, boolean[] groundIsCheckCollisions)
-    {
-        for (int i = 0; i < groundXs.length; i++)
-        {
-            if (checkEntering(groundXs[i], groundYs[i], (int) grounds[0].width, (int) grounds[0].height, 60))
-            {
-                if (!isGroundDisplayed[i])
-                {
-                    if (newGround(groundXs[i], groundYs[i], groundTypes[i], groundShapes[i], groundIsCheckCollisions[i], i) != -1)
-                    {
-                        isGroundDisplayed[i] = true;
-                    }
-                    else
-                    {
-                        System.err.println("ground の数が足りません" + groundXs[i] + " " + groundYs[i] + " " + i);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * 新しく joint をactivateする
-     *
-     * @param x          joint のx座標
-     * @param y          joint のy座標
-     * @param type       joint のtype
-     * @param lockRadius joint のlockRadius
-     * @param num        joint がステージ上のどの joint を演じているのか（stageData.jointXsの配列番号）
-     * @return joints の配列番号　なかったら-1
-     */
-    public int newJoint(int x, int y, Joint.Type type, int lockRadius, boolean isPlayerLoop, int num)
-    {
-        for (int i = 0; i < JOINT_MAX; i++)
-        {
-            if (!joints[i].active)
-            {
-                joints[i].activate(x, y, type, lockRadius, isPlayerLoop, num);
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * 画面内にある joints を newJoint する
-     *
-     * @param jointXs ground の絶対座標（空の場合は-1）
-     * @param jointYs ground の絶対座標（空の場合は-1）
-     *                //* @param jointTypes ground の型
-     */
-    public void moveJoints(int[] jointXs, int[] jointYs, Joint.Type[] jointTypes)
-    {
-        for (int i = 0; i < jointXs.length; i++)
-        {
-            if (!isJointDisplayed[i])
-            {
-                if (checkEntering(jointXs[i], jointYs[i], joints[0].RADIUS * 2, joints[0].RADIUS * 2, 20))
-                {
-                    if (newJoint(jointXs[i], jointYs[i], jointTypes[i], 0, isJointLoopeds[i], i) != -1)
-                    {
-                        isJointDisplayed[i] = true;
-                    }
-                    else
-                    {
-                        System.err.println("joint の数が足りません" + jointXs[i] + " " + jointYs[i] + " " + i);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * 新しく cherry をactivateする
-     *
-     * @param x          cherry のx座標
-     * @param y          cherry のy座標
-     * @param num        cherry がステージ上のどの cherry を演じているのか（stageData.cherryXsの配列番号）
-     * @return cherries の配列番号　なかったら-1
-     */
-    public int newCherry(int x, int y, int num)
-    {
-        for (int i = 0; i < CHERRY_MAX; i++)
-        {
-            if (!cherries[i].active)
-            {
-                cherries[i].activate(x, y, num);
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * 画面内にある cherries を newCherry する
-     *
-     * @param cherryXs cherry の絶対座標（空の場合は-1）
-     * @param cherryYs cherry の絶対座標（空の場合は-1）
-     */
-    public void moveCherries(int[] cherryXs, int[] cherryYs)
-    {
-        for (int i = 0; i < cherryXs.length; i++)
-        {
-            if (!isCherryDisplayed[i] && !isCherryTook[i])
-            {
-                if (checkEntering(cherryXs[i], cherryYs[i], Cherry.RADIUS * 2, Cherry.RADIUS * 2, 0))
-                {
-                    if (newCherry(cherryXs[i], cherryYs[i], i) != -1)
-                    {
-                        isCherryDisplayed[i] = true;
-                    }
-                    else
-                    {
-                        System.err.println("cherry の数が足りません" + cherryXs[i] + " " + cherryYs[i] + " " + i);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * 新しく heart をactivateする
-     *
-     * @param x          heart のx座標
-     * @param y          heart のy座標
-     * @param num        heart がステージ上のどの cherry を演じているのか（stageData.cherryXsの配列番号）
-     * @return hearts の配列番号　なかったら-1
-     */
-    public int newHeart(int x, int y, int num)
-    {
-        for (int i = 0; i < HEART_MAX; i++)
-        {
-            if (!hearts[i].active)
-            {
-                hearts[i].activate(x, y, num);
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * 画面内にある hearts を newHeart する
-     *
-     * @param heartXs heart の絶対座標（空の場合は-1）
-     * @param heartYs heart の絶対座標（空の場合は-1）
-     */
-    public void moveHearts(int[] heartXs, int[] heartYs)
-    {
-        for (int i = 0; i < heartXs.length; i++)
-        {
-            if (!isHeartDisplayed[i] && !isHeartTook[i])
-            {
-                if (checkEntering(heartXs[i], heartYs[i], Heart.RADIUS * 2, Heart.RADIUS * 2, 0))
-                {
-                    if (newHeart(heartXs[i], heartYs[i], i) != -1)
-                    {
-                        isHeartDisplayed[i] = true;
-                    }
-                    else
-                    {
-                        System.err.println("heart の数が足りません" + heartXs[i] + " " + heartYs[i] + " " + i);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * 新しく backObject をactivateする
-     *
-     * @param x    backObject のx座標
-     * @param y    backObject のy座標
-     * @param type backObject のtype
-     * @param num  backObject がステージ上のどの backObject を演じているのか（stageData.jointXsの配列番号）
-     * @return backObjects の配列番号　なかったら-1
-     */
-    public int newBackObject(int x, int y, BackObject.Type type, BackObject.Layer layer, int num)
-    {
-        for (int i = 0; i < BACK_OBJECT_MAX; i++)
-        {
-            if (!backObjects[i].active)
-            {
-                backObjects[i].activate(x, y, type, layer, num);
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * 画面内にある backObject を newBackObject する
-
-     * @param backObjectXs    backObject の絶対座標（空の場合は-1）
-     * @param backObjectYs    backObject の絶対座標（空の場合は-1）
-     * @param backObjectTypes backObject の型
-     */
-    public void moveBackObjects(int[] backObjectXs, int[] backObjectYs, BackObject.Type[] backObjectTypes, BackObject.Layer[] backObjectLayers)
-    {
-        for (int i = 0; i < backObjectXs.length; i++)
-        {
-            if (!isBackObjectDisplayed[i])
-            {
-                if (checkEntering(backObjectXs[i], backObjectYs[i], backObjectTypes[i].WIDTH, backObjectTypes[i].HEIGHT, 0))
-                {
-                    if (newBackObject(backObjectXs[i], backObjectYs[i], backObjectTypes[i], backObjectLayers[i], i) != -1)
-                    {
-                        isBackObjectDisplayed[i] = true;
-                    }
-                    else
-                    {
-                        System.err.println("backObject の数が足りません" + backObjectXs[i] + " " + backObjectYs[i] + " " + i);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * 弾の生成・初期化（実際は配列のインスタンスを使い回す）
-     * @param x 生成先x座標
-     * @param y 生成先y座標
-     * @param direction 向き(単位は度　0-360)
-     * @param speed 動かす速度
-     * @return 弾のID（空きが無ければ-1）
-     */
-    public int newBullet(float x, float y, float direction, float speed)
-    {
-        for (int i = 0; i < BULLET_MAX; i++)
-        {
-            if ((bullets[i].active) == false)
-            {
-                bullets[i].activate(x, y, direction, speed);
-                return i;
-            }
-        }
-        return -1;		//見つからなかった
-    }
-
-    /**
      * 衝突判定
      */
     public void collisionDetection(GameContainer gc)
@@ -535,6 +269,7 @@ public class ObjectPool
                             {
                                 wire.jointLockedNum = i;
                                 wire.active = true;
+                                wire.initIsPlayerPass();
                             }
                             break f;
                         }
@@ -627,13 +362,294 @@ public class ObjectPool
             }
         }
 
+        // player vs bullet
+        for (Bullet bullet : bullets)
+        {
+            if (bullet.active)
+            {
+                if (getDistance(player, bullet) < player.width / 2 + bullet.width / 2)
+                {
+                    bullet.active = false;
+                    score.subHeart();
+                }
+            }
+        }
+
         //playerが一周したとき
-        if(wire.playerLoop())
+        if (wire.playerLoop())
         {
             joints[wire.jointLockedNum].isPlayerLoop = true;
             isJointLoopeds[joints[wire.jointLockedNum].num] = true;
             wire.initIsPlayerPass();
         }
+    }
+
+    /**
+     * 新しく ground をactivateする
+     *
+     * @param x    ground のx座標
+     * @param y    ground のy座標
+     * @param type ground のtype
+     * @return grounds の配列番号　なかったら-1
+     */
+    public int newGround(int x, int y, Ground.Type type, Ground.Shape shape, boolean isCheckCollision, int num)
+    {
+        for (int i = 0; i < GROUND_MAX; i++)
+        {
+            if (!grounds[i].active)
+            {
+                grounds[i].activate(x, y, type, shape, isCheckCollision, num);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 画面内にある grounds を newGround する
+     *
+     * @param groundXs    ground の絶対座標（空の場合は-1）
+     * @param groundYs    ground の絶対座標（空の場合は-1）
+     * @param groundTypes ground の型
+     */
+    public void moveGrounds(int[] groundXs, int[] groundYs, Ground.Type[] groundTypes, Ground.Shape[] groundShapes, boolean[] groundIsCheckCollisions)
+    {
+        for (int i = 0; i < groundXs.length; i++)
+        {
+            if (checkEntering(groundXs[i], groundYs[i], (int) grounds[0].width, (int) grounds[0].height, 60))
+            {
+                if (!isGroundDisplayed[i])
+                {
+                    if (newGround(groundXs[i], groundYs[i], groundTypes[i], groundShapes[i], groundIsCheckCollisions[i], i) != -1)
+                    {
+                        isGroundDisplayed[i] = true;
+                    }
+                    else
+                    {
+                        System.err.println("ground の数が足りません" + groundXs[i] + " " + groundYs[i] + " " + i);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 新しく joint をactivateする
+     *
+     * @param x          joint のx座標
+     * @param y          joint のy座標
+     * @param type       joint のtype
+     * @param lockRadius joint のlockRadius
+     * @param num        joint がステージ上のどの joint を演じているのか（stageData.jointXsの配列番号）
+     * @return joints の配列番号　なかったら-1
+     */
+    public int newJoint(int x, int y, Joint.Type type, int lockRadius, boolean isPlayerLoop, int num)
+    {
+        for (int i = 0; i < JOINT_MAX; i++)
+        {
+            if (!joints[i].active)
+            {
+                joints[i].activate(x, y, type, lockRadius, isPlayerLoop, num);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 画面内にある joints を newJoint する
+     *
+     * @param jointXs    ground の絶対座標（空の場合は-1）
+     * @param jointYs    ground の絶対座標（空の場合は-1）
+     * @param jointTypes ground の型
+     */
+    public void moveJoints(int[] jointXs, int[] jointYs, Joint.Type[] jointTypes)
+    {
+        for (int i = 0; i < jointXs.length; i++)
+        {
+            if (!isJointDisplayed[i])
+            {
+                if (checkEntering(jointXs[i], jointYs[i], joints[0].RADIUS * 2, joints[0].RADIUS * 2, 15))
+                {
+                    if (newJoint(jointXs[i], jointYs[i], jointTypes[i], 0, isJointLoopeds[i], i) != -1)
+                    {
+                        isJointDisplayed[i] = true;
+                    }
+                    else
+                    {
+                        System.err.println("joint の数が足りません" + jointXs[i] + " " + jointYs[i] + " " + i);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 新しく cherry をactivateする
+     *
+     * @param x   cherry のx座標
+     * @param y   cherry のy座標
+     * @param num cherry がステージ上のどの cherry を演じているのか（stageData.cherryXsの配列番号）
+     * @return cherries の配列番号　なかったら-1
+     */
+    public int newCherry(int x, int y, int num)
+    {
+        for (int i = 0; i < CHERRY_MAX; i++)
+        {
+            if (!cherries[i].active)
+            {
+                cherries[i].activate(x, y, num);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 画面内にある cherries を newCherry する
+     *
+     * @param cherryXs cherry の絶対座標（空の場合は-1）
+     * @param cherryYs cherry の絶対座標（空の場合は-1）
+     */
+    public void moveCherries(int[] cherryXs, int[] cherryYs)
+    {
+        for (int i = 0; i < cherryXs.length; i++)
+        {
+            if (!isCherryDisplayed[i] && !isCherryTook[i])
+            {
+                if (checkEntering(cherryXs[i], cherryYs[i], Cherry.RADIUS * 2, Cherry.RADIUS * 2, 0))
+                {
+                    if (newCherry(cherryXs[i], cherryYs[i], i) != -1)
+                    {
+                        isCherryDisplayed[i] = true;
+                    }
+                    else
+                    {
+                        System.err.println("cherry の数が足りません" + cherryXs[i] + " " + cherryYs[i] + " " + i);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 新しく heart をactivateする
+     *
+     * @param x   heart のx座標
+     * @param y   heart のy座標
+     * @param num heart がステージ上のどの cherry を演じているのか（stageData.cherryXsの配列番号）
+     * @return hearts の配列番号　なかったら-1
+     */
+    public int newHeart(int x, int y, int num)
+    {
+        for (int i = 0; i < HEART_MAX; i++)
+        {
+            if (!hearts[i].active)
+            {
+                hearts[i].activate(x, y, num);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 画面内にある hearts を newHeart する
+     *
+     * @param heartXs heart の絶対座標（空の場合は-1）
+     * @param heartYs heart の絶対座標（空の場合は-1）
+     */
+    public void moveHearts(int[] heartXs, int[] heartYs)
+    {
+        for (int i = 0; i < heartXs.length; i++)
+        {
+            if (!isHeartDisplayed[i] && !isHeartTook[i])
+            {
+                if (checkEntering(heartXs[i], heartYs[i], Heart.RADIUS * 2, Heart.RADIUS * 2, 0))
+                {
+                    if (newHeart(heartXs[i], heartYs[i], i) != -1)
+                    {
+                        isHeartDisplayed[i] = true;
+                    }
+                    else
+                    {
+                        System.err.println("heart の数が足りません" + heartXs[i] + " " + heartYs[i] + " " + i);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 新しく backObject をactivateする
+     *
+     * @param x    backObject のx座標
+     * @param y    backObject のy座標
+     * @param type backObject のtype
+     * @param num  backObject がステージ上のどの backObject を演じているのか（stageData.jointXsの配列番号）
+     * @return backObjects の配列番号　なかったら-1
+     */
+    public int newBackObject(int x, int y, BackObject.Type type, BackObject.Layer layer, int num)
+    {
+        for (int i = 0; i < BACK_OBJECT_MAX; i++)
+        {
+            if (!backObjects[i].active)
+            {
+                backObjects[i].activate(x, y, type, layer, num);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 画面内にある backObject を newBackObject する
+     *
+     * @param backObjectXs    backObject の絶対座標（空の場合は-1）
+     * @param backObjectYs    backObject の絶対座標（空の場合は-1）
+     * @param backObjectTypes backObject の型
+     */
+    public void moveBackObjects(int[] backObjectXs, int[] backObjectYs, BackObject.Type[] backObjectTypes, BackObject.Layer[] backObjectLayers)
+    {
+        for (int i = 0; i < backObjectXs.length; i++)
+        {
+            if (!isBackObjectDisplayed[i])
+            {
+                if (checkEntering(backObjectXs[i], backObjectYs[i], backObjectTypes[i].WIDTH, backObjectTypes[i].HEIGHT, 0))
+                {
+                    if (newBackObject(backObjectXs[i], backObjectYs[i], backObjectTypes[i], backObjectLayers[i], i) != -1)
+                    {
+                        isBackObjectDisplayed[i] = true;
+                    }
+                    else
+                    {
+                        System.err.println("backObject の数が足りません" + backObjectXs[i] + " " + backObjectYs[i] + " " + i);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 弾の生成・初期化（実際は配列のインスタンスを使い回す）
+     *
+     * @param x         生成先x座標
+     * @param y         生成先y座標
+     * @param direction 向き(単位は度　0-360)
+     * @param speed     動かす速度
+     * @return 弾のID（空きが無ければ-1）
+     */
+    public int newBullet(float x, float y, float direction, float speed)
+    {
+        for (int i = 0; i < BULLET_MAX; i++)
+        {
+            if ((bullets[i].active) == false)
+            {
+                bullets[i].activate(x, y, direction, speed);
+                return i;
+            }
+        }
+        return -1;        //見つからなかった
     }
 
     /**
