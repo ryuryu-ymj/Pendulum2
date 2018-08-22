@@ -16,8 +16,9 @@ public class Cherry extends GameObject
      */
     public int num;
 
-    Cherry()
+    Cherry(ObjectPool objectPool)
     {
+        super(objectPool);
         width = RADIUS * 2;
         height = RADIUS * 2;
     }
@@ -28,7 +29,7 @@ public class Cherry extends GameObject
         if (checkLeaving(0))
         {
             active = false;
-            ObjectPool.isCherryDisplayed[num] = false;
+            objectPool.isCherryDisplayed[num] = false;
         }
         changeToDisplayPoint(cameraX, cameraY);
     }

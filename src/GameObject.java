@@ -42,6 +42,20 @@ public abstract class GameObject
     private float diY;
 
     /**
+     * ObjectPoolクラスのインスタンス
+     */
+    public ObjectPool objectPool;
+
+    GameObject(ObjectPool objectPool)
+    {
+        this.objectPool = objectPool;
+    }
+
+    GameObject()
+    {
+    }
+
+    /**
      * ステップごとの更新.
      */
     public abstract void update(GameContainer gc, float cameraX, float cameraY);

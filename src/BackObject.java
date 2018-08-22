@@ -57,8 +57,9 @@ public class BackObject extends GameObject
         }
     }
 
-    BackObject()
+    BackObject(ObjectPool objectPool)
     {
+        super(objectPool);
         width = 600;
         height = 600;
         abX = 300;

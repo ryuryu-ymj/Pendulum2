@@ -58,8 +58,9 @@ public class Ground extends GameObject
     /**
      * コンストラクタ
      */
-    Ground()
+    Ground(ObjectPool objectPool)
     {
+        super(objectPool);
         active = false;
         this.width = WIDTH;
         this.height = WIDTH;
@@ -74,7 +75,7 @@ public class Ground extends GameObject
         if (checkLeaving(60))
         {
             active = false;
-            ObjectPool.isGroundDisplayed[num] = false;
+            objectPool.isGroundDisplayed[num] = false;
             //System.out.println("delate " + num + " " + (int)abX / 55 + "," + (int)abY / 55);
         }
         changeToDisplayPoint(cameraX, cameraY);

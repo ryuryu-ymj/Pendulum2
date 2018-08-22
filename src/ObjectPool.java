@@ -17,6 +17,7 @@ public class ObjectPool
     BackObject[] backObjects;
     Cherry[] cherries;
     Heart[] hearts;
+    Bullet[] bullets;
     Camera camera;
     Score score;
 
@@ -36,7 +37,7 @@ public class ObjectPool
     /**
      * その joint が表示されたかどうか
      */
-    static boolean[] isJointDisplayed = new boolean[StageData.JOINT_MAX];
+    public boolean[] isJointDisplayed = new boolean[StageData.JOINT_MAX];
     /**
      * そのジョイントがプレイヤーに一周されているかどうか
      */
@@ -49,7 +50,7 @@ public class ObjectPool
     /**
      * その backObject が表示されたかどうか
      */
-    static boolean[] isBackObjectDisplayed = new boolean[StageData.BACK_OBJECT_MAX];
+    public boolean[] isBackObjectDisplayed = new boolean[StageData.BACK_OBJECT_MAX];
 
     /**
      * 画面上における cherry の数の最大値
@@ -58,7 +59,7 @@ public class ObjectPool
     /**
      * その cherry が表示されたかどうか
      */
-    static boolean[] isCherryDisplayed = new boolean[StageData.CHERRY_MAX];
+    public boolean[] isCherryDisplayed = new boolean[StageData.CHERRY_MAX];
     /**
      * その cherry が取られたかどうか
      */
@@ -71,43 +72,58 @@ public class ObjectPool
     /**
      * その heart が表示されたかどうか
      */
-    static boolean[] isHeartDisplayed = new boolean[StageData.HEART_MAX];
+    public boolean[] isHeartDisplayed = new boolean[StageData.HEART_MAX];
     /**
      * その heart が取られたかどうか
      */
     private boolean[] isHeartTook = new boolean[StageData.HEART_MAX];
 
-    ObjectPool()
+    /**
+     * 画面上における bullet の数の最大値
+     */
+    public static final int BULLET_MAX = 20;
+
+    /**
+     * コンストラクタの代わり
+     * @param objectPool
+     */
+    public void create(ObjectPool objectPool)
     {
         player = new Player(200, 200);
         wire = new Wire();
         joints = new Joint[JOINT_MAX];
         for (int i = 0; i < JOINT_MAX; i++)
         {
-            joints[i] = new Joint(player);
+            joints[i] = new Joint(player, objectPool);
         }
         grounds = new Ground[GROUND_MAX];
         for (int i = 0; i < grounds.length; i++)
         {
-            grounds[i] = new Ground();
+            grounds[i] = new Ground(objectPool);
         }
         backObjects = new BackObject[BACK_OBJECT_MAX];
         for (int i = 0; i < backObjects.length; i++)
         {
-            backObjects[i] = new BackObject();
+            backObjects[i] = new BackObject(objectPool);
         }
         cherries = new Cherry[CHERRY_MAX];
         for (int i = 0; i < cherries.length; i++)
         {
-            cherries[i] = new Cherry();
+            cherries[i] = new Cherry(objectPool);
         }
         hearts = new Heart[HEART_MAX];
         for (int i = 0; i < hearts.length; i++)
         {
-            hearts[i] = new Heart();
+            hearts[i] = new Heart(objectPool);
+        }
+        bullets = new Bullet[BULLET_MAX];
+        for (int i = 0; i < bullets.length; i++)
+        {
+            bullets[i] = new Bullet(objectPool);
         }
         camera = new Camera();
         score = new Score();
+
         init();
     }
 
@@ -184,6 +200,7 @@ public class ObjectPool
         updateObjects(cherries, gc);
         updateObjects(hearts, gc);
         updateObjects(grounds, gc);
+        updateObjects(bullets, gc);
         if (player.active)
         {
             player.update(gc, camera.getX(), camera.getY());
@@ -219,6 +236,7 @@ public class ObjectPool
         renderObjects(cherries, g, im);
         renderObjects(hearts, g, im);
         renderObjects(grounds, g, im);
+        renderObjects(bullets, g, im);
         if (wire.active)
         {
             wire.render(g, im);
@@ -474,6 +492,27 @@ public class ObjectPool
                 }
             }
         }
+    }
+
+    /**
+     * 弾の生成・初期化（実際は配列のインスタンスを使い回す）
+     * @param x 生成先x座標
+     * @param y 生成先y座標
+     * @param direction 向き(単位は度　0-360)
+     * @param speed 動かす速度
+     * @return 弾のID（空きが無ければ-1）
+     */
+    public int newBullet(float x, float y, float direction, float speed)
+    {
+        for (int i = 0; i < BULLET_MAX; i++)
+        {
+            if ((bullets[i].active) == false)
+            {
+                bullets[i].activate(x, y, direction, speed);
+                return i;
+            }
+        }
+        return -1;		//見つからなかった
     }
 
     /**

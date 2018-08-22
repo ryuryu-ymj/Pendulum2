@@ -16,8 +16,9 @@ public class Heart extends GameObject
      */
     public int num;
 
-    Heart()
+    Heart(ObjectPool objectPool)
     {
+        super(objectPool);
         width = RADIUS * 2;
         height = RADIUS * 2;
     }
@@ -28,7 +29,7 @@ public class Heart extends GameObject
         if (checkLeaving(0))
         {
             active = false;
-            ObjectPool.isHeartDisplayed[num] = false;
+            objectPool.isHeartDisplayed[num] = false;
         }
         changeToDisplayPoint(cameraX, cameraY);
     }

@@ -166,12 +166,13 @@ public class ImageManager
      * @param y      中心点のy座標
      * @param width  中心のjointの横幅
      * @param height 中心のjointの縦幅
+     * @param angle  針の方向（弧度法　三時の方向から時計周り）
      */
     public void drawBee(float x, float y, float width, float height, float angle)
     {
         float margin = 108.56f * width / (player.getWidth() - 108.56f * 2);
         bee.setCenterOfRotation(width / 2 + margin, height / 2 + margin);
-        bee.setRotation(angle);
+        bee.setRotation(angle - 90);
         bee.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
     }
 

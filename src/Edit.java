@@ -26,6 +26,7 @@ public class Edit extends GameState
     {
         super();
         objectPool = new ObjectPoolEditVer();
+        objectPool.create(objectPool);
         stageData = new StageData();
         grid = new Grid();
         mousePointer = new MousePointer();

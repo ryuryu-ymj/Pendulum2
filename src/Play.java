@@ -35,6 +35,7 @@ public class Play extends GameState
     {
         super();
         objectPool = new ObjectPool();
+        objectPool.create(objectPool);
         stageData = new StageData();
     }
 

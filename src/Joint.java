@@ -43,8 +43,9 @@ public class Joint extends GameObject
         NORMAL, GOAL, BEE
     }
 
-    Joint(Player player)
+    Joint(Player player, ObjectPool objectPool)
     {
+        super(objectPool);
         this.player = player;
         active = false;
     }
@@ -52,22 +53,25 @@ public class Joint extends GameObject
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
-        switch (type)
+        if (!isPlayerLoop)
         {
-            case BEE:
-                angle = (float) Math.toDegrees(Math.atan2(player.abY - abY, player.abX - abX)) - 90;
+            switch (type)
+            {
+                case BEE:
+                    angle = (float) Math.toDegrees(Math.atan2(player.abY - abY, player.abX - abX));
 
-                if (counter % 10 == 0)
-                {
-
-                }
-                break;
+                    if (counter % 50 == 0)
+                    {
+                        fireBullet(angle);
+                    }
+                    break;
+            }
         }
 
         if (checkLeaving(20))
         {
             active = false;
-            ObjectPool.isJointDisplayed[num] = false;
+            objectPool.isJointDisplayed[num] = false;
             //System.out.println("delate " + num + " " + (int)abX / 55 + "," + (int)abY / 55);
         }
         changeToDisplayPoint(cameraX, cameraY);
@@ -75,9 +79,14 @@ public class Joint extends GameObject
         counter++;
     }
 
-    private void fireBullet()
+    /**
+     * 指定された方向に弾を撃つ
+     *
+     * @param angle 動かす方向の角度（３時の方向から反時計回り）
+     */
+    private void fireBullet(float angle)
     {
-
+        objectPool.newBullet(abX, abY, angle, 3);
     }
 
     @Override
