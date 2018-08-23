@@ -177,6 +177,23 @@ public class ImageManager
     }
 
     /**
+     * sting の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  同スケールのjointの横幅
+     * @param height 同スケールのjointの縦幅
+     * @param angle  針の方向（弧度法　三時の方向から時計周り）
+     */
+    public void drawSting(float x, float y, float width, float height, float angle)
+    {
+        float margin = 108.56f * width / (player.getWidth() - 108.56f * 2);
+        sting.setCenterOfRotation(width / 2 + margin, height / 2 + margin);
+        sting.setRotation(angle - 90);
+        sting.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
+    }
+
+    /**
      * tree1 の画像を表示する
      *
      * @param x      中心点のx座標

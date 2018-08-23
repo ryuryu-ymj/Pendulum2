@@ -233,11 +233,11 @@ public class ObjectPool
         g.setColor(new Color(189, 226, 14));
         g.fillRect(0, 0, Play.DISPLAY_WIDTH, Play.DISPLAY_HEIGHT);
         renderObjects(backObjects, g, im);
+        renderObjects(bullets, g, im);
         renderObjects(joints, g, im);
         renderObjects(cherries, g, im);
         renderObjects(hearts, g, im);
         renderObjects(grounds, g, im);
-        renderObjects(bullets, g, im);
         if (wire.active)
         {
             wire.render(g, im);

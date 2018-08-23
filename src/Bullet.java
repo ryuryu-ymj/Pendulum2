@@ -38,8 +38,9 @@ public class Bullet extends GameObject
     @Override
     public void render(Graphics g, ImageManager im)
     {
-        g.setColor(Color.blue);
-        g.drawOval((int)(getDiX() - RADIUS), (int)(getDiY() - RADIUS), RADIUS * 2, RADIUS * 2);
+        /*g.setColor(Color.blue);
+        g.drawOval((int)(getDiX() - RADIUS), (int)(getDiY() - RADIUS), RADIUS * 2, RADIUS * 2);*/
+        im.drawSting(getDiX(), getDiY(), Joint.RADIUS * 2, Joint.RADIUS * 2, direction);
     }
 
 	/**
