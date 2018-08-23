@@ -20,8 +20,9 @@ public class Player extends GameObject
     private double angle;
     private final int speedMax = 11;
 
-    Player(int x, int y)
+    Player(int x, int y, ObjectPool objectPool)
     {
+        super(objectPool);
         this.abX = x;
         this.abY = y;
         radius = 25;

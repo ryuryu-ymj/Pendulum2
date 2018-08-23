@@ -90,7 +90,7 @@ public class ObjectPool
      */
     public void create(ObjectPool objectPool)
     {
-        player = new Player(200, 200);
+        player = new Player(200, 200, objectPool);
         wire = new Wire();
         joints = new Joint[JOINT_MAX];
         for (int i = 0; i < JOINT_MAX; i++)
