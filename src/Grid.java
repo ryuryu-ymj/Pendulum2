@@ -7,6 +7,11 @@ import org.newdawn.slick.Graphics;
  */
 public class Grid extends GameObject
 {
+    Grid(ObjectPool objectPool)
+    {
+        super(objectPool);
+    }
+
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {

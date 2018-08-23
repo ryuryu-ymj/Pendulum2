@@ -24,8 +24,9 @@ public class MousePointer extends GameObject
     }
     public Type type;
 
-    MousePointer()
+    MousePointer(ObjectPool objectPool)
     {
+        super(objectPool);
         type = Type.GROUND_NORMAL;
     }
 

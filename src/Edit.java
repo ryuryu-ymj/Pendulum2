@@ -28,8 +28,8 @@ public class Edit extends GameState
         objectPool = new ObjectPoolEditVer();
         objectPool.create(objectPool);
         stageData = new StageData();
-        grid = new Grid();
-        mousePointer = new MousePointer();
+        grid = new Grid(objectPool);
+        mousePointer = new MousePointer(objectPool);
     }
 
     /**

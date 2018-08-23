@@ -51,10 +51,6 @@ public abstract class GameObject
         this.objectPool = objectPool;
     }
 
-    GameObject()
-    {
-    }
-
     /**
      * ステップごとの更新.
      */
