@@ -18,6 +18,7 @@ public class Score
     public void initScore()
     {
         cherryScore = 0;
+        heartScore = 3;
     }
 
     public void render(Graphics g, ImageManager im)

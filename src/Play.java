@@ -69,6 +69,10 @@ public class Play extends GameState
             objectPool.init();
             stageData.loadStageDate(++stageNum);
         }
+        if (objectPool.isPlayerDead())
+        {
+            init(gc);
+        }
         counter++;
     }
 

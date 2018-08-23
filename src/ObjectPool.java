@@ -189,6 +189,10 @@ public class ObjectPool
         {
             hearts[i].active = false;
         }
+        for (Bullet bullet : bullets)
+        {
+            bullet.active = false;
+        }
     }
 
     /**
@@ -382,6 +386,26 @@ public class ObjectPool
             isJointLoopeds[joints[wire.jointLockedNum].num] = true;
             wire.initIsPlayerPass();
         }
+    }
+
+    /**
+     * @return playerがゴールしたかどうか
+     */
+    public boolean isPlayerGoal()
+    {
+        if (wire.jointLockedNum != -1)
+        {
+            return joints[wire.jointLockedNum].getType() == Joint.Type.GOAL;
+        }
+        return false;
+    }
+
+    /**
+     * @return playerが死んだかどうか
+     */
+    public boolean isPlayerDead()
+    {
+        return score.isHeartZero();
     }
 
     /**
@@ -650,18 +674,6 @@ public class ObjectPool
             }
         }
         return -1;        //見つからなかった
-    }
-
-    /**
-     * @return playerがゴールしたかどうか
-     */
-    public boolean isPlayerGoal()
-    {
-        if (wire.jointLockedNum != -1)
-        {
-            return joints[wire.jointLockedNum].getType() == Joint.Type.GOAL;
-        }
-        return false;
     }
 
     /**
