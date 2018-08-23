@@ -1,5 +1,6 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -20,13 +21,21 @@ public class Play extends GameState
      */
     public static int counter;
 
-    ObjectPool objectPool;
-    StageData stageData;
-
     /**
      * プレイするステージの番号 0から
      */
     public int stageNum;
+
+    private State state;
+
+    private enum State
+    {
+        STAGETITLE, PLAY, GAMEOVER
+    }
+
+    ObjectPool objectPool;
+    StageData stageData;
+    PlayMessage playMessage;
 
     /**
      * コンストラクタ
@@ -37,6 +46,7 @@ public class Play extends GameState
         objectPool = new ObjectPool();
         objectPool.create(objectPool);
         stageData = new StageData();
+        playMessage = new PlayMessage();
     }
 
     /**
@@ -48,6 +58,7 @@ public class Play extends GameState
         stageNum = 0;
         stageData.loadStageDate(stageNum);
         objectPool.init();
+        state = State.STAGETITLE;
     }
 
     /**
@@ -56,23 +67,41 @@ public class Play extends GameState
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
-        objectPool.moveGrounds(stageData.getGroundXs(), stageData.getGroundYs(), stageData.getGroundTypes(), stageData.getGroundShapes(), stageData.getGroundIsCheckCollisions());
-        objectPool.moveJoints(stageData.getJointXs(), stageData.getJointYs(), stageData.getJointTypes());
-        objectPool.moveCherries(stageData.getCherryXs(), stageData.getCherryYs());
-        objectPool.moveHearts(stageData.getHeartXs(), stageData.getHeartYs());
-        objectPool.moveBackObjects(stageData.getBackObjectXs(), stageData.getBackObjectYs(), stageData.getBackObjectTypes()
-                , stageData.getBackObjectLayers());
-        objectPool.collisionDetection(gc);
-        objectPool.update(gc);
-        if (objectPool.isPlayerGoal())
+        switch (state)
         {
-            objectPool.init();
-            stageData.loadStageDate(++stageNum);
+            case STAGETITLE:
+                if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+                {
+                    state = State.PLAY;
+                }
+                break;
+            case PLAY:
+                objectPool.moveGrounds(stageData.getGroundXs(), stageData.getGroundYs(), stageData.getGroundTypes(), stageData.getGroundShapes(), stageData.getGroundIsCheckCollisions());
+                objectPool.moveJoints(stageData.getJointXs(), stageData.getJointYs(), stageData.getJointTypes());
+                objectPool.moveCherries(stageData.getCherryXs(), stageData.getCherryYs());
+                objectPool.moveHearts(stageData.getHeartXs(), stageData.getHeartYs());
+                objectPool.moveBackObjects(stageData.getBackObjectXs(), stageData.getBackObjectYs(), stageData.getBackObjectTypes()
+                        , stageData.getBackObjectLayers());
+                objectPool.collisionDetection(gc);
+                objectPool.update(gc);
+                if (objectPool.isPlayerGoal())
+                {
+                    objectPool.init();
+                    stageData.loadStageDate(++stageNum);
+                }
+                if (objectPool.isPlayerDead())
+                {
+                    init(gc);
+                    state = State.GAMEOVER;
+                }
+                break;
+            case GAMEOVER:
+                if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+                {
+                    state = State.STAGETITLE;
+                }
         }
-        if (objectPool.isPlayerDead())
-        {
-            init(gc);
-        }
+
         counter++;
     }
 
@@ -82,6 +111,17 @@ public class Play extends GameState
     public void render(GameContainer gc, Graphics g, ImageManager im)
             throws SlickException
     {
-        objectPool.render(g, im);
+        switch (state)
+        {
+            case STAGETITLE:
+                playMessage.renderStageNum(stageNum, counter);
+                break;
+            case PLAY:
+                objectPool.render(g, im);
+                break;
+            case GAMEOVER:
+                playMessage.renderGameOver(counter);
+                break;
+        }
     }
 }
