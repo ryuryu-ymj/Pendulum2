@@ -1,4 +1,3 @@
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -414,13 +413,13 @@ public class ObjectPool
      * @param type ground のtype
      * @return grounds の配列番号　なかったら-1
      */
-    public int newGround(int x, int y, Ground.Type type, Ground.Shape shape, boolean isCheckCollision, int num)
+    public int newGround(int x, int y, Ground.Type type, Ground.Position position, int num)
     {
         for (int i = 0; i < GROUND_MAX; i++)
         {
             if (!grounds[i].active)
             {
-                grounds[i].activate(x, y, type, shape, isCheckCollision, num);
+                grounds[i].activate(x, y, type, position, num);
                 return i;
             }
         }
@@ -434,7 +433,7 @@ public class ObjectPool
      * @param groundYs    ground の絶対座標（空の場合は-1）
      * @param groundTypes ground の型
      */
-    public void moveGrounds(int[] groundXs, int[] groundYs, Ground.Type[] groundTypes, Ground.Shape[] groundShapes, boolean[] groundIsCheckCollisions)
+    public void moveGrounds(int[] groundXs, int[] groundYs, Ground.Type[] groundTypes, Ground.Position[] groundPositions)
     {
         for (int i = 0; i < groundXs.length; i++)
         {
@@ -442,7 +441,7 @@ public class ObjectPool
             {
                 if (!isGroundDisplayed[i])
                 {
-                    if (newGround(groundXs[i], groundYs[i], groundTypes[i], groundShapes[i], groundIsCheckCollisions[i], i) != -1)
+                    if (newGround(groundXs[i], groundYs[i], groundTypes[i], groundPositions[i], i) != -1)
                     {
                         isGroundDisplayed[i] = true;
                     }

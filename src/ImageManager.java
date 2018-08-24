@@ -227,45 +227,63 @@ public class ImageManager
      * @param y      中心点のy座標
      * @param width  横幅
      * @param height 縦幅
-     * @param type   種類
+     * @param position   種類
      */
-    public void drawGround(float x, float y, float width, float height, Ground.Shape type)
+    public void drawGround(float x, float y, float width, float height, Ground.Position position)
     {
-        switch (type)
+        if (!position.hasTop)
         {
-            case GLASS:
+            if (position.hasRight && position.hasLeft)
+            {
                 groundGlass.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case GLASS_TOP_EDGE:
-                groundGlassTopEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case GLASS_TOP_LEFT_EDGE:
+            }
+            else if (position.hasRight && position.hasBottom)
+            {
                 groundGlassCornerEdge.draw(x + width / 2, y - height / 2, -width, height);
-                break;
-            case GLASS_TOP_RIGHT_EDGE:
+            }
+            else if (position.hasLeft && position.hasBottom)
+            {
                 groundGlassCornerEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case GLASS_LEFT_EDGE:
+            }
+            else if (position.hasRight)
+            {
                 groundGlassSideEdge.draw(x + width / 2, y - height / 2, -width, height);
-                break;
-            case GLASS_RIGHT_EDGE:
+            }
+            else if (position.hasLeft)
+            {
                 groundGlassSideEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case GLASS_ALL_EDGE:
+            }
+            else if (position.hasBottom)
+            {
+                groundGlassTopEdge.draw(x - width / 2, y - height / 2, width, height);
+            }
+            else
+            {
                 groundGlassAllEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case NO_GLASS:
+            }
+        }
+        else
+        {
+            if (position.hasRight && position.hasLeft)
+            {
                 groundNoGlass.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case NO_GLASS_BOTTOM_EDGE:
-                groundNoGlassBottomEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case NO_GLASS_BOTTOM_LEFT_EDGE:
+            }
+            else if (position.hasBottom)
+            {
+                groundNoGlass.draw(x - width / 2, y - height / 2, width, height);
+            }
+            else if (position.hasRight)
+            {
                 groundNoGlassCornerEdge.draw(x + width / 2, y - height / 2, -width, height);
-                break;
-            case NO_GLASS_BOTTOM_RIGHT_EDGE:
+            }
+            else if (position.hasLeft)
+            {
                 groundNoGlassCornerEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
+            }
+            else
+            {
+                groundNoGlassBottomEdge.draw(x - width / 2, y - height / 2, width, height);
+            }
         }
     }
 
@@ -276,45 +294,10 @@ public class ImageManager
      * @param y      中心点のy座標
      * @param width  横幅
      * @param height 縦幅
-     * @param type   種類
+     * @param position   種類
      */
-    public void drawSpine(float x, float y, float width, float height, Ground.Shape type)
+    public void drawSpine(float x, float y, float width, float height, Ground.Position position)
     {
-        switch (type)
-        {
-            case GLASS_ALL_EDGE:
-            case GLASS_TOP_LEFT_EDGE:
-                spineEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case GLASS_TOP_RIGHT_EDGE:
-                spineEdge.draw(x + width / 2, y - height / 2, -width, height);
-                break;
-            case GLASS:
-                spineMiddle.draw(x - width / 2, y - height / 2, width, height);
-                break;
-
-            case GLASS_TOP_EDGE:
-                groundGlassTopEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case GLASS_LEFT_EDGE:
-                groundGlassSideEdge.draw(x + width / 2, y - height / 2, -width, height);
-                break;
-            case GLASS_RIGHT_EDGE:
-                groundGlassSideEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case NO_GLASS:
-                groundNoGlass.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case NO_GLASS_BOTTOM_EDGE:
-                groundNoGlassBottomEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
-            case NO_GLASS_BOTTOM_LEFT_EDGE:
-                groundNoGlassCornerEdge.draw(x + width / 2, y - height / 2, -width, height);
-                break;
-            case NO_GLASS_BOTTOM_RIGHT_EDGE:
-                groundNoGlassCornerEdge.draw(x - width / 2, y - height / 2, width, height);
-                break;
-        }
     }
 
     /**

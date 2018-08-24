@@ -73,7 +73,8 @@ public class Play extends GameState
                 }
                 break;
             case PLAY:
-                objectPool.moveGrounds(stageData.getGroundXs(), stageData.getGroundYs(), stageData.getGroundTypes(), stageData.getGroundShapes(), stageData.getGroundIsCheckCollisions());
+                objectPool.moveGrounds(stageData.getGroundXs(), stageData.getGroundYs()
+                        , stageData.getGroundTypes(), stageData.getGroundPositions());
                 objectPool.moveJoints(stageData.getJointXs(), stageData.getJointYs(), stageData.getJointTypes());
                 objectPool.moveCherries(stageData.getCherryXs(), stageData.getCherryYs());
                 objectPool.moveHearts(stageData.getHeartXs(), stageData.getHeartYs());

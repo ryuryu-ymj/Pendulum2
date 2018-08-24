@@ -71,7 +71,7 @@ public class MousePointer extends GameObject
         switch (type)
         {
             case GROUND_NORMAL:
-                im.drawGround(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH, Ground.Shape.NO_GLASS);
+                im.drawGround(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH, new Ground.Position());
                 break;
             case GROUND_INVISIBLE:
                 g.setColor(Color.red);

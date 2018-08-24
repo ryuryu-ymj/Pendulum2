@@ -20,15 +20,11 @@ public class StageData
     /**
      * ground の位置
      */
-    private ArrayList<Ground.Shape> groundShapes;
-    /**
-     * ground のあたり判定を行うかどうか
-     */
-    //private ArrayList<Boolean> groundIsCheckCollisions;
+    private ArrayList<Ground.Position> groundPositions;
     /**
      * ground に接するgroundの数
      */
-    private ArrayList<Integer> groundTouchNums;
+    //private ArrayList<Integer> groundTouchNums;
 
     /**
      * joint の絶対座標（空の場合は-1）
@@ -96,8 +92,8 @@ public class StageData
         groundXs = new ArrayList<>();
         groundYs = new ArrayList<>();
         groundTypes = new ArrayList<>();
-        groundShapes = new ArrayList<>();
-        groundTouchNums = new ArrayList<>();
+        groundPositions = new ArrayList<>();
+        //groundTouchNums = new ArrayList<>();
         jointXs = new ArrayList<>();
         jointYs = new ArrayList<>();
         jointTypes = new ArrayList<>();
@@ -135,8 +131,7 @@ public class StageData
             groundXs.clear();
             groundYs.clear();
             groundTypes.clear();
-            groundShapes.clear();
-            groundTouchNums.clear();
+            groundPositions.clear();
             jointXs.clear();
             jointYs.clear();
             jointTypes.clear();
@@ -161,8 +156,11 @@ public class StageData
                                 groundXs.add(Integer.parseInt(st.nextToken()));
                                 groundYs.add(Integer.parseInt(st.nextToken()));
                                 groundTypes.add(Ground.Type.valueOf(st.nextToken()));
-                                groundShapes.add(Ground.Shape.valueOf(st.nextToken()));
-                                groundTouchNums.add(Integer.parseInt(st.nextToken()));
+                                groundPositions.add(new Ground.Position(Boolean.valueOf(st.nextToken()),
+                                        Boolean.valueOf(st.nextToken()),
+                                        Boolean.valueOf(st.nextToken()),
+                                        Boolean.valueOf(st.nextToken())));
+                                //System.out.println(groundPositions.get(groundPositions.size() - 1).toString());
                             }
                             catch (EmptyStackException e)
                             {
@@ -243,9 +241,11 @@ public class StageData
         {
             FileWriter fw = new FileWriter("res/stage/stage" + (stageNum + 1) + ".csv");
             PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+
             for (int i = 0; i < groundXs.size(); i++)
             {
-                pw.println("ground," + groundXs.get(i) + "," + groundYs.get(i) + "," + groundTypes.get(i) + "," + groundShapes.get(i) + "," + groundTouchNums.get(i));
+                pw.println("ground," + groundXs.get(i) + "," + groundYs.get(i) + "," + groundTypes.get(i)
+                        + "," + groundPositions.get(i).toString());
             }
             for (int i = 0; i < jointXs.size(); i++)
             {
@@ -263,6 +263,7 @@ public class StageData
             {
                 pw.println("heart," + heartXs.get(i) + "," + heartYs.get(i));
             }
+
             pw.close();
             fw.close();
         }
@@ -297,19 +298,9 @@ public class StageData
         return groundTypes.toArray(new Ground.Type[groundTypes.size()]);
     }
 
-    public Ground.Shape[] getGroundShapes()
+    public Ground.Position[] getGroundPositions()
     {
-        return groundShapes.toArray(new Ground.Shape[groundShapes.size()]);
-    }
-
-    public boolean[] getGroundIsCheckCollisions()
-    {
-        boolean[] groundIsCheckCollision = new boolean[this.groundTouchNums.size()];
-        for (int i = 0; i < groundIsCheckCollision.length; i++)
-        {
-            groundIsCheckCollision[i] = this.groundTouchNums.get(i) != 4;
-        }
-        return groundIsCheckCollision;
+        return groundPositions.toArray(new Ground.Position[groundPositions.size()]);
     }
 
     public int[] getJointXs()
@@ -423,234 +414,50 @@ public class StageData
             }
         }
 
-        if (groundType == Ground.Type.NORMAL)
-        {
-            boolean isTop, isBottom, isLeft, isRight;
-            isTop = isBottom = isLeft = isRight = false;
-            int touchNum = 0;
-            for (int i = 0; i < groundXs.size(); i++)
-            {
-                if (groundTypes.get(i) == Ground.Type.NORMAL)
-                {
-                    if (groundXs.get(i) == groundX)
-                    {
-                        if (groundYs.get(i) == groundY + Ground.WIDTH)
-                        {
-                            //bottom
-                            if (groundShapes.get(i) == Ground.Shape.GLASS ||
-                                    groundShapes.get(i) == Ground.Shape.GLASS_TOP_EDGE ||
-                                    groundShapes.get(i) == Ground.Shape.GLASS_TOP_LEFT_EDGE ||
-                                    groundShapes.get(i) == Ground.Shape.GLASS_TOP_RIGHT_EDGE ||
-                                    groundShapes.get(i) == Ground.Shape.GLASS_ALL_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.NO_GLASS);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.GLASS_LEFT_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.NO_GLASS_BOTTOM_LEFT_EDGE);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.GLASS_RIGHT_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.NO_GLASS_BOTTOM_RIGHT_EDGE);
-                            }
-                            groundTouchNums.set(i, groundTouchNums.get(i) + 1);
-                            if (groundTypes.get(i) == Ground.Type.NORMAL)
-                            {
-                                touchNum++;
-                            }
-                            isBottom = true;
-                        }
-                        else if (groundYs.get(i) == groundY - Ground.WIDTH)
-                        {
-                            //top
-                            if (groundShapes.get(i) == Ground.Shape.NO_GLASS ||
-                                    groundShapes.get(i) == Ground.Shape.NO_GLASS_BOTTOM_EDGE ||
-                                    groundShapes.get(i) == Ground.Shape.NO_GLASS_BOTTOM_LEFT_EDGE ||
-                                    groundShapes.get(i) == Ground.Shape.NO_GLASS_BOTTOM_RIGHT_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.NO_GLASS);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.GLASS_ALL_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.GLASS_TOP_EDGE);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.GLASS_RIGHT_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.GLASS_TOP_RIGHT_EDGE);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.GLASS_LEFT_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.GLASS_TOP_LEFT_EDGE);
-                            }
-                            else
-                            {
-                                groundShapes.set(i, Ground.Shape.GLASS);
-                            }
-                            groundTouchNums.set(i, groundTouchNums.get(i) + 1);
-                            if (groundTypes.get(i) == Ground.Type.NORMAL)
-                            {
-                                touchNum++;
-                            }
-                            isTop = true;
-                        }
-                    }
-                    else if (groundXs.get(i) == groundX + Ground.WIDTH)
-                    {
-                        if (groundYs.get(i) == groundY)
-                        {
-                            //right
-                            if (groundShapes.get(i) == Ground.Shape.GLASS_TOP_LEFT_EDGE ||
-                                    groundShapes.get(i) == Ground.Shape.GLASS_LEFT_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.GLASS);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.GLASS_ALL_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.GLASS_RIGHT_EDGE);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.GLASS_TOP_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.GLASS_TOP_RIGHT_EDGE);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.NO_GLASS_BOTTOM_LEFT_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.NO_GLASS);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.NO_GLASS_BOTTOM_RIGHT_EDGE ||
-                                    groundShapes.get(i) == Ground.Shape.NO_GLASS_BOTTOM_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.NO_GLASS_BOTTOM_RIGHT_EDGE);
-                            }
-                            groundTouchNums.set(i, groundTouchNums.get(i) + 1);
-                            if (groundTypes.get(i) == Ground.Type.NORMAL)
-                            {
-                                touchNum++;
-                            }
-                            isRight = true;
-                        }
-                    }
-                    else if (groundXs.get(i) == groundX - Ground.WIDTH)
-                    {
-                        if (groundYs.get(i) == groundY)
-                        {
-                            //left
-                            if (groundShapes.get(i) == Ground.Shape.GLASS_TOP_RIGHT_EDGE ||
-                                    groundShapes.get(i) == Ground.Shape.GLASS_RIGHT_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.GLASS);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.GLASS_ALL_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.GLASS_LEFT_EDGE);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.GLASS_TOP_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.GLASS_TOP_LEFT_EDGE);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.NO_GLASS_BOTTOM_RIGHT_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.NO_GLASS);
-                            }
-                            else if (groundShapes.get(i) == Ground.Shape.NO_GLASS_BOTTOM_LEFT_EDGE ||
-                                    groundShapes.get(i) == Ground.Shape.NO_GLASS_BOTTOM_EDGE)
-                            {
-                                groundShapes.set(i, Ground.Shape.NO_GLASS_BOTTOM_LEFT_EDGE);
-                            }
-                            groundTouchNums.set(i, groundTouchNums.get(i) + 1);
-                            if (groundTypes.get(i) == Ground.Type.NORMAL)
-                            {
-                                touchNum++;
-                            }
-                            isLeft = true;
-                        }
-                    }
-                }
-            }
-
-            if (isTop)
-            {
-                if (isBottom)
-                {
-                    groundShapes.add(Ground.Shape.NO_GLASS);
-                }
-                else if (isLeft)
-                {
-                    if (isRight)
-                    {
-                        groundShapes.add(Ground.Shape.NO_GLASS);
-                    }
-                    else
-                    {
-                        groundShapes.add(Ground.Shape.NO_GLASS_BOTTOM_RIGHT_EDGE);
-                    }
-                }
-                else if (isRight)
-                {
-                    groundShapes.add(Ground.Shape.NO_GLASS_BOTTOM_LEFT_EDGE);
-                }
-                else
-                {
-                    groundShapes.add(Ground.Shape.NO_GLASS_BOTTOM_EDGE);
-                }
-            }
-            else
-            {
-                if (isBottom)
-                {
-                    if (isLeft)
-                    {
-                        if (isRight)
-                        {
-                            groundShapes.add(Ground.Shape.GLASS);
-                        }
-                        else
-                        {
-                            groundShapes.add(Ground.Shape.GLASS_TOP_RIGHT_EDGE);
-                        }
-                    }
-                    else if (isRight)
-                    {
-                        groundShapes.add(Ground.Shape.GLASS_TOP_LEFT_EDGE);
-                    }
-                    else
-                    {
-                        groundShapes.add(Ground.Shape.GLASS_TOP_EDGE);
-                    }
-                }
-                else
-                {
-                    if (isLeft)
-                    {
-                        if (isRight)
-                        {
-                            groundShapes.add(Ground.Shape.GLASS);
-                        }
-                        else
-                        {
-                            groundShapes.add(Ground.Shape.GLASS_RIGHT_EDGE);
-                        }
-                    }
-                    else if (isRight)
-                    {
-                        groundShapes.add(Ground.Shape.GLASS_LEFT_EDGE);
-                    }
-                    else
-                    {
-                        groundShapes.add(Ground.Shape.GLASS_ALL_EDGE);
-                    }
-                }
-            }
-            groundTouchNums.add(touchNum);
-        }
-        else
-        {
-            groundShapes.add(Ground.Shape.NO_GLASS);
-            groundTouchNums.add(0);
-        }
-        //System.out.println("add " + groundX + " " + groundY + " " + groundXs[0] + " " + groundYs[0] + " " + groundNum);
         groundXs.add(groundX);
         groundYs.add(groundY);
         groundTypes.add(groundType);
+        groundPositions.add(new Ground.Position());
+        for (int i = 0; i < groundXs.size(); i++)
+        {
+            if (groundTypes.get(i) == groundTypes.get(groundTypes.size() - 1))
+            {
+                if (groundXs.get(i) == groundX)
+                {
+                    if (groundYs.get(i) == groundY + Ground.WIDTH)
+                    {
+                        //bottom
+                        groundPositions.get(i).hasTop = true;
+                        groundPositions.get(groundPositions.size() - 1).hasBottom = true;
+                    }
+                    else if (groundYs.get(i) == groundY - Ground.WIDTH)
+                    {
+                        //top
+                        groundPositions.get(i).hasBottom = true;
+                        groundPositions.get(groundPositions.size() - 1).hasTop = true;
+                    }
+                }
+                else if (groundXs.get(i) == groundX + Ground.WIDTH)
+                {
+                    if (groundYs.get(i) == groundY)
+                    {
+                        //right
+                        groundPositions.get(i).hasLeft = true;
+                        groundPositions.get(groundPositions.size() - 1).hasRight = true;
+                    }
+                }
+                else if (groundXs.get(i) == groundX - Ground.WIDTH)
+                {
+                    if (groundYs.get(i) == groundY)
+                    {
+                        //left
+                        groundPositions.get(i).hasRight = true;
+                        groundPositions.get(groundPositions.size() - 1).hasLeft = true;
+                    }
+                }
+            }
+        }
+        //System.out.println(groundPositions.get(groundPositions.size() - 1).toString());
     }
 
     public void addJoint(int jointX, int jointY, Joint.Type jointType)
@@ -718,8 +525,7 @@ public class StageData
                 groundXs.remove(i);
                 groundYs.remove(i);
                 groundTypes.remove(i);
-                groundShapes.remove(i);
-                groundTouchNums.remove(i);
+                groundPositions.remove(i);
             }
         }
         for (int i = 0; i < groundXs.size(); i++)
@@ -802,8 +608,7 @@ public class StageData
         groundXs.remove(index);
         groundYs.remove(index);
         groundTypes.remove(index);
-        groundShapes.remove(index);
-        groundTouchNums.remove(index);
+        groundPositions.remove(index);
         addGround(groundX, groundY, groundType);
     }
 
@@ -812,8 +617,7 @@ public class StageData
         groundXs.clear();
         groundYs.clear();
         groundTypes.clear();
-        groundShapes.clear();
-        groundTouchNums.clear();
+        groundPositions.clear();
         jointXs.clear();
         jointYs.clear();
         jointTypes.clear();

@@ -18,7 +18,7 @@ public class Ground extends GameObject
     /**
      * groundの位置
      */
-    private Shape shape;
+    private Position position;
     /**
      * groundの縦幅，横幅
      */
@@ -47,12 +47,36 @@ public class Ground extends GameObject
         INVISIBLE;
     }
 
-    /**
-     * groundの形
-     */
-    public enum Shape
+    public static class Position
     {
-        GLASS, GLASS_TOP_LEFT_EDGE, GLASS_TOP_RIGHT_EDGE, GLASS_TOP_EDGE, GLASS_LEFT_EDGE, GLASS_RIGHT_EDGE, GLASS_ALL_EDGE, NO_GLASS, NO_GLASS_BOTTOM_EDGE, NO_GLASS_BOTTOM_LEFT_EDGE, NO_GLASS_BOTTOM_RIGHT_EDGE
+        public boolean hasTop, hasBottom, hasLeft, hasRight;
+
+        Position(boolean hasTop, boolean hasBottom, boolean hasLeft, boolean hasRight)
+        {
+            this.hasTop = hasTop;
+            this.hasBottom = hasBottom;
+            this.hasLeft = hasLeft;
+            this.hasRight = hasRight;
+        }
+
+        Position()
+        {
+            this(false, false, false, false);
+        }
+
+        public String toString()
+        {
+            return hasTop + "," + hasBottom + "," + hasLeft + "," + hasRight;
+        }
+
+        public boolean isCheckCollision()
+        {
+            if (hasTop && hasBottom && hasLeft && hasRight)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 
     /**
@@ -65,7 +89,7 @@ public class Ground extends GameObject
         this.width = WIDTH;
         this.height = WIDTH;
         type = Type.NORMAL;
-        shape = Shape.NO_GLASS;
+        position = new Position();
         isCheckCollision = true;
     }
 
@@ -90,7 +114,7 @@ public class Ground extends GameObject
         switch (type)
         {
             case NORMAL:
-                im.drawGround(getDiX(), getDiY(), width, height, shape);
+                im.drawGround(getDiX(), getDiY(), width, height, position);
                 break;
             case INVISIBLE:
                 break;
@@ -104,7 +128,7 @@ public class Ground extends GameObject
         switch (type)
         {
             case NORMAL:
-                im.drawGround(getDiX(), getDiY(), width, height, shape);
+                im.drawGround(getDiX(), getDiY(), width, height, position);
                 break;
             case INVISIBLE:
                 g.setColor(Color.red);
@@ -116,15 +140,15 @@ public class Ground extends GameObject
     /**
      * 初期化処理
      */
-    public void activate(int x, int y, Type type, Shape shape, boolean isCheckCollision, int num)
+    public void activate(int x, int y, Type type, Position position, int num)
     {
         this.abX = x;
         this.abY = y;
         this.type = type;
-        this.shape = shape;
+        this.position = position;
         this.num = num;
-        this.isCheckCollision = isCheckCollision;
         active = true;
+        isCheckCollision = position.isCheckCollision();
     }
 
     public Type getType()
@@ -132,9 +156,9 @@ public class Ground extends GameObject
         return type;
     }
 
-    public Shape getShape()
+    public Position getPosition()
     {
-        return shape;
+        return position;
     }
 
     public boolean isCheckCollision()
