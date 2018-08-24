@@ -29,6 +29,8 @@ public class ImageManager
     private Image heart;
     private Image bee;
     private Image sting;
+    private Image spineMiddle;
+    private Image spineEdge;
 
     ImageManager()
     {
@@ -121,6 +123,17 @@ public class ImageManager
             SpriteSheet ss = new SpriteSheet("res/img/item.png", 50, 50);
             cherry = ss.getSubImage(0, 0);
             heart = ss.getSubImage(1, 0);
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            SpriteSheet ss = new SpriteSheet("res/img/spine.png", 100, 100);
+            spineEdge = ss.getSubImage(0, 0);
+            spineMiddle = ss.getSubImage(1, 0);
         }
         catch (SlickException e)
         {
@@ -240,6 +253,54 @@ public class ImageManager
                 break;
             case GLASS_ALL_EDGE:
                 groundGlassAllEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case NO_GLASS:
+                groundNoGlass.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case NO_GLASS_BOTTOM_EDGE:
+                groundNoGlassBottomEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case NO_GLASS_BOTTOM_LEFT_EDGE:
+                groundNoGlassCornerEdge.draw(x + width / 2, y - height / 2, -width, height);
+                break;
+            case NO_GLASS_BOTTOM_RIGHT_EDGE:
+                groundNoGlassCornerEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+        }
+    }
+
+    /**
+     * spine トゲトゲのつた の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     * @param type   種類
+     */
+    public void drawSpine(float x, float y, float width, float height, Ground.Shape type)
+    {
+        switch (type)
+        {
+            case GLASS_ALL_EDGE:
+            case GLASS_TOP_LEFT_EDGE:
+                spineEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case GLASS_TOP_RIGHT_EDGE:
+                spineEdge.draw(x + width / 2, y - height / 2, -width, height);
+                break;
+            case GLASS:
+                spineMiddle.draw(x - width / 2, y - height / 2, width, height);
+                break;
+
+            case GLASS_TOP_EDGE:
+                groundGlassTopEdge.draw(x - width / 2, y - height / 2, width, height);
+                break;
+            case GLASS_LEFT_EDGE:
+                groundGlassSideEdge.draw(x + width / 2, y - height / 2, -width, height);
+                break;
+            case GLASS_RIGHT_EDGE:
+                groundGlassSideEdge.draw(x - width / 2, y - height / 2, width, height);
                 break;
             case NO_GLASS:
                 groundNoGlass.draw(x - width / 2, y - height / 2, width, height);

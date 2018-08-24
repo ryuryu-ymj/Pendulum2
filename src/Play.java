@@ -1,7 +1,4 @@
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 
 /**
  * プレイ画面の更新,描画を行うクラス.
@@ -111,16 +108,18 @@ public class Play extends GameState
     public void render(GameContainer gc, Graphics g, ImageManager im)
             throws SlickException
     {
+        g.setBackground(new Color(189f / 256, 226f / 256, 14f / 256));
+
         switch (state)
         {
             case STAGETITLE:
-                playMessage.renderStageNum(stageNum, counter);
+                playMessage.renderStageNum(g, stageNum, counter);
                 break;
             case PLAY:
                 objectPool.render(g, im);
                 break;
             case GAMEOVER:
-                playMessage.renderGameOver(counter);
+                playMessage.renderGameOver(g, counter);
                 break;
         }
     }

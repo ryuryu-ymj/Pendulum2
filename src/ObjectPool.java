@@ -234,8 +234,6 @@ public class ObjectPool
         //g.setLineWidth(1.5f);
 
         //im.drawBackGround(Play.DISPLAY_WIDTH / 2, Play.DISPLAY_HEIGHT / 2, 4900 / 2, 1800 / 2);
-        g.setColor(new Color(189, 226, 14));
-        g.fillRect(0, 0, Play.DISPLAY_WIDTH, Play.DISPLAY_HEIGHT);
         renderObjects(backObjects, g, im);
         renderObjects(bullets, g, im);
         renderObjects(joints, g, im);
