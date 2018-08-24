@@ -293,13 +293,13 @@ public class ObjectPool
             {
                 if (ground.isCheckCollision())
                 {
-                    if (ground.getType() == Ground.Type.NORMAL)
+                    if (ground.getType() == Ground.Type.INVISIBLE)
                     {
-                        bound = 1;
+                        bound = 0;
                     }
                     else
                     {
-                        bound = 0;
+                        bound = 1;
                     }
                     if (player.abX > ground.abX - ground.width / 2
                             && player.abX < ground.abX + ground.width / 2
