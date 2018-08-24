@@ -19,6 +19,7 @@ public class ObjectPool
     Bullet[] bullets;
     Camera camera;
     Score score;
+    DamageEffect damageEffect;
 
     /**
      * 画面上における ground の数の最大値
@@ -123,6 +124,7 @@ public class ObjectPool
         }
         camera = new Camera();
         score = new Score();
+        damageEffect = new DamageEffect();
 
         init();
     }
@@ -136,6 +138,7 @@ public class ObjectPool
         camera.init(200, 200);
         wire.init();
         score.initScore();
+        damageEffect.init();
         for (int i = 0; i < isJointDisplayed.length; i++)
         {
             isJointDisplayed[i] = false;
@@ -218,6 +221,7 @@ public class ObjectPool
         {
             wire.update(gc, player.getDiX(), player.getDiY(), joints[wire.jointLockedNum].getDiX(), joints[wire.jointLockedNum].getDiY());
         }
+        damageEffect.update();
 
         if (camera.active)
         {
@@ -247,6 +251,7 @@ public class ObjectPool
         {
             player.render(g, im);
         }
+        damageEffect.render(g);
         score.render(g, im);
     }
 
@@ -318,6 +323,7 @@ public class ObjectPool
                         if (ground.getType() == Ground.Type.SPINE)
                         {
                             score.subHeart();
+                            damageEffect.start();
                         }
                     }
                     else if (player.abX + player.height / 2 > ground.abX - ground.width / 2
@@ -337,6 +343,7 @@ public class ObjectPool
                         if (ground.getType() == Ground.Type.SPINE)
                         {
                             score.subHeart();
+                            damageEffect.start();
                         }
                     }
                 }
@@ -382,6 +389,7 @@ public class ObjectPool
                 {
                     bullet.active = false;
                     score.subHeart();
+                    damageEffect.start();
                 }
             }
         }

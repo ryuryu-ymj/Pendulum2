@@ -49,6 +49,7 @@ public class Play extends GameState
     /**
      * 初期化処理.
      */
+    @Override
     public void init(GameContainer gc)
             throws SlickException
     {
@@ -61,6 +62,7 @@ public class Play extends GameState
     /**
      * ステップごとの更新.
      */
+    @Override
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
@@ -106,6 +108,7 @@ public class Play extends GameState
     /**
      * ステップごとの描画処理.
      */
+    @Override
     public void render(GameContainer gc, Graphics g, ImageManager im)
             throws SlickException
     {
