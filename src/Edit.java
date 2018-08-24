@@ -56,6 +56,8 @@ public class Edit extends GameState
                 case GROUND_NORMAL:
                     stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, Ground.Type.NORMAL);
                     break;
+                case GROUND_SPINE:
+                    stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, Ground.Type.SPINE);
                 case GROUND_INVISIBLE:
                     stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, Ground.Type.INVISIBLE);
                     break;

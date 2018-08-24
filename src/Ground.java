@@ -116,6 +116,9 @@ public class Ground extends GameObject
             case NORMAL:
                 im.drawGround(getDiX(), getDiY(), width, height, position);
                 break;
+            case SPINE:
+                im.drawSpine(getDiX(), getDiY(), width, height, position);
+                break;
             case INVISIBLE:
                 break;
         }
@@ -129,6 +132,9 @@ public class Ground extends GameObject
         {
             case NORMAL:
                 im.drawGround(getDiX(), getDiY(), width, height, position);
+                break;
+            case SPINE:
+                im.drawSpine(getDiX(), getDiY(), width, height, position);
                 break;
             case INVISIBLE:
                 g.setColor(Color.red);

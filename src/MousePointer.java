@@ -11,7 +11,7 @@ public class MousePointer extends GameObject
 {
     public enum Type
     {
-        DELETE, GROUND_NORMAL, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL, JOINT_BEE_AIM, GLASS1, GLASS2, GLASS3, GLASS4, CHERRY, HEART;
+        DELETE, GROUND_NORMAL, GROUND_SPINE, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL, JOINT_BEE_AIM, GLASS1, GLASS2, GLASS3, GLASS4, CHERRY, HEART;
 
         public Type next()
         {
@@ -72,6 +72,9 @@ public class MousePointer extends GameObject
         {
             case GROUND_NORMAL:
                 im.drawGround(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH, new Ground.Position());
+                break;
+            case GROUND_SPINE:
+                im.drawSpine(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH, new Ground.Position());
                 break;
             case GROUND_INVISIBLE:
                 g.setColor(Color.red);

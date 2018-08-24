@@ -314,6 +314,11 @@ public class ObjectPool
                         {
                             player.boundUp(ground.abY - ground.height / 2, bound);
                         }
+
+                        if (ground.getType() == Ground.Type.SPINE)
+                        {
+                            score.subHeart();
+                        }
                     }
                     else if (player.abX + player.height / 2 > ground.abX - ground.width / 2
                             && player.abX - player.height / 2 < ground.abX + ground.width / 2
@@ -327,6 +332,11 @@ public class ObjectPool
                         else
                         {
                             player.boundLeft(ground.abX - ground.width / 2, bound);
+                        }
+
+                        if (ground.getType() == Ground.Type.SPINE)
+                        {
+                            score.subHeart();
                         }
                     }
                 }

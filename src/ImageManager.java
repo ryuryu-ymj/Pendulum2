@@ -298,6 +298,50 @@ public class ImageManager
      */
     public void drawSpine(float x, float y, float width, float height, Ground.Position position)
     {
+        if (position.hasTop && position.hasBottom)
+        {
+            spineMiddle.setCenterOfRotation(width / 2, height / 2);
+            spineMiddle.setRotation(90);
+            spineMiddle.draw(x - width / 2, y - height / 2, width, height);
+            return;
+        }
+        else if (position.hasTop)
+        {
+            spineEdge.setCenterOfRotation(width / 2, height / 2);
+            spineEdge.setRotation(270);
+            spineEdge.draw(x - width / 2, y - height / 2, width, height);
+            return;
+        }
+        else if (position.hasBottom)
+        {
+            spineEdge.setCenterOfRotation(width / 2, height / 2);
+            spineEdge.setRotation(90);
+            spineEdge.draw(x - width / 2, y - height / 2, width, height);
+            return;
+        }
+
+        if (position.hasLeft && position.hasRight)
+        {
+            spineMiddle.setRotation(0);
+            spineMiddle.draw(x - width / 2, y - height / 2, width, height);
+            return;
+        }
+        else if (position.hasLeft)
+        {
+            spineEdge.setCenterOfRotation(width / 2, height / 2);
+            spineEdge.setRotation(180);
+            spineEdge.draw(x - width / 2, y - height / 2, width, height);
+            return;
+        }
+        else if (position.hasRight)
+        {
+            spineEdge.setRotation(0);
+            spineEdge.draw(x - width / 2, y - height / 2, width, height);
+            return;
+        }
+
+        spineMiddle.setRotation(0);
+        spineMiddle.draw(x - width / 2, y - height / 2, width, height);
     }
 
     /**

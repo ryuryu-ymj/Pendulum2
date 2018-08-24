@@ -455,6 +455,16 @@ ground,-390,-690,INVISIBLE,false,true,false,true
 ground,-330,-690,INVISIBLE,false,false,true,true
 ground,-270,-690,INVISIBLE,false,false,true,true
 ground,-210,-690,INVISIBLE,false,false,true,true
+ground,450,-270,SPINE,false,true,false,false
+ground,450,-210,SPINE,true,true,false,false
+ground,450,-150,SPINE,true,true,false,false
+ground,450,-90,SPINE,true,true,false,false
+ground,450,-30,SPINE,true,true,false,false
+ground,450,30,SPINE,true,true,false,false
+ground,450,90,SPINE,true,true,false,false
+ground,450,150,SPINE,true,true,false,false
+ground,450,210,SPINE,true,true,false,false
+ground,450,270,SPINE,true,false,false,false
 joint,810,-330,NORMAL
 joint,1290,150,NORMAL
 joint,330,-90,NORMAL
