@@ -149,12 +149,14 @@ public class ImageManager
      * @param width  横幅
      * @param height 縦幅
      * @param angle  角度　ラジアン
+     * @param alpha  透明度
      */
-    public void drawPlayer(float x, float y, float width, float height, float angle)
+    public void drawPlayer(float x, float y, float width, float height, float angle, float alpha)
     {
         float margin = 59 * width / (player.getWidth() - 59 * 2);
         player.setCenterOfRotation(width / 2 + margin, height / 2 + margin);
         player.setRotation(angle);
+        player.setAlpha(alpha);
         player.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
     }
 
@@ -223,11 +225,11 @@ public class ImageManager
     /**
      * ground の画像を表示する
      *
-     * @param x      中心点のx座標
-     * @param y      中心点のy座標
-     * @param width  横幅
-     * @param height 縦幅
-     * @param position   種類
+     * @param x        中心点のx座標
+     * @param y        中心点のy座標
+     * @param width    横幅
+     * @param height   縦幅
+     * @param position 種類
      */
     public void drawGround(float x, float y, float width, float height, Ground.Position position)
     {
@@ -290,11 +292,11 @@ public class ImageManager
     /**
      * spine トゲトゲのつた の画像を表示する
      *
-     * @param x      中心点のx座標
-     * @param y      中心点のy座標
-     * @param width  横幅
-     * @param height 縦幅
-     * @param position   種類
+     * @param x        中心点のx座標
+     * @param y        中心点のy座標
+     * @param width    横幅
+     * @param height   縦幅
+     * @param position 種類
      */
     public void drawSpine(float x, float y, float width, float height, Ground.Position position)
     {

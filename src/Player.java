@@ -1,4 +1,3 @@
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -18,7 +17,12 @@ public class Player extends GameObject
      * 12時から時計回り　ラジアン
      */
     private double angle;
-    private final int speedMax = 11;
+    private final int SPEED_MAX = 11;
+    /**
+     * 攻撃を受けるかどうか
+     */
+    private boolean canBeDamaged;
+    private int counter;
 
     Player(int x, int y, ObjectPool objectPool)
     {
@@ -40,6 +44,8 @@ public class Player extends GameObject
         speedY = 0;
         angle = 0;
         active = true;
+        canBeDamaged = true;
+        counter = 0;
     }
 
     /**
@@ -137,6 +143,15 @@ public class Player extends GameObject
         return a;
     }
 
+    /**
+     * ダメージを受けると，一定時間受けなくなる
+     */
+    public void damage()
+    {
+        counter = 100;
+        canBeDamaged = false;
+    }
+
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
@@ -144,21 +159,21 @@ public class Player extends GameObject
         speedY += 0.1;
 
         // 速度の出過ぎを防止
-        if (speedX > speedMax)
+        if (speedX > SPEED_MAX)
         {
-            speedX = speedMax;
+            speedX = SPEED_MAX;
         }
-        else if (speedX < -speedMax)
+        else if (speedX < -SPEED_MAX)
         {
-            speedX = -speedMax;
+            speedX = -SPEED_MAX;
         }
-        if (speedY > speedMax)
+        if (speedY > SPEED_MAX)
         {
-            speedY = speedMax;
+            speedY = SPEED_MAX;
         }
-        else if (speedY < -speedMax)
+        else if (speedY < -SPEED_MAX)
         {
-            speedY = -speedMax;
+            speedY = -SPEED_MAX;
         }
 
         abX = abX + speedX;
@@ -183,6 +198,16 @@ public class Player extends GameObject
         angle += deltaAngle / 30;
 
         changeToDisplayPoint(cameraX, cameraY);
+
+
+        if (counter > 0)
+        {
+            counter--;
+        }
+        else
+        {
+            canBeDamaged = true;
+        }
     }
 
     @Override
@@ -190,6 +215,18 @@ public class Player extends GameObject
     {
         /*g.setColor(Color.orange);
         g.drawOval((int) getDiX() - RADIUS, (int) getDiY() - RADIUS, RADIUS * 2, RADIUS * 2);*/
-        im.drawPlayer(getDiX(), getDiY(), radius * 2, radius * 2, (float) Math.toDegrees(angle));
+        if (canBeDamaged)
+        {
+            im.drawPlayer(getDiX(), getDiY(), radius * 2, radius * 2, (float) Math.toDegrees(angle), 1);
+        }
+        else
+        {
+            im.drawPlayer(getDiX(), getDiY(), radius * 2, radius * 2, (float) Math.toDegrees(angle), 0.5f);
+        }
+    }
+
+    public boolean isCanBeDamaged()
+    {
+        return canBeDamaged;
     }
 }

@@ -44,7 +44,7 @@ public abstract class GameObject
     /**
      * ObjectPoolクラスのインスタンス
      */
-    public ObjectPool objectPool;
+    protected ObjectPool objectPool;
 
     GameObject(ObjectPool objectPool)
     {

@@ -322,8 +322,12 @@ public class ObjectPool
 
                         if (ground.getType() == Ground.Type.SPINE)
                         {
-                            score.subHeart();
-                            damageEffect.start();
+                            if (player.isCanBeDamaged())
+                            {
+                                score.subHeart();
+                                damageEffect.start();
+                                player.damage();
+                            }
                         }
                     }
                     else if (player.abX + player.height / 2 > ground.abX - ground.width / 2
@@ -342,8 +346,12 @@ public class ObjectPool
 
                         if (ground.getType() == Ground.Type.SPINE)
                         {
-                            score.subHeart();
-                            damageEffect.start();
+                            if (player.isCanBeDamaged())
+                            {
+                                score.subHeart();
+                                damageEffect.start();
+                                player.damage();
+                            }
                         }
                     }
                 }
@@ -388,8 +396,12 @@ public class ObjectPool
                 if (getDistance(player, bullet) < player.width / 2 + bullet.width / 2)
                 {
                     bullet.active = false;
-                    score.subHeart();
-                    damageEffect.start();
+                    if (player.isCanBeDamaged())
+                    {
+                        score.subHeart();
+                        damageEffect.start();
+                        player.damage();
+                    }
                 }
             }
         }
