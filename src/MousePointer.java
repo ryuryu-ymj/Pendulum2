@@ -11,7 +11,7 @@ public class MousePointer extends GameObject
 {
     public enum Type
     {
-        DELETE, GROUND_NORMAL, GROUND_SPINE, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL, JOINT_BEE_AIM, GLASS1, GLASS2, GLASS3, GLASS4, CHERRY, HEART;
+        DELETE, GROUND_NORMAL, GROUND_SPINE, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL, JOINT_BEE_AIM, JOINT_BEE_ROTATE, GLASS1, GLASS2, GLASS3, GLASS4, CHERRY, HEART;
 
         public Type next()
         {
@@ -89,6 +89,11 @@ public class MousePointer extends GameObject
                 break;
             case JOINT_BEE_AIM:
                 im.drawBee(getDiX(), getDiY(), Joint.RADIUS * 2, Joint.RADIUS * 2, 90);
+                break;
+            case JOINT_BEE_ROTATE:
+                im.drawBee(getDiX(), getDiY(), Joint.RADIUS * 2, Joint.RADIUS * 2, 90);
+                g.setColor(Color.red);
+                g.drawOval(getDiX() - 40, getDiY() - 40, 80, 80);
                 break;
             case GLASS1:
                 im.drawGlass1(getDiX(), getDiY(), BackObject.Type.GLASS1.WIDTH, BackObject.Type.GLASS1.HEIGHT);

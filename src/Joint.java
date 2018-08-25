@@ -40,7 +40,7 @@ public class Joint extends GameObject
 
     public enum Type
     {
-        NORMAL, GOAL, BEE_AIM
+        NORMAL, GOAL, BEE_AIM, BEE_ROTATE
     }
 
     Joint(Player player, ObjectPool objectPool)
@@ -59,6 +59,13 @@ public class Joint extends GameObject
             {
                 case BEE_AIM:
                     angle = (float) Math.toDegrees(Math.atan2(player.abY - abY, player.abX - abX));
+                    if (counter % 50 == 0)
+                    {
+                        fireBullet(angle);
+                    }
+                    break;
+                case BEE_ROTATE:
+                    angle = counter;
                     if (counter % 50 == 0)
                     {
                         fireBullet(angle);
@@ -111,6 +118,7 @@ public class Joint extends GameObject
                 g.drawOval(getDiX() - Joint.RADIUS, getDiY() - Joint.RADIUS, Joint.RADIUS * 2, Joint.RADIUS * 2);
                 break;
             case BEE_AIM:
+            case BEE_ROTATE:
                 if (isPlayerLoop)
                 {
                     im.drawJoint(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2);
@@ -133,6 +141,7 @@ public class Joint extends GameObject
         this.num = num;
         active = true;
         angle = 0;
+        counter = 0;
     }
 
     public Type getType()
