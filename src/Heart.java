@@ -5,33 +5,11 @@ import org.newdawn.slick.Graphics;
  * ハートクラス<br>
  * アイテム
  */
-public class Heart extends GameObject
+public class Heart extends GameItem
 {
-    /**
-     * 半径
-     */
-    public static final int RADIUS = 20;
-    /**
-     * heart がステージ上のどの heart を演じているのか（heartX の配列番号）
-     */
-    public int num;
-
     Heart(ObjectPool objectPool)
     {
-        super(objectPool);
-        width = RADIUS * 2;
-        height = RADIUS * 2;
-    }
-
-    @Override
-    public void update(GameContainer gc, float cameraX, float cameraY)
-    {
-        if (checkLeaving(0))
-        {
-            active = false;
-            objectPool.isHeartDisplayed[num] = false;
-        }
-        changeToDisplayPoint(cameraX, cameraY);
+        super(Play.DISPLAY_WIDTH - 125, 50, objectPool);
     }
 
     @Override
@@ -40,11 +18,10 @@ public class Heart extends GameObject
         im.drawHeart(getDiX(), getDiY(), width, height);
     }
 
-    public void activate(int abX, int abY, int num)
+    @Override
+    public void disActive()
     {
-        this.abX = abX;
-        this.abY = abY;
-        this.num = num;
-        active = true;
+        active = false;
+        objectPool.isHeartDisplayed[num] = false;
     }
 }

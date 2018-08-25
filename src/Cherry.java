@@ -5,33 +5,11 @@ import org.newdawn.slick.Graphics;
  * チェリークラス<br>
  * アイテム
  */
-public class Cherry extends GameObject
+public class Cherry extends GameItem
 {
-    /**
-     * 半径
-     */
-    public static final int RADIUS = 20;
-    /**
-     * cherry がステージ上のどの cherry を演じているのか（cherryX の配列番号）
-     */
-    public int num;
-
     Cherry(ObjectPool objectPool)
     {
-        super(objectPool);
-        width = RADIUS * 2;
-        height = RADIUS * 2;
-    }
-
-    @Override
-    public void update(GameContainer gc, float cameraX, float cameraY)
-    {
-        if (checkLeaving(0))
-        {
-            active = false;
-            objectPool.isCherryDisplayed[num] = false;
-        }
-        changeToDisplayPoint(cameraX, cameraY);
+        super(Play.DISPLAY_WIDTH - 250, 50, objectPool);
     }
 
     @Override
@@ -40,11 +18,10 @@ public class Cherry extends GameObject
         im.drawCherry(getDiX(), getDiY(), width, height);
     }
 
-    public void activate(int abX, int abY, int num)
+    @Override
+    public void disActive()
     {
-        this.abX = abX;
-        this.abY = abY;
-        this.num = num;
-        active = true;
+        active = false;
+        objectPool.isCherryDisplayed[num] = false;
     }
 }

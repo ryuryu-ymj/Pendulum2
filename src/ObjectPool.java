@@ -365,8 +365,7 @@ public class ObjectPool
             {
                 if (getDistance(player, cherry) < player.width / 2 + cherry.width / 2)
                 {
-                    cherry.active = false;
-                    isCherryDisplayed[cherry.num] = false;
+                    cherry.taken();
                     isCherryTook[cherry.num] = true;
                     score.addCherry();
                 }
@@ -380,8 +379,7 @@ public class ObjectPool
             {
                 if (getDistance(player, heart) < player.width / 2 + heart.width / 2)
                 {
-                    heart.active = false;
-                    isHeartDisplayed[heart.num] = false;
+                    heart.taken();
                     isHeartTook[heart.num] = true;
                     score.addHeart();
                 }
