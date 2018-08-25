@@ -409,6 +409,14 @@ public class ObjectPool
         //playerが一周したとき
         if (wire.playerLoop())
         {
+            if (joints[wire.jointLockedNum].getType() == Joint.Type.HEART_IN)
+            {
+                if (!joints[wire.jointLockedNum].isPlayerLoop)
+                {
+                    score.addHeart();
+                }
+            }
+
             joints[wire.jointLockedNum].isPlayerLoop = true;
             isJointLoopeds[joints[wire.jointLockedNum].num] = true;
             wire.initIsPlayerPass();

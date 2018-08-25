@@ -72,6 +72,9 @@ public class Edit extends GameState
                     break;
                 case JOINT_BEE_ROTATE:
                     stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, Joint.Type.BEE_ROTATE);
+                break;
+                case JOINT_HEART_IN:
+                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, Joint.Type.HEART_IN);
                     break;
                 case GLASS1:
                     stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, BackObject.Type.GLASS1, BackObject.Layer.LAYER0);

@@ -40,7 +40,7 @@ public class Joint extends GameObject
 
     public enum Type
     {
-        NORMAL, GOAL, BEE_AIM, BEE_ROTATE
+        NORMAL, GOAL, BEE_AIM, BEE_ROTATE, HEART_IN
     }
 
     Joint(Player player, ObjectPool objectPool)
@@ -126,6 +126,16 @@ public class Joint extends GameObject
                 else
                 {
                     im.drawBee(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2, angle);
+                }
+                break;
+            case HEART_IN:
+                if (isPlayerLoop)
+                {
+                    im.drawJointHeartOut(getDiX(), getDiY(), Heart.RADIUS * 2, Heart.RADIUS * 2);
+                }
+                else
+                {
+                    im.drawJointHeartIn(getDiX(), getDiY(), Heart.RADIUS * 2, Heart.RADIUS * 2);
                 }
                 break;
         }
