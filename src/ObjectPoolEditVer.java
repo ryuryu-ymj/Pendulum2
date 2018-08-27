@@ -11,6 +11,7 @@ public class ObjectPoolEditVer extends ObjectPool
     @Override
     public void init()
     {
+        player.init(200, 200);
         camera.active = true;
         for (int i = 0; i < isJointDisplayed.length; i++)
         {
@@ -62,6 +63,7 @@ public class ObjectPoolEditVer extends ObjectPool
         updateObjects(cherries, gc);
         updateObjects(hearts, gc);
         updateObjects(grounds, gc);
+        player.changeToDisplayPoint(camera.getX(), camera.getY());
 
         if (camera.active)
         {
@@ -83,5 +85,6 @@ public class ObjectPoolEditVer extends ObjectPool
                 ground.renderEditVer(g, im);
             }
         }
+        player.render(g, im);
     }
 }
