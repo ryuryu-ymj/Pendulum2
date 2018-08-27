@@ -27,13 +27,14 @@ public abstract class GameItem extends GameObject
     {
         if (takenMotionFlag)
         {
-            abX += (TAKEN_X - getDiX() + 100) / 5;
-            abY += (TAKEN_Y - getDiY() - 100) / 5;
+            abX += (TAKEN_X - getDiX() + 100) / 7;
+            abY += (TAKEN_Y - getDiY() - 100) / 7;
 
             if (getDiX() > TAKEN_X && getDiY() < TAKEN_Y)
             {
                 takenMotionFlag = false;
                 disActive();
+                //System.out.println(this.toString() + "disActive");
             }
         }
 
@@ -44,6 +45,9 @@ public abstract class GameItem extends GameObject
         changeToDisplayPoint(cameraX, cameraY);
     }
 
+    /**
+     *
+     */
     public abstract void disActive();
 
     /**
