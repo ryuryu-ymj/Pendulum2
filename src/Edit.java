@@ -53,40 +53,15 @@ public class Edit extends GameState
         {
             switch (mousePointer.type)
             {
-                case GROUND_NORMAL:
-                    stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, Ground.Type.NORMAL);
+                case GROUND:
+                    stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.ground.getType());
                     break;
-                case GROUND_SPINE:
-                    stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, Ground.Type.SPINE);
-                case GROUND_INVISIBLE:
-                    stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, Ground.Type.INVISIBLE);
+                case JOINT:
+                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.joint.getType());
                     break;
-                case JOINT_NORMAL:
-                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, Joint.Type.NORMAL);
-                    break;
-                case JOINT_GOAL:
-                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, Joint.Type.GOAL);
-                    break;
-                case JOINT_BEE_AIM:
-                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, Joint.Type.BEE_AIM);
-                    break;
-                case JOINT_BEE_ROTATE:
-                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, Joint.Type.BEE_ROTATE);
-                break;
-                case JOINT_HEART_IN:
-                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, Joint.Type.HEART_IN);
-                    break;
-                case GLASS1:
-                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, BackObject.Type.GLASS1, BackObject.Layer.LAYER0);
-                    break;
-                case GLASS2:
-                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, BackObject.Type.GLASS2, BackObject.Layer.LAYER0);
-                    break;
-                case GLASS3:
-                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, BackObject.Type.GLASS3, BackObject.Layer.LAYER0);
-                    break;
-                case GLASS4:
-                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, BackObject.Type.GLASS4, BackObject.Layer.LAYER0);
+                case BACK_OBJECT:
+                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.backObject.type
+                            , mousePointer.backObject.layer);
                     break;
                 case CHERRY:
                     stageData.addCherry((int) mousePointer.abX, (int) mousePointer.abY);

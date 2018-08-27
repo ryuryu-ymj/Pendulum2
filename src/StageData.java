@@ -34,6 +34,10 @@ public class StageData
      * joint の型
      */
     private ArrayList<Joint.Type> jointTypes;
+    /**
+     * joint のjointLock有効範囲半径　0なら有効範囲は無限(指定しない)
+     */
+    private ArrayList<Integer> jointLockRadiuses;
 
     /**
      * backObjectの絶対座標（空の場合は-1）
@@ -93,10 +97,10 @@ public class StageData
         groundYs = new ArrayList<>();
         groundTypes = new ArrayList<>();
         groundPositions = new ArrayList<>();
-        //groundTouchNums = new ArrayList<>();
         jointXs = new ArrayList<>();
         jointYs = new ArrayList<>();
         jointTypes = new ArrayList<>();
+        jointLockRadiuses = new ArrayList<>();
         backObjectXs = new ArrayList<>();
         backObjectYs = new ArrayList<>();
         backObjectLayers = new ArrayList<>();
@@ -135,6 +139,7 @@ public class StageData
             jointXs.clear();
             jointYs.clear();
             jointTypes.clear();
+            jointLockRadiuses.clear();
             backObjectXs.clear();
             backObjectYs.clear();
             backObjectTypes.clear();
@@ -173,6 +178,7 @@ public class StageData
                                 jointXs.add(Integer.parseInt(st.nextToken()));
                                 jointYs.add(Integer.parseInt(st.nextToken()));
                                 jointTypes.add(Joint.Type.valueOf(st.nextToken()));
+                                jointLockRadiuses.add(Integer.parseInt(st.nextToken()));
                             }
                             catch (EmptyStackException e)
                             {
@@ -249,7 +255,7 @@ public class StageData
             }
             for (int i = 0; i < jointXs.size(); i++)
             {
-                pw.println("joint," + jointXs.get(i) + "," + jointYs.get(i) + "," + jointTypes.get(i));
+                pw.println("joint," + jointXs.get(i) + "," + jointYs.get(i) + "," + jointTypes.get(i) + "," + jointLockRadiuses.get(i));
             }
             for (int i = 0; i < backObjectXs.size(); i++)
             {
@@ -326,6 +332,16 @@ public class StageData
     public Joint.Type[] getJointTypes()
     {
         return jointTypes.toArray(new Joint.Type[jointTypes.size()]);
+    }
+
+    public int[] getJointLockRadiuses()
+    {
+        int[] jointLockRadiuses = new int[this.jointLockRadiuses.size()];
+        for (int i = 0; i < jointLockRadiuses.length; i++)
+        {
+            jointLockRadiuses[i] = this.jointLockRadiuses.get(i);
+        }
+        return jointLockRadiuses;
     }
 
     public int[] getBackObjectXs()

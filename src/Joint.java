@@ -48,6 +48,7 @@ public class Joint extends GameObject
         super(objectPool);
         this.player = player;
         active = false;
+        type = Type.NORMAL;
     }
 
     @Override
@@ -138,6 +139,12 @@ public class Joint extends GameObject
                     im.drawJointHeartIn(getDiX(), getDiY(), Heart.RADIUS * 2, Heart.RADIUS * 2);
                 }
                 break;
+        }
+
+        if (lockRadius != 0)
+        {
+            g.setColor(Color.blue);
+            g.drawOval((int)getDiX() - lockRadius, (int)getDiY() - lockRadius, lockRadius * 2, lockRadius * 2);
         }
     }
 

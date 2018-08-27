@@ -9,10 +9,17 @@ import org.newdawn.slick.Input;
  */
 public class MousePointer extends GameObject
 {
+    Ground ground;
+    Joint joint;
+    BackObject backObject;
+    Cherry cherry;
+    Heart heart;
+
+    GameObject gameObject;
+
     public enum Type
     {
-        DELETE, GROUND_NORMAL, GROUND_SPINE, GROUND_INVISIBLE, JOINT_NORMAL, JOINT_GOAL, JOINT_BEE_AIM,
-        JOINT_BEE_ROTATE, JOINT_HEART_IN, GLASS1, GLASS2, GLASS3, GLASS4, CHERRY, HEART;
+        GROUND, JOINT, BACK_OBJECT, DELETE, CHERRY, HEART;
 
         public Type next()
         {
@@ -23,12 +30,19 @@ public class MousePointer extends GameObject
             return values()[ordinal() + 1];
         }
     }
+
     public Type type;
 
     MousePointer(ObjectPool objectPool)
     {
         super(objectPool);
-        type = Type.GROUND_NORMAL;
+        type = Type.GROUND;
+        ground = new Ground(objectPool);
+        joint = new Joint(objectPool.player, objectPool);
+        backObject = new BackObject(objectPool);
+        cherry = new Cherry(objectPool);
+        heart = new Heart(objectPool);
+        gameObject = new Ground(objectPool);
     }
 
     @Override
@@ -36,11 +50,13 @@ public class MousePointer extends GameObject
     {
         if (gc.getInput().isKeyPressed(Input.KEY_G))
         {
-            type = Type.GROUND_NORMAL;
+            type = Type.GROUND;
+            gameObject = ground;
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_J))
         {
-            type = Type.JOINT_NORMAL;
+            type = Type.JOINT;
+            gameObject = joint;
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_D))
         {
@@ -48,21 +64,27 @@ public class MousePointer extends GameObject
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_B))
         {
-            type = Type.GLASS1;
+            type = Type.BACK_OBJECT;
+            gameObject = backObject;
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_C))
         {
             type = Type.CHERRY;
+            gameObject = cherry;
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_H))
         {
             type = Type.HEART;
+            gameObject = heart;
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_ENTER))
         {
             type = type.next();
         }
 
+        gameObject.abX = abX;
+        gameObject.abY = abY;
+        gameObject.changeToDisplayPoint(cameraX, cameraY);
         changeToDisplayPoint(cameraX, cameraY);
     }
 
@@ -71,55 +93,12 @@ public class MousePointer extends GameObject
     {
         switch (type)
         {
-            case GROUND_NORMAL:
-                im.drawGround(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH, new Ground.Position());
-                break;
-            case GROUND_SPINE:
-                im.drawSpine(getDiX(), getDiY(), Ground.WIDTH, Ground.WIDTH, new Ground.Position());
-                break;
-            case GROUND_INVISIBLE:
-                g.setColor(Color.red);
-                g.drawRect(getDiX() - Ground.WIDTH / 2, getDiY() - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
-                break;
-            case JOINT_NORMAL:
-                im.drawJoint(getDiX(), getDiY(), Joint.RADIUS * 2, Joint.RADIUS * 2);
-                break;
-            case JOINT_GOAL:
-                g.setColor(Color.red);
-                g.drawOval(getDiX() - Joint.RADIUS, getDiY() - Joint.RADIUS, Joint.RADIUS * 2, Joint.RADIUS * 2);
-                break;
-            case JOINT_BEE_AIM:
-                im.drawBee(getDiX(), getDiY(), Joint.RADIUS * 2, Joint.RADIUS * 2, 90);
-                break;
-            case JOINT_BEE_ROTATE:
-                im.drawBee(getDiX(), getDiY(), Joint.RADIUS * 2, Joint.RADIUS * 2, 90);
-                g.setColor(Color.red);
-                g.drawOval(getDiX() - 40, getDiY() - 40, 80, 80);
-                break;
-            case JOINT_HEART_IN:
-                im.drawJointHeartIn(getDiX(), getDiY(), Heart.RADIUS * 2, Heart.RADIUS * 2);
-                break;
-            case GLASS1:
-                im.drawGlass1(getDiX(), getDiY(), BackObject.Type.GLASS1.WIDTH, BackObject.Type.GLASS1.HEIGHT);
-                break;
-            case GLASS2:
-                im.drawGlass2(getDiX(), getDiY(), BackObject.Type.GLASS2.WIDTH, BackObject.Type.GLASS2.HEIGHT);
-                break;
-            case GLASS3:
-                im.drawGlass3(getDiX(), getDiY(), BackObject.Type.GLASS3.WIDTH, BackObject.Type.GLASS3.HEIGHT);
-                break;
-            case GLASS4:
-                im.drawGlass4(getDiX(), getDiY(), BackObject.Type.GLASS4.WIDTH, BackObject.Type.GLASS4.HEIGHT);
-                break;
-            case CHERRY:
-                im.drawCherry(getDiX(), getDiY(), Cherry.RADIUS * 2, Cherry.RADIUS * 2);
-                break;
-            case HEART:
-                im.drawHeart(getDiX(), getDiY(), Heart.RADIUS * 2, Heart.RADIUS * 2);
-                break;
             case DELETE:
                 g.setColor(Color.red);
                 g.drawOval(getDiX() - Ground.WIDTH / 2, getDiY() - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
+                break;
+            default:
+                gameObject.render(g, im);
                 break;
         }
     }
