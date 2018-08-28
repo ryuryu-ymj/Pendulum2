@@ -476,7 +476,7 @@ public class StageData
         //System.out.println(groundPositions.get(groundPositions.size() - 1).toString());
     }
 
-    public void addJoint(int jointX, int jointY, Joint.Type jointType)
+    public void addJoint(int jointX, int jointY, Joint.Type jointType, int jointLockRadius)
     {
         for (int i = 0; i < jointXs.size(); i++)
         {
@@ -488,6 +488,7 @@ public class StageData
         jointXs.add(jointX);
         jointYs.add(jointY);
         jointTypes.add(jointType);
+        jointLockRadiuses.add(jointLockRadius);
     }
 
     public void addCherry(int cherryX, int cherryY)

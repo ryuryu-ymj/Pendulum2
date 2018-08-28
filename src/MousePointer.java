@@ -17,6 +17,11 @@ public class MousePointer extends GameObject
 
     GameObject gameObject;
 
+    /**
+     * ゲームオブジェクトを置けるかどうか
+     */
+    public boolean canPutObject;
+
     public enum Type
     {
         GROUND, JOINT, BACK_OBJECT, DELETE, CHERRY, HEART;
@@ -33,6 +38,7 @@ public class MousePointer extends GameObject
         cherry = new Cherry(objectPool);
         heart = new Heart(objectPool);
         gameObject = ground;
+        canPutObject = true;
     }
 
     @Override
@@ -111,5 +117,10 @@ public class MousePointer extends GameObject
     {
         this.abX = abX;
         this.abY = abY;
+    }
+
+    public boolean isCanPutObject()
+    {
+        return canPutObject;
     }
 }

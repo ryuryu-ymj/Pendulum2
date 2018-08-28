@@ -77,7 +77,8 @@ public class Play extends GameState
             case PLAY:
                 objectPool.moveGrounds(stageData.getGroundXs(), stageData.getGroundYs()
                         , stageData.getGroundTypes(), stageData.getGroundPositions());
-                objectPool.moveJoints(stageData.getJointXs(), stageData.getJointYs(), stageData.getJointTypes());
+                objectPool.moveJoints(stageData.getJointXs(), stageData.getJointYs(), stageData.getJointTypes(),
+                        stageData.getJointLockRadiuses());
                 objectPool.moveCherries(stageData.getCherryXs(), stageData.getCherryYs());
                 objectPool.moveHearts(stageData.getHeartXs(), stageData.getHeartYs());
                 objectPool.moveBackObjects(stageData.getBackObjectXs(), stageData.getBackObjectYs(), stageData.getBackObjectTypes()

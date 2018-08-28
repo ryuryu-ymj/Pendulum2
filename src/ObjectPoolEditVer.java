@@ -1,5 +1,6 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 
 public class ObjectPoolEditVer extends ObjectPool
 {
@@ -86,5 +87,37 @@ public class ObjectPoolEditVer extends ObjectPool
             }
         }
         player.render(g, im);
+    }
+
+    public void collisionDetection(GameContainer gc)
+    {
+        f:
+        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
+        {
+            for (int i = 0; i < JOINT_MAX; i++)
+            {
+                if (joints[i].active && player.active)
+                {
+                    if (gc.getInput().getMouseX() < joints[i].getDiX() + joints[i].RADIUS * 2 &&
+                            gc.getInput().getMouseX() > joints[i].getDiX() - joints[i].RADIUS * 2)
+                    {
+                        if (gc.getInput().getMouseY() < joints[i].getDiY() + joints[i].RADIUS * 2 &&
+                                gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].RADIUS * 2)
+                        {
+                            if (joints[i].getLockRadius() == 0 || getDistance(player, joints[i]) < joints[i].getLockRadius())
+                            {
+                                wire.jointLockedNum = i;
+                            }
+                            break f;
+                        }
+                    }
+                }
+                if (i == JOINT_MAX - 1)
+                {
+                    wire.init();
+                    //camera.active = false;
+                }
+            }
+        }
     }
 }

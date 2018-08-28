@@ -520,7 +520,7 @@ public class ObjectPool
      * @param jointYs    ground の絶対座標（空の場合は-1）
      * @param jointTypes ground の型
      */
-    public void moveJoints(int[] jointXs, int[] jointYs, Joint.Type[] jointTypes)
+    public void moveJoints(int[] jointXs, int[] jointYs, Joint.Type[] jointTypes, int[] jointLockRadius)
     {
         for (int i = 0; i < jointXs.length; i++)
         {
@@ -528,7 +528,7 @@ public class ObjectPool
             {
                 if (checkEntering(jointXs[i], jointYs[i], joints[0].RADIUS * 2, joints[0].RADIUS * 2, 15))
                 {
-                    if (newJoint(jointXs[i], jointYs[i], jointTypes[i], 0, isJointLoopeds[i], i) != -1)
+                    if (newJoint(jointXs[i], jointYs[i], jointTypes[i], jointLockRadius[i], isJointLoopeds[i], i) != -1)
                     {
                         isJointDisplayed[i] = true;
                     }
