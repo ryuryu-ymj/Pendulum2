@@ -45,6 +45,15 @@ public class Ground extends GameObject
          * 見えない　あたり判定のみ行う
          */
         INVISIBLE;
+
+        public Type next()
+        {
+            if (ordinal() + 1 >= values().length)
+            {
+                return values()[0];
+            }
+            return values()[ordinal() + 1];
+        }
     }
 
     public static class Position

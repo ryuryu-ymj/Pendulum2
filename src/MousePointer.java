@@ -20,17 +20,7 @@ public class MousePointer extends GameObject
     public enum Type
     {
         GROUND, JOINT, BACK_OBJECT, DELETE, CHERRY, HEART;
-
-        public Type next()
-        {
-            if (ordinal() + 1 >= values().length)
-            {
-                return values()[0];
-            }
-            return values()[ordinal() + 1];
-        }
     }
-
     public Type type;
 
     MousePointer(ObjectPool objectPool)
@@ -42,7 +32,7 @@ public class MousePointer extends GameObject
         backObject = new BackObject(objectPool);
         cherry = new Cherry(objectPool);
         heart = new Heart(objectPool);
-        gameObject = new Ground(objectPool);
+        gameObject = ground;
     }
 
     @Override
@@ -79,11 +69,23 @@ public class MousePointer extends GameObject
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_ENTER))
         {
-            type = type.next();
+            switch (type)
+            {
+                case GROUND:
+                    ground.activate((int) abX, (int) abY, ground.getType().next(), new Ground.Position(), 0);
+                    break;
+                case JOINT:
+                    joint.activate((int) abX, (int) abY, joint.getType().next(), joint.getLockRadius(), false, 0);
+                    break;
+                case BACK_OBJECT:
+                    backObject.activate((int) abX, (int) abY, backObject.getType().next(), backObject.getLayer(), 0);
+                    break;
+            }
         }
 
         gameObject.abX = abX;
         gameObject.abY = abY;
+        gameObject.update(gc, cameraX, cameraY);
         gameObject.changeToDisplayPoint(cameraX, cameraY);
         changeToDisplayPoint(cameraX, cameraY);
     }
@@ -97,6 +99,8 @@ public class MousePointer extends GameObject
                 g.setColor(Color.red);
                 g.drawOval(getDiX() - Ground.WIDTH / 2, getDiY() - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
                 break;
+            case GROUND:
+                ground.renderEditVer(g, im);
             default:
                 gameObject.render(g, im);
                 break;

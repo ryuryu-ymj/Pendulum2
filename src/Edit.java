@@ -60,8 +60,8 @@ public class Edit extends GameState
                     stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.joint.getType());
                     break;
                 case BACK_OBJECT:
-                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.backObject.type
-                            , mousePointer.backObject.layer);
+                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.backObject.getType()
+                            , mousePointer.backObject.getLayer());
                     break;
                 case CHERRY:
                     stageData.addCherry((int) mousePointer.abX, (int) mousePointer.abY);

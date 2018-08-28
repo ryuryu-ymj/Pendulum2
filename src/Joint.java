@@ -40,7 +40,16 @@ public class Joint extends GameObject
 
     public enum Type
     {
-        NORMAL, GOAL, BEE_AIM, BEE_ROTATE, HEART_IN
+        NORMAL, GOAL, BEE_AIM, BEE_ROTATE, HEART_IN;
+
+        public Type next()
+        {
+            if (ordinal() + 1 >= values().length)
+            {
+                return values()[0];
+            }
+            return values()[ordinal() + 1];
+        }
     }
 
     Joint(Player player, ObjectPool objectPool)

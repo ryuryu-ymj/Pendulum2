@@ -10,8 +10,8 @@ public class BackObject extends GameObject
      * backObject がステージ上のどの地面を演じているのか（backObjectX の配列番号）
      */
     private int num;
-    Layer layer;
-    Type type;
+    private Layer layer;
+    private Type type;
 
     /**
      * 奥行き
@@ -54,6 +54,15 @@ public class BackObject extends GameObject
         {
             WIDTH = width;
             HEIGHT = height;
+        }
+
+        public Type next()
+        {
+            if (ordinal() + 1 >= values().length)
+            {
+                return values()[0];
+            }
+            return values()[ordinal() + 1];
         }
     }
 
@@ -117,5 +126,15 @@ public class BackObject extends GameObject
         width = type.WIDTH;
         height = type.HEIGHT;
         active = true;
+    }
+
+    public Layer getLayer()
+    {
+        return layer;
+    }
+
+    public Type getType()
+    {
+        return type;
     }
 }
