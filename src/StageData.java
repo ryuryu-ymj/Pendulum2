@@ -504,6 +504,18 @@ public class StageData
         cherryYs.add(cherryY);
     }
 
+    public void resetJointRadius(int jointX, int jointY, int jointLockRadius)
+    {
+        for (int i = 0; i < jointXs.size(); i++)
+        {
+            if (jointX == jointXs.get(i) && jointY == jointYs.get(i))
+            {
+                jointLockRadiuses.set(i, jointLockRadius);
+                System.out.println("reset jointRadius index:" + 1);
+            }
+        }
+    }
+
     public void addHeart(int heartX, int heartY)
     {
         for (int i = 0; i < heartXs.size(); i++)
@@ -585,6 +597,7 @@ public class StageData
                 jointXs.remove(i);
                 jointYs.remove(i);
                 jointTypes.remove(i);
+                jointLockRadiuses.remove(i);
             }
         }
 
@@ -638,6 +651,7 @@ public class StageData
         jointXs.clear();
         jointYs.clear();
         jointTypes.clear();
+        jointLockRadiuses.clear();
         backObjectXs.clear();
         backObjectYs.clear();
         backObjectTypes.clear();

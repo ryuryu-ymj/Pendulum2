@@ -876,14 +876,14 @@ ground,3570,810,NORMAL,true,true,true,false
 ground,3570,750,NORMAL,false,true,true,false
 joint,810,-330,NORMAL,0
 joint,1290,150,NORMAL,0
-joint,330,-90,NORMAL,0
-joint,-30,-90,NORMAL,0
 joint,2670,-330,NORMAL,0
 joint,2310,-90,NORMAL,0
 joint,1710,-90,NORMAL,0
 joint,2310,270,NORMAL,0
 joint,2010,-390,NORMAL,0
 joint,2610,510,GOAL,0
+joint,330,-90,NORMAL,0
+joint,-30,-90,NORMAL,0
 backObject,-30,270,GLASS2,LAYER0
 backObject,90,270,GLASS2,LAYER0
 backObject,210,270,GLASS2,LAYER0

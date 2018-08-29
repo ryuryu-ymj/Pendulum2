@@ -33,6 +33,7 @@ public class ImageManager
     private Image sting;
     private Image spineMiddle;
     private Image spineEdge;
+    private Image cursor;
 
     ImageManager()
     {
@@ -138,6 +139,15 @@ public class ImageManager
             SpriteSheet ss = new SpriteSheet("res/img/spine.png", 100, 100);
             spineEdge = ss.getSubImage(0, 0);
             spineMiddle = ss.getSubImage(1, 0);
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            cursor = new Image("res/img/cursor.png");
         }
         catch (SlickException e)
         {
@@ -469,5 +479,24 @@ public class ImageManager
     {
         float margin = 10 * width / 50;
         jointHeartOut.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
+    }
+
+    /**
+     * cursor の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawCursor(float x, float y, float width, float height)
+    {
+        float margin = 10 * width / 50;
+        cursor.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
+    }
+
+    public Image getCursor()
+    {
+        return cursor;
     }
 }

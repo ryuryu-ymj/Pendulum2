@@ -20,11 +20,11 @@ public class MousePointer extends GameObject
     /**
      * ゲームオブジェクトを置けるかどうか
      */
-    public boolean canPutObject;
+    //public boolean canPutObject;
 
     public enum Type
     {
-        GROUND, JOINT, BACK_OBJECT, DELETE, CHERRY, HEART;
+        GROUND, JOINT, BACK_OBJECT, CHERRY, HEART, DELETE, OPERATE
     }
     public Type type;
 
@@ -38,7 +38,7 @@ public class MousePointer extends GameObject
         cherry = new Cherry(objectPool);
         heart = new Heart(objectPool);
         gameObject = ground;
-        canPutObject = true;
+        //canPutObject = true;
     }
 
     @Override
@@ -73,6 +73,10 @@ public class MousePointer extends GameObject
             type = Type.HEART;
             gameObject = heart;
         }
+        else if (gc.getInput().isKeyPressed(Input.KEY_O))
+        {
+            type = Type.OPERATE;
+        }
         else if (gc.getInput().isKeyPressed(Input.KEY_ENTER))
         {
             switch (type)
@@ -87,6 +91,12 @@ public class MousePointer extends GameObject
                     backObject.activate((int) abX, (int) abY, backObject.getType().next(), backObject.getLayer(), 0);
                     break;
             }
+        }
+
+        //canPutObject = true;
+        if (objectPool.wire.jointLockedNum != -1)
+        {
+            //canPutObject = false;
         }
 
         gameObject.abX = abX;
@@ -105,8 +115,11 @@ public class MousePointer extends GameObject
                 g.setColor(Color.red);
                 g.drawOval(getDiX() - Ground.WIDTH / 2, getDiY() - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
                 break;
+            case OPERATE:
+                break;
             case GROUND:
                 ground.renderEditVer(g, im);
+                break;
             default:
                 gameObject.render(g, im);
                 break;
@@ -117,10 +130,5 @@ public class MousePointer extends GameObject
     {
         this.abX = abX;
         this.abY = abY;
-    }
-
-    public boolean isCanPutObject()
-    {
-        return canPutObject;
     }
 }

@@ -56,44 +56,42 @@ public class Edit extends GameState
 
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
         {
-            if (mousePointer.isCanPutObject())
+            switch (mousePointer.type)
             {
-                switch (mousePointer.type)
-                {
-                    case GROUND:
-                        stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.ground.getType());
-                        break;
-                    case JOINT:
-                        stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.joint.getType(),
-                                mousePointer.joint.getLockRadius());
-                        break;
-                    case BACK_OBJECT:
-                        stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.backObject.getType()
-                                , mousePointer.backObject.getLayer());
-                        break;
-                    case CHERRY:
-                        stageData.addCherry((int) mousePointer.abX, (int) mousePointer.abY);
-                        break;
-                    case HEART:
-                        stageData.addHeart((int) mousePointer.abX, (int) mousePointer.abY);
-                        break;
-                    case DELETE:
-                        stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY);
-                        break;
-                }
-                objectPool.init();
-            }
+                case GROUND:
+                    stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.ground.getType());
+                    break;
+                case JOINT:
+                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.joint.getType(),
+                            mousePointer.joint.getLockRadius());
+                    break;
+                case BACK_OBJECT:
+                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.backObject.getType()
+                            , mousePointer.backObject.getLayer());
+                    break;
+                case CHERRY:
+                    stageData.addCherry((int) mousePointer.abX, (int) mousePointer.abY);
+                    break;
+                case HEART:
+                    stageData.addHeart((int) mousePointer.abX, (int) mousePointer.abY);
+                    break;
+                case DELETE:
+                    stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY);
+                    break;
+                case OPERATE:
+                    if (objectPool.wire.jointLockedNum != -1)
+                    {
+                        int jointLockRadius = ((int) (objectPool.joints[objectPool.wire.jointLockedNum].getDiX() - gc.getInput().getMouseX()))
+                                / Ground.WIDTH * Ground.WIDTH;
+                        Joint joint = objectPool.joints[objectPool.wire.jointLockedNum];
+                        stageData.resetJointRadius((int) joint.abX, (int) joint.abY, jointLockRadius);
+                    }
+                    break;
 
-            mousePointer.canPutObject = true;
-            if (objectPool.wire.jointLockedNum != -1)
-            {
-                mousePointer.canPutObject = false;
-                int jointLockRadius = ((int) (objectPool.joints[objectPool.wire.jointLockedNum].getDiX() - gc.getInput().getMouseX()))
-                        / Ground.WIDTH * Ground.WIDTH;
-                Joint joint = objectPool.joints[objectPool.wire.jointLockedNum];
-                joint.activate((int) joint.abX, (int) joint.abY, joint.getType(), jointLockRadius,
-                        false, 0);
             }
+            //System.out.println(joint.abX + " " + joint.abY);
+
+            objectPool.init();
         }
 
         if (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))

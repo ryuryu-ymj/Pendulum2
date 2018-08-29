@@ -46,6 +46,7 @@ public class Main extends BasicGame
         state = State.Title;
         play.init(gc);
         im = new ImageManager();
+        gc.setMouseCursor(im.getCursor(), 20, 10);
     }
 
     /**
