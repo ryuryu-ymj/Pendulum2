@@ -26,7 +26,7 @@ public class MousePointer extends GameObject
     {
         GROUND, JOINT, BACK_OBJECT, CHERRY, HEART, DELETE, OPERATE
     }
-    public Type type;
+    private Type type;
 
     MousePointer(ObjectPool objectPool)
     {
@@ -93,12 +93,6 @@ public class MousePointer extends GameObject
             }
         }
 
-        //canPutObject = true;
-        if (objectPool.wire.jointLockedNum != -1)
-        {
-            //canPutObject = false;
-        }
-
         gameObject.abX = abX;
         gameObject.abY = abY;
         gameObject.update(gc, cameraX, cameraY);
@@ -130,5 +124,33 @@ public class MousePointer extends GameObject
     {
         this.abX = abX;
         this.abY = abY;
+    }
+
+    public Type getType()
+    {
+        return type;
+    }
+
+    public void setType(Type type)
+    {
+        this.type = type;
+        switch (type)
+        {
+            case GROUND:
+                gameObject = ground;
+                break;
+            case JOINT:
+                gameObject = joint;
+                break;
+            case CHERRY:
+                gameObject = cherry;
+                break;
+            case HEART:
+                gameObject = heart;
+                break;
+            case BACK_OBJECT:
+                gameObject = backObject;
+                break;
+        }
     }
 }

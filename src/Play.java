@@ -69,7 +69,7 @@ public class Play extends GameState
         switch (state)
         {
             case STAGETITLE:
-                if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+                if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
                 {
                     state = State.PLAY;
                 }

@@ -908,7 +908,6 @@ cherry,930,-450
 cherry,810,-510
 cherry,690,-450
 cherry,150,-90
-cherry,-210,-90
 cherry,1290,270
 cherry,2310,-270
 cherry,2490,-90
@@ -925,5 +924,6 @@ cherry,2190,390
 cherry,2310,450
 cherry,2010,-210
 cherry,2430,-210
+cherry,-210,-90
 heart,1290,-450
 heart,2670,-510

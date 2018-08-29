@@ -56,7 +56,7 @@ public class Edit extends GameState
 
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
         {
-            switch (mousePointer.type)
+            switch (mousePointer.getType())
             {
                 case GROUND:
                     stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.ground.getType());
@@ -86,12 +86,20 @@ public class Edit extends GameState
                         Joint joint = objectPool.joints[objectPool.wire.jointLockedNum];
                         stageData.resetJointRadius((int) joint.abX, (int) joint.abY, jointLockRadius);
                     }
+
+                    mousePointer.setType(stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY));
+                    objectPool.init();
                     break;
 
             }
             //System.out.println(joint.abX + " " + joint.abY);
 
             objectPool.init();
+        }
+
+        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
+        {
+            System.out.println(0);
         }
 
         if (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))

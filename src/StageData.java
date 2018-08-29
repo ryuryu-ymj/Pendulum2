@@ -1,3 +1,5 @@
+import jdk.nashorn.internal.scripts.JO;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
@@ -511,7 +513,7 @@ public class StageData
             if (jointX == jointXs.get(i) && jointY == jointYs.get(i))
             {
                 jointLockRadiuses.set(i, jointLockRadius);
-                System.out.println("reset jointRadius index:" + 1);
+                //System.out.println("reset jointRadius index:" + 1);
             }
         }
     }
@@ -544,19 +546,14 @@ public class StageData
         backObjectLayers.add(layer);
     }
 
-    public void deleteObject(int objectX, int objectY)
+    /**
+     *
+     * @param objectX
+     * @param objectY
+     * @return 消されたゲームオブジェクト（該当オブジェクトがない場合OPERATE）
+     */
+    public MousePointer.Type deleteObject(int objectX, int objectY)
     {
-        for (int i = 0; i < groundXs.size(); i++)
-        {
-            if (groundXs.get(i) == objectX && groundYs.get(i) == objectY)
-            {
-                //System.out.println(groundXs.get(i) + " " + groundYs.get(i));
-                groundXs.remove(i);
-                groundYs.remove(i);
-                groundTypes.remove(i);
-                groundPositions.remove(i);
-            }
-        }
         for (int i = 0; i < groundXs.size(); i++)
         {
             if (groundXs.get(i) == objectX)
@@ -589,6 +586,18 @@ public class StageData
                 }
             }
         }
+        for (int i = 0; i < groundXs.size(); i++)
+        {
+            if (groundXs.get(i) == objectX && groundYs.get(i) == objectY)
+            {
+                //System.out.println(groundXs.get(i) + " " + groundYs.get(i));
+                groundXs.remove(i);
+                groundYs.remove(i);
+                groundTypes.remove(i);
+                groundPositions.remove(i);
+                return MousePointer.Type.GROUND;
+            }
+        }
 
         for (int i = 0; i < jointXs.size(); i++)
         {
@@ -598,6 +607,7 @@ public class StageData
                 jointYs.remove(i);
                 jointTypes.remove(i);
                 jointLockRadiuses.remove(i);
+                return MousePointer.Type.JOINT;
             }
         }
 
@@ -608,6 +618,7 @@ public class StageData
                 backObjectXs.remove(i);
                 backObjectYs.remove(i);
                 backObjectTypes.remove(i);
+                return MousePointer.Type.BACK_OBJECT;
             }
         }
 
@@ -617,6 +628,7 @@ public class StageData
             {
                 cherryXs.remove(i);
                 cherryYs.remove(i);
+                return MousePointer.Type.CHERRY;
             }
         }
 
@@ -626,8 +638,12 @@ public class StageData
             {
                 heartXs.remove(i);
                 heartYs.remove(i);
+                return MousePointer.Type.HEART;
             }
         }
+
+        System.out.println(0);
+        return MousePointer.Type.OPERATE;
     }
 
     private void resetGround(int index)
