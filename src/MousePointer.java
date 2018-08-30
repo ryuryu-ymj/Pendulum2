@@ -20,12 +20,13 @@ public class MousePointer extends GameObject
     /**
      * ゲームオブジェクトを置けるかどうか
      */
-    //public boolean canPutObject;
+    public boolean canPutObject;
 
     public enum Type
     {
         GROUND, JOINT, BACK_OBJECT, CHERRY, HEART, DELETE, OPERATE
     }
+
     private Type type;
 
     MousePointer(ObjectPool objectPool)
@@ -38,7 +39,7 @@ public class MousePointer extends GameObject
         cherry = new Cherry(objectPool);
         heart = new Heart(objectPool);
         gameObject = ground;
-        //canPutObject = true;
+        canPutObject = true;
     }
 
     @Override
@@ -98,6 +99,8 @@ public class MousePointer extends GameObject
         gameObject.update(gc, cameraX, cameraY);
         gameObject.changeToDisplayPoint(cameraX, cameraY);
         changeToDisplayPoint(cameraX, cameraY);
+
+        //System.out.println(getClass().toString());
     }
 
     @Override
@@ -131,26 +134,38 @@ public class MousePointer extends GameObject
         return type;
     }
 
-    public void setType(Type type)
+    public void setType(GameObject gameObject)
     {
-        this.type = type;
-        switch (type)
+        if (gameObject == null)
         {
-            case GROUND:
-                gameObject = ground;
+            type = Type.OPERATE;
+            return;
+        }
+
+        this.gameObject = gameObject;
+        switch (gameObject.getClassName())
+        {
+            case "Ground":
+                type = Type.GROUND;
+                this.ground = (Ground) gameObject;
                 break;
-            case JOINT:
-                gameObject = joint;
+            case "Joint":
+                type = Type.JOINT;
+                this.joint = (Joint) gameObject;
                 break;
-            case CHERRY:
-                gameObject = cherry;
+            case "Cherry":
+                type = Type.CHERRY;
+                this.cherry = (Cherry) gameObject;
                 break;
-            case HEART:
-                gameObject = heart;
+            case "Heart":
+                type = Type.HEART;
+                this.heart = (Heart) gameObject;
                 break;
-            case BACK_OBJECT:
-                gameObject = backObject;
+            case "BackObject":
+                type = Type.BACK_OBJECT;
+                this.backObject = (BackObject) gameObject;
                 break;
         }
+        System.out.println(gameObject.getClassName());
     }
 }

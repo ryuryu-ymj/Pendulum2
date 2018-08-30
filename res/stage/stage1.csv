@@ -882,8 +882,8 @@ joint,1710,-90,NORMAL,0
 joint,2310,270,NORMAL,0
 joint,2010,-390,NORMAL,0
 joint,2610,510,GOAL,0
-joint,330,-90,NORMAL,0
 joint,-30,-90,NORMAL,0
+joint,330,-90,NORMAL,0
 backObject,-30,270,GLASS2,LAYER0
 backObject,90,270,GLASS2,LAYER0
 backObject,210,270,GLASS2,LAYER0
@@ -907,7 +907,6 @@ cherry,990,-330
 cherry,930,-450
 cherry,810,-510
 cherry,690,-450
-cherry,150,-90
 cherry,1290,270
 cherry,2310,-270
 cherry,2490,-90
@@ -925,5 +924,6 @@ cherry,2310,450
 cherry,2010,-210
 cherry,2430,-210
 cherry,-210,-90
+cherry,150,-90
 heart,1290,-450
 heart,2670,-510

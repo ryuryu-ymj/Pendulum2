@@ -550,52 +550,55 @@ public class StageData
      *
      * @param objectX
      * @param objectY
-     * @return 消されたゲームオブジェクト（該当オブジェクトがない場合OPERATE）
+     * @return 消されたゲームオブジェクト（該当オブジェクトがない場合null）
      */
-    public MousePointer.Type deleteObject(int objectX, int objectY)
+    public GameObject deleteObject(int objectX, int objectY, ObjectPool objectPool)
     {
-        for (int i = 0; i < groundXs.size(); i++)
-        {
-            if (groundXs.get(i) == objectX)
-            {
-                if (groundYs.get(i) == objectY + Ground.WIDTH)
-                {
-                    //bottom
-                    resetGround(i);
-                }
-                else if (groundYs.get(i) == objectY - Ground.WIDTH)
-                {
-                    //top
-                    resetGround(i);
-                }
-            }
-            else if (groundXs.get(i) == objectX + Ground.WIDTH)
-            {
-                if (groundYs.get(i) == objectY)
-                {
-                    //right
-                    resetGround(i);
-                }
-            }
-            else if (groundXs.get(i) == objectX - Ground.WIDTH)
-            {
-                if (groundYs.get(i) == objectY)
-                {
-                    //left
-                    resetGround(i);
-                }
-            }
-        }
         for (int i = 0; i < groundXs.size(); i++)
         {
             if (groundXs.get(i) == objectX && groundYs.get(i) == objectY)
             {
                 //System.out.println(groundXs.get(i) + " " + groundYs.get(i));
+                Ground ground = new Ground(objectPool);
+                ground.activate(groundXs.get(i), groundYs.get(i), groundTypes.get(i), groundPositions.get(i), 0);
                 groundXs.remove(i);
                 groundYs.remove(i);
                 groundTypes.remove(i);
                 groundPositions.remove(i);
-                return MousePointer.Type.GROUND;
+
+                for (int j = 0; j < groundXs.size(); j++)
+                {
+                    if (groundXs.get(j) == objectX)
+                    {
+                        if (groundYs.get(j) == objectY + Ground.WIDTH)
+                        {
+                            //bottom
+                            resetGround(j);
+                        }
+                        else if (groundYs.get(j) == objectY - Ground.WIDTH)
+                        {
+                            //top
+                            resetGround(j);
+                        }
+                    }
+                    else if (groundXs.get(j) == objectX + Ground.WIDTH)
+                    {
+                        if (groundYs.get(j) == objectY)
+                        {
+                            //right
+                            resetGround(j);
+                        }
+                    }
+                    else if (groundXs.get(j) == objectX - Ground.WIDTH)
+                    {
+                        if (groundYs.get(j) == objectY)
+                        {
+                            //left
+                            resetGround(j);
+                        }
+                    }
+                }
+                return ground;
             }
         }
 
@@ -603,11 +606,13 @@ public class StageData
         {
             if (objectX == jointXs.get(i) && objectY == jointYs.get(i))
             {
+                Joint joint = new Joint(new  Player(0, 0, objectPool), objectPool);
+                joint.activate(jointXs.get(i), jointYs.get(i), jointTypes.get(i), jointLockRadiuses.get(i), false, 0);
                 jointXs.remove(i);
                 jointYs.remove(i);
                 jointTypes.remove(i);
                 jointLockRadiuses.remove(i);
-                return MousePointer.Type.JOINT;
+                return joint;
             }
         }
 
@@ -615,10 +620,12 @@ public class StageData
         {
             if (objectX == backObjectXs.get(i) && objectY == backObjectYs.get(i))
             {
+                BackObject backObject = new BackObject(objectPool);
+                backObject.activate(backObjectXs.get(i), backObjectYs.get(i), backObjectTypes.get(i), backObjectLayers.get(i), 0);
                 backObjectXs.remove(i);
                 backObjectYs.remove(i);
                 backObjectTypes.remove(i);
-                return MousePointer.Type.BACK_OBJECT;
+                return backObject;
             }
         }
 
@@ -626,9 +633,11 @@ public class StageData
         {
             if (objectX == cherryXs.get(i) && objectY == cherryYs.get(i))
             {
+                Cherry cherry = new Cherry(objectPool);
+                cherry.activate(cherryXs.get(i), cherryYs.get(i), 0);
                 cherryXs.remove(i);
                 cherryYs.remove(i);
-                return MousePointer.Type.CHERRY;
+                return cherry;
             }
         }
 
@@ -636,14 +645,15 @@ public class StageData
         {
             if (objectX == heartXs.get(i) && objectY == heartYs.get(i))
             {
+                Heart heart = new Heart(objectPool);
+                heart.activate(heartXs.get(i), heartYs.get(i), 0);
                 heartXs.remove(i);
                 heartYs.remove(i);
-                return MousePointer.Type.HEART;
+                return heart;
             }
         }
 
-        System.out.println(0);
-        return MousePointer.Type.OPERATE;
+        return null;
     }
 
     private void resetGround(int index)

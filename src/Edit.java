@@ -56,50 +56,39 @@ public class Edit extends GameState
 
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
         {
-            switch (mousePointer.getType())
+            if (mousePointer.canPutObject)
             {
-                case GROUND:
-                    stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.ground.getType());
-                    break;
-                case JOINT:
-                    stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.joint.getType(),
-                            mousePointer.joint.getLockRadius());
-                    break;
-                case BACK_OBJECT:
-                    stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.backObject.getType()
-                            , mousePointer.backObject.getLayer());
-                    break;
-                case CHERRY:
-                    stageData.addCherry((int) mousePointer.abX, (int) mousePointer.abY);
-                    break;
-                case HEART:
-                    stageData.addHeart((int) mousePointer.abX, (int) mousePointer.abY);
-                    break;
-                case DELETE:
-                    stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY);
-                    break;
-                case OPERATE:
-                    if (objectPool.wire.jointLockedNum != -1)
-                    {
-                        int jointLockRadius = ((int) (objectPool.joints[objectPool.wire.jointLockedNum].getDiX() - gc.getInput().getMouseX()))
-                                / Ground.WIDTH * Ground.WIDTH;
-                        Joint joint = objectPool.joints[objectPool.wire.jointLockedNum];
-                        stageData.resetJointRadius((int) joint.abX, (int) joint.abY, jointLockRadius);
-                    }
+                addStageData();
+                switch (mousePointer.getType())
+                {
+                    case DELETE:
+                        stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY, objectPool);
+                        break;
+                    case OPERATE:
+                        if (objectPool.wire.jointLockedNum != -1)
+                        {
+                            int jointLockRadius = ((int) (objectPool.joints[objectPool.wire.jointLockedNum].getDiX() - gc.getInput().getMouseX()))
+                                    / Ground.WIDTH * Ground.WIDTH;
+                            Joint joint = objectPool.joints[objectPool.wire.jointLockedNum];
+                            stageData.resetJointRadius((int) joint.abX, (int) joint.abY, jointLockRadius);
+                        }
 
-                    mousePointer.setType(stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY));
-                    objectPool.init();
-                    break;
-
+                        mousePointer.setType(stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY, objectPool));
+                        mousePointer.canPutObject = false;
+                        break;
+                }
+                objectPool.init();
             }
-            //System.out.println(joint.abX + " " + joint.abY);
-
-            objectPool.init();
         }
-
-        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
+        else
         {
-            System.out.println(0);
+            if (!mousePointer.canPutObject)
+            {
+                mousePointer.canPutObject = true;
+                addStageData();
+                mousePointer.setType(null);
+                objectPool.init();
+            }
         }
 
         if (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))
@@ -137,16 +126,40 @@ public class Edit extends GameState
         counter++;
     }
 
-    /**
-     * ステップごとの描画処理.
-     */
-    public void render(GameContainer gc, Graphics g, ImageManager im)
-            throws SlickException
+    private void addStageData()
     {
-        grid.render(g, im);
-        objectPool.render(g, im);
-        mousePointer.render(g, im);
-        g.setColor(Color.black);
-        g.drawString("stage" + (stageNum + 1), 100, 100);
+        switch (mousePointer.getType())
+        {
+            case GROUND:
+                stageData.addGround((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.ground.getType());
+                break;
+            case JOINT:
+                stageData.addJoint((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.joint.getType(),
+                        mousePointer.joint.getLockRadius());
+                break;
+            case BACK_OBJECT:
+                stageData.addBackObject((int) mousePointer.abX, (int) mousePointer.abY, mousePointer.backObject.getType()
+                        , mousePointer.backObject.getLayer());
+                break;
+            case CHERRY:
+                stageData.addCherry((int) mousePointer.abX, (int) mousePointer.abY);
+                break;
+            case HEART:
+                stageData.addHeart((int) mousePointer.abX, (int) mousePointer.abY);
+                break;
+        }
     }
-}
+
+        /**
+         * ステップごとの描画処理.
+         */
+        public void render (GameContainer gc, Graphics g, ImageManager im)
+            throws SlickException
+        {
+            grid.render(g, im);
+            objectPool.render(g, im);
+            mousePointer.render(g, im);
+            g.setColor(Color.black);
+            g.drawString("stage" + (stageNum + 1), 100, 100);
+        }
+    }

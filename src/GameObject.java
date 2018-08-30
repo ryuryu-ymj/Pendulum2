@@ -1,6 +1,8 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+import java.util.StringTokenizer;
+
 /**
  * ゲームオブジェクトの抽象クラス.
  */
@@ -107,5 +109,11 @@ public abstract class GameObject
     public float getDiY()
     {
         return diY;
+    }
+
+    public String getClassName()
+    {
+        String[] string = getClass().toString().split(" ", 2);
+        return string[1];
     }
 }
