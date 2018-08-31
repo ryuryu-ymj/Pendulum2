@@ -69,6 +69,7 @@ public class ObjectPoolEditVer extends ObjectPool
         if (camera.active)
         {
             camera.moveByKey(gc);
+            camera.moveByMouse(gc);
         }
     }
 

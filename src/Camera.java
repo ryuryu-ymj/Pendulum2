@@ -54,6 +54,30 @@ public class Camera
         }
     }
 
+    public void moveByMouse(GameContainer gc)
+    {
+        final int mouseX = gc.getInput().getMouseX();
+        final int mouseY = gc.getInput().getMouseY();
+        final float speed = 0.1f;
+        if (mouseX < 60)
+        {
+            x -= (60 - mouseX) * speed;
+        }
+        else if (mouseX > Play.DISPLAY_WIDTH - 60)
+        {
+            x += (mouseX - (Play.DISPLAY_WIDTH - 60)) * speed;
+        }
+
+        if (mouseY < 60)
+        {
+            y -= (60 - mouseY) * speed;
+        }
+        else if (mouseY > Play.DISPLAY_HEIGHT - 60)
+        {
+            y += (mouseY - (Play.DISPLAY_HEIGHT - 60)) * speed;
+        }
+    }
+
     public float getX()
     {
         return x;
