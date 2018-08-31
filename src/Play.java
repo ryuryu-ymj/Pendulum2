@@ -8,7 +8,7 @@ public class Play extends GameState
     /**
      * 画面の横幅
      */
-    public static final int DISPLAY_WIDTH = 1400;
+    public static final int DISPLAY_WIDTH = 1200;
     /**
      * 画面の縦幅
      */
