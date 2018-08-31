@@ -493,14 +493,12 @@ ground,2010,630,NORMAL,true,true,true,true
 ground,2010,690,NORMAL,true,true,true,true
 ground,2070,690,NORMAL,true,true,true,true
 ground,2250,-930,INVISIBLE,false,false,true,true
-ground,2730,-870,NORMAL,true,true,false,false
+ground,2730,-870,NORMAL,false,true,false,false
 ground,2730,-810,NORMAL,true,true,false,false
 ground,2730,-750,NORMAL,true,true,false,false
 ground,2730,-690,NORMAL,true,true,false,false
 ground,2730,-630,NORMAL,true,true,false,false
-ground,2610,-930,NORMAL,false,false,false,true
-ground,2670,-930,NORMAL,false,false,true,true
-ground,2550,-930,INVISIBLE,false,false,true,false
+ground,2550,-930,INVISIBLE,false,false,true,true
 ground,2490,-930,INVISIBLE,false,false,true,true
 ground,2430,-930,INVISIBLE,false,false,true,true
 ground,2370,-930,INVISIBLE,false,false,true,true
@@ -776,7 +774,6 @@ ground,1950,1110,NORMAL,true,false,true,true
 ground,2010,1110,NORMAL,true,false,true,true
 ground,2310,750,NORMAL,false,true,true,true
 ground,2250,690,NORMAL,false,true,true,false
-ground,2730,-930,NORMAL,false,true,true,false
 ground,2790,150,NORMAL,false,true,true,false
 ground,2790,210,NORMAL,true,true,true,true
 ground,2850,210,NORMAL,false,true,true,false
@@ -874,9 +871,11 @@ ground,3570,870,NORMAL,true,true,true,false
 ground,3510,750,NORMAL,false,true,true,true
 ground,3570,810,NORMAL,true,true,true,false
 ground,3570,750,NORMAL,false,true,true,false
+ground,2610,-930,INVISIBLE,false,false,true,true
+ground,2670,-930,INVISIBLE,false,false,true,true
+ground,2730,-930,INVISIBLE,false,false,true,false
 joint,810,-330,NORMAL,0
 joint,1290,150,NORMAL,0
-joint,2670,-330,NORMAL,0
 joint,2310,-90,NORMAL,0
 joint,1710,-90,NORMAL,0
 joint,2310,270,NORMAL,0
@@ -926,4 +925,3 @@ cherry,2430,-210
 cherry,150,-90
 cherry,-210,-90
 heart,1290,-450
-heart,2670,-510
