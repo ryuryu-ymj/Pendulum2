@@ -18,11 +18,7 @@ public class Player extends GameObject
      */
     private double angle;
     private final int SPEED_MAX = 11;
-    /**
-     * 攻撃を受けるかどうか
-     */
-    private boolean canBeDamaged;
-    private int counter;
+    public boolean isDead;
 
     Player(int x, int y, ObjectPool objectPool)
     {
@@ -44,8 +40,7 @@ public class Player extends GameObject
         speedY = 0;
         angle = 0;
         active = true;
-        canBeDamaged = true;
-        counter = 0;
+        isDead = false;
     }
 
     /**
@@ -143,12 +138,9 @@ public class Player extends GameObject
         return a;
     }
 
-    /**
-     * ダメージを受けると，一定時間受けなくなる
-     */
     public void damage()
     {
-        active = false;
+        isDead = true;
     }
 
     @Override
@@ -197,16 +189,6 @@ public class Player extends GameObject
         angle += deltaAngle / 30;
 
         changeToDisplayPoint(cameraX, cameraY);
-
-
-        if (counter > 0)
-        {
-            counter--;
-        }
-        else
-        {
-            canBeDamaged = true;
-        }
     }
 
     @Override
@@ -214,18 +196,6 @@ public class Player extends GameObject
     {
         /*g.setColor(Color.orange);
         g.drawOval((int) getDiX() - RADIUS, (int) getDiY() - RADIUS, RADIUS * 2, RADIUS * 2);*/
-        if (canBeDamaged)
-        {
-            im.drawPlayer(getDiX(), getDiY(), radius * 2, radius * 2, (float) Math.toDegrees(angle), 1);
-        }
-        else
-        {
-            im.drawPlayer(getDiX(), getDiY(), radius * 2, radius * 2, (float) Math.toDegrees(angle), 0.5f);
-        }
-    }
-
-    public boolean isCanBeDamaged()
-    {
-        return canBeDamaged;
+        im.drawPlayer(getDiX(), getDiY(), radius * 2, radius * 2, (float) Math.toDegrees(angle), 1);
     }
 }

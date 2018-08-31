@@ -1,4 +1,5 @@
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Sound;
 
 public class Score
 {
@@ -29,13 +30,14 @@ public class Score
         font.drawString("x " + heartScore, Play.DISPLAY_WIDTH - 100, 50);
     }
 
-    public void addCherry()
+    public void addCherry(Sound sound)
     {
         cherryScore++;
         if (cherryScore >= CHERRY_MAX)
         {
             cherryScore = 0;
             heartScore++;
+            sound.play();
         }
     }
 

@@ -50,7 +50,7 @@ public class Main extends BasicGame
         play = new Play();
         edit = new Edit();
         state = State.Title;
-        play.init(gc);
+        title.init(gc);
         im = new ImageManager();
         gc.setMouseCursor(im.getCursor(), 20, 10);
     }
@@ -93,6 +93,7 @@ public class Main extends BasicGame
             }
             else if (gc.getInput().isKeyPressed(Input.KEY_E))
             {
+                play.finish();
                 edit.initStage(play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
                 state = State.Edit;
             }

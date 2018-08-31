@@ -117,8 +117,9 @@ public class StageData
      * ステージのデータを読み込む
      *
      * @param stageNum ステージ番号(0から)
+     * @return 読み込みに成功したか
      */
-    public void loadStageDate(int stageNum)
+    public boolean loadStageDate(int stageNum)
     {
         try
         {
@@ -126,9 +127,7 @@ public class StageData
             if (!file.exists())
             {
                 System.err.println("ファイルが存在しません stage" + (stageNum + 1));
-                deleteAllObject();
-                saveStageDate(stageNum);
-                return;
+                return false;
             }
 
             FileReader fr = new FileReader(file);
@@ -236,6 +235,19 @@ public class StageData
         {
             e.printStackTrace();
         }
+
+        return true;
+    }
+
+    /**
+     * 新しいステージデータファイルを作る
+     *
+     * @param stageNum
+     */
+    public void createNewStage(int stageNum)
+    {
+        deleteAllObject();
+        saveStageDate(stageNum);
     }
 
     /**
@@ -547,7 +559,6 @@ public class StageData
     }
 
     /**
-     *
      * @param objectX
      * @param objectY
      * @return 消されたゲームオブジェクト（該当オブジェクトがない場合null）
@@ -606,7 +617,7 @@ public class StageData
         {
             if (objectX == jointXs.get(i) && objectY == jointYs.get(i))
             {
-                Joint joint = new Joint(new  Player(0, 0, objectPool), objectPool);
+                Joint joint = new Joint(new Player(0, 0, objectPool), objectPool);
                 joint.activate(jointXs.get(i), jointYs.get(i), jointTypes.get(i), jointLockRadiuses.get(i), false, 0);
                 jointXs.remove(i);
                 jointYs.remove(i);

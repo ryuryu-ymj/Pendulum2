@@ -17,6 +17,7 @@ public class Play extends GameState
      * フレームカウンタ
      */
     public static int counter;
+    Music bgm;
 
     /**
      * プレイするステージの番号 0から
@@ -32,7 +33,7 @@ public class Play extends GameState
 
     private enum State
     {
-        STAGETITLE, PLAY, GAMEOVER
+        STAGE_TITLE, PLAY, GAMEOVER, KEEP
     }
 
     ObjectPool objectPool;
@@ -49,6 +50,15 @@ public class Play extends GameState
         objectPool.create(objectPool);
         stageData = new StageData();
         playMessage = new PlayMessage();
+        try
+        {
+            bgm = new Music("res/sound/bgm.ogg");
+            bgm.setVolume(0.5f);
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -56,18 +66,17 @@ public class Play extends GameState
      */
     public void init(GameContainer gc)
     {
-        stageNum = 0;
-        stageData.loadStageDate(stageNum);
-        objectPool.init();
-        state = State.STAGETITLE;
+        initStage(0);
     }
 
     public void initStage(int stageNum)
     {
-        this.stageNum = stageNum;
-        stageData.loadStageDate(stageNum);
+        if (stageData.loadStageDate(stageNum))
+        {
+            this.stageNum = stageNum;
+        }
         objectPool.init();
-        state = State.STAGETITLE;
+        state = State.STAGE_TITLE;
     }
 
     /**
@@ -79,10 +88,11 @@ public class Play extends GameState
     {
         switch (state)
         {
-            case STAGETITLE:
+            case STAGE_TITLE:
                 if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
                 {
                     state = State.PLAY;
+                    bgm.loop();
                 }
                 break;
             case PLAY:
@@ -96,26 +106,44 @@ public class Play extends GameState
                         , stageData.getBackObjectLayers());
                 objectPool.collisionDetection(gc);
                 objectPool.update(gc);
+                if (objectPool.isPlayerGoal() || objectPool.isPlayerDead() || objectPool.isPlayerGameOver())
+                {
+                    state = State.KEEP;
+                    counter = 0;
+                    bgm.pause();
+                }
+                break;
+            case KEEP:
                 if (objectPool.isPlayerGoal())
                 {
-                    initStage(stageNum + 1);
-                }
-                else if (objectPool.isPlayerGameOver())
-                {
-                    init(gc);
-                    state = State.GAMEOVER;
+                    if (counter > 90)
+                    {
+                        initStage(stageNum + 1);
+                    }
                 }
                 else if (objectPool.isPlayerDead())
                 {
-                    objectPool.initStage();
-                    state = State.STAGETITLE;
+                    if (counter > 30)
+                    {
+                        objectPool.initStage();
+                        state = State.STAGE_TITLE;
+                    }
+                }
+                else if (objectPool.isPlayerGameOver())
+                {
+                    if (counter > 30)
+                    {
+                        init(gc);
+                        state = State.GAMEOVER;
+                    }
                 }
                 break;
             case GAMEOVER:
                 if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
                 {
-                    state = State.STAGETITLE;
+                    state = State.STAGE_TITLE;
                 }
+                break;
         }
 
         counter++;
@@ -132,16 +160,22 @@ public class Play extends GameState
 
         switch (state)
         {
-            case STAGETITLE:
+            case STAGE_TITLE:
                 playMessage.renderStageNum(g, stageNum, counter);
                 objectPool.score.render(g, im);
                 break;
             case PLAY:
+            case KEEP:
                 objectPool.render(g, im);
                 break;
             case GAMEOVER:
                 playMessage.renderGameOver(g, counter);
                 break;
         }
+    }
+
+    public void finish()
+    {
+        bgm.pause();
     }
 }

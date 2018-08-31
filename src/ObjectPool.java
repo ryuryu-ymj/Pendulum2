@@ -1,6 +1,4 @@
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.*;
 
 /**
  * ゲームオブジェクトの管理クラス.
@@ -19,6 +17,11 @@ public class ObjectPool
     Bullet[] bullets;
     Camera camera;
     Score score;
+
+    Sound cherryCatchSound;
+    Sound heartCatchSound;
+    Sound playerDieSound;
+    Sound playerGoalSound;
 
     /**
      * 画面上における ground の数の最大値
@@ -123,6 +126,18 @@ public class ObjectPool
         }
         camera = new Camera();
         score = new Score();
+
+        try
+        {
+            cherryCatchSound = new Sound("res/sound/cherry_catch.wav");
+            heartCatchSound = new Sound("res/sound/heart_catch.wav");
+            playerDieSound = new Sound("res/sound/player_die.wav");
+            playerGoalSound = new Sound("res/sound/player_goal.wav");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
 
         init();
     }
@@ -267,15 +282,20 @@ public class ObjectPool
             {
                 if (joints[i].active && player.active)
                 {
-                    if (gc.getInput().getMouseX() < joints[i].getDiX() + joints[i].RADIUS * 5 && gc.getInput().getMouseX() > joints[i].getDiX() - joints[i].RADIUS * 5)
+                    if (gc.getInput().getMouseX() < joints[i].getDiX() + Joint.RADIUS * 5 && gc.getInput().getMouseX() > joints[i].getDiX() - joints[i].RADIUS * 5)
                     {
-                        if (gc.getInput().getMouseY() < joints[i].getDiY() + joints[i].RADIUS * 5 && gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].RADIUS * 5)
+                        if (gc.getInput().getMouseY() < joints[i].getDiY() + Joint.RADIUS * 5 && gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].RADIUS * 5)
                         {
                             if (joints[i].getLockRadius() == 0 || getDistance(player, joints[i]) < joints[i].getLockRadius())
                             {
                                 wire.jointLockedNum = i;
                                 wire.active = true;
                                 wire.initIsPlayerPass();
+
+                                if (joints[i].getType() == Joint.Type.GOAL)
+                                {
+                                    playerGoalSound.play();
+                                }
                             }
                             break f;
                         }
@@ -293,7 +313,6 @@ public class ObjectPool
         int bound;
         for (Ground ground : grounds)
         {
-            check:
             if (ground.active)
             {
                 if (ground.isCheckCollision())
@@ -322,11 +341,7 @@ public class ObjectPool
 
                         if (ground.getType() == Ground.Type.SPINE)
                         {
-                            if (player.isCanBeDamaged())
-                            {
-                                score.subHeart();
-                                player.damage();
-                            }
+                            playerDie();
                         }
                     }
                     else if (player.abX + player.height / 2 > ground.abX - ground.width / 2
@@ -345,11 +360,7 @@ public class ObjectPool
 
                         if (ground.getType() == Ground.Type.SPINE)
                         {
-                            if (player.isCanBeDamaged())
-                            {
-                                score.subHeart();
-                                player.damage();
-                            }
+                            playerDie();
                         }
                     }
                 }
@@ -365,7 +376,8 @@ public class ObjectPool
                 {
                     cherry.taken();
                     isCherryTook[cherry.num] = true;
-                    score.addCherry();
+                    score.addCherry(heartCatchSound);
+                    cherryCatchSound.play();
                 }
             }
         }
@@ -380,6 +392,7 @@ public class ObjectPool
                     heart.taken();
                     isHeartTook[heart.num] = true;
                     score.addHeart();
+                    heartCatchSound.play();
                 }
             }
         }
@@ -392,11 +405,7 @@ public class ObjectPool
                 if (getDistance(player, bullet) < player.width / 2 + bullet.width / 2)
                 {
                     bullet.active = false;
-                    if (player.isCanBeDamaged())
-                    {
-                        score.subHeart();
-                        player.damage();
-                    }
+                    playerDie();
                 }
             }
         }
@@ -418,6 +427,13 @@ public class ObjectPool
         }
     }
 
+    private void playerDie()
+    {
+        score.subHeart();
+        player.damage();
+        playerDieSound.play();
+    }
+
     /**
      * @return playerがゴールしたかどうか
      */
@@ -425,7 +441,10 @@ public class ObjectPool
     {
         if (wire.jointLockedNum != -1)
         {
-            return joints[wire.jointLockedNum].getType() == Joint.Type.GOAL;
+            if (joints[wire.jointLockedNum].getType() == Joint.Type.GOAL)
+            {
+                return true;
+            }
         }
         return false;
     }
@@ -443,7 +462,7 @@ public class ObjectPool
      */
     public boolean isPlayerDead()
     {
-        return !player.active;
+        return player.isDead;
     }
 
     /**

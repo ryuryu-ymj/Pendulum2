@@ -50,8 +50,10 @@ public class Edit extends GameState
 
     public void initStage(int stageNum, int cameraX, int cameraY)
     {
-        this.stageNum = stageNum;
-        stageData.loadStageDate(stageNum);
+        if (stageData.loadStageDate(stageNum))
+        {
+            this.stageNum = stageNum;
+        }
         objectPool.init();
         objectPool.camera.init(cameraX, cameraY);
     }
@@ -123,7 +125,10 @@ public class Edit extends GameState
                 if (gc.getInput().isKeyPressed(2 + i) || gc.getInput().isKeyPressed(79 + i))
                 {
                     stageNum = i;
-                    stageData.loadStageDate(stageNum);
+                    if (!stageData.loadStageDate(stageNum))
+                    {
+                        stageData.createNewStage(stageNum);
+                    }
                     objectPool.init();
                 }
             }
