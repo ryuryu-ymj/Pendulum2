@@ -53,6 +53,7 @@ public class MousePointer extends GameObject
         else if (gc.getInput().isKeyPressed(Input.KEY_J))
         {
             type = Type.JOINT;
+            joint.activate((int) abX, (int) abY, joint.getType(), 0, false, 0);
             gameObject = joint;
         }
         else if (gc.getInput().isKeyPressed(Input.KEY_D))
@@ -90,7 +91,7 @@ public class MousePointer extends GameObject
                     ground.activate((int) abX, (int) abY, ground.getType().next(), new Ground.Position(), 0);
                     break;
                 case JOINT:
-                    joint.activate((int) abX, (int) abY, joint.getType().next(), joint.getLockRadius(), false, 0);
+                    joint.activate((int) abX, (int) abY, joint.getType().next(), 0, false, 0);
                     break;
                 case BACK_OBJECT:
                     backObject.activate((int) abX, (int) abY, backObject.getType().next(), backObject.getLayer(), 0);
