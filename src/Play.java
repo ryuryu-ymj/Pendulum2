@@ -21,7 +21,12 @@ public class Play extends GameState
     /**
      * プレイするステージの番号 0から
      */
-    public int stageNum;
+    private int stageNum;
+
+    public int getStageNum()
+    {
+        return stageNum;
+    }
 
     private State state;
 
@@ -49,11 +54,17 @@ public class Play extends GameState
     /**
      * 初期化処理.
      */
-    @Override
     public void init(GameContainer gc)
-            throws SlickException
     {
         stageNum = 0;
+        stageData.loadStageDate(stageNum);
+        objectPool.init();
+        state = State.STAGETITLE;
+    }
+
+    public void initStage(int stageNum)
+    {
+        this.stageNum = stageNum;
         stageData.loadStageDate(stageNum);
         objectPool.init();
         state = State.STAGETITLE;

@@ -6,12 +6,18 @@ import org.newdawn.slick.*;
  */
 public class Main extends BasicGame
 {
-    /** タイトル画面 */
+    /**
+     * タイトル画面
+     */
     Title title;
-    /** プレイ画面 */
+    /**
+     * プレイ画面
+     */
     Play play;
     Edit edit;
-    /** ゲームシーン */
+    /**
+     * ゲームシーン
+     */
     private State state;
     ImageManager im;
 
@@ -82,12 +88,12 @@ public class Main extends BasicGame
         {
             if (gc.getInput().isKeyPressed(Input.KEY_P))
             {
-                play.init(gc);
+                play.initStage(edit.getStageNum());
                 state = State.Play;
             }
             else if (gc.getInput().isKeyPressed(Input.KEY_E))
             {
-                edit.init(gc);
+                edit.init(play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
                 state = State.Edit;
             }
         }

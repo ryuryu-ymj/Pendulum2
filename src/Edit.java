@@ -19,6 +19,11 @@ public class Edit extends GameState
      */
     private int stageNum;
 
+    public int getStageNum()
+    {
+        return stageNum;
+    }
+
     /**
      * コンストラクタ
      */
@@ -43,6 +48,14 @@ public class Edit extends GameState
         objectPool.init();
     }
 
+    public void init(int stageNum, int cameraX, int cameraY)
+    {
+        this.stageNum = stageNum;
+        stageData.loadStageDate(stageNum);
+        objectPool.init();
+        objectPool.camera.init(cameraX, cameraY);
+    }
+
     /**
      * ステップごとの更新.
      */
@@ -54,7 +67,7 @@ public class Edit extends GameState
         mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));
         mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
 
-        System.out.println(objectPool.wire.jointLockedNum);
+        //System.out.println(objectPool.wire.jointLockedNum);
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
         {
             if (mousePointer.canPutObject)

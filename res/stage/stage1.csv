@@ -883,7 +883,6 @@ joint,2310,270,NORMAL,0
 joint,2010,-390,NORMAL,0
 joint,2610,510,GOAL,0
 joint,330,-90,NORMAL,0
-joint,-210,-90,NORMAL,0
 joint,-30,-90,NORMAL,0
 backObject,-30,270,GLASS2,LAYER0
 backObject,90,270,GLASS2,LAYER0
@@ -924,7 +923,7 @@ cherry,2190,390
 cherry,2310,450
 cherry,2010,-210
 cherry,2430,-210
-cherry,-210,-90
 cherry,150,-90
+cherry,-210,-90
 heart,1290,-450
 heart,2670,-510
