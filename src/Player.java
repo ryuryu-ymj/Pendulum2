@@ -148,8 +148,7 @@ public class Player extends GameObject
      */
     public void damage()
     {
-        counter = 100;
-        canBeDamaged = false;
+        active = false;
     }
 
     @Override

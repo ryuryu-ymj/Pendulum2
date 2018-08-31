@@ -48,7 +48,7 @@ public class Edit extends GameState
         objectPool.init();
     }
 
-    public void init(int stageNum, int cameraX, int cameraY)
+    public void initStage(int stageNum, int cameraX, int cameraY)
     {
         this.stageNum = stageNum;
         stageData.loadStageDate(stageNum);

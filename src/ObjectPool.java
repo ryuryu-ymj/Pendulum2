@@ -19,7 +19,6 @@ public class ObjectPool
     Bullet[] bullets;
     Camera camera;
     Score score;
-    DamageEffect damageEffect;
 
     /**
      * 画面上における ground の数の最大値
@@ -124,7 +123,6 @@ public class ObjectPool
         }
         camera = new Camera();
         score = new Score();
-        damageEffect = new DamageEffect();
 
         init();
     }
@@ -134,11 +132,15 @@ public class ObjectPool
      */
     public void init()
     {
+        score.initScore();
+        initStage();
+    }
+
+    public void initStage()
+    {
         player.init(200, 200);
         camera.init(200, 200);
         wire.init();
-        score.initScore();
-        damageEffect.init();
         for (int i = 0; i < isJointDisplayed.length; i++)
         {
             isJointDisplayed[i] = false;
@@ -221,7 +223,6 @@ public class ObjectPool
         {
             wire.update(gc, player.getDiX(), player.getDiY(), joints[wire.jointLockedNum].getDiX(), joints[wire.jointLockedNum].getDiY());
         }
-        damageEffect.update();
 
         if (camera.active)
         {
@@ -251,7 +252,6 @@ public class ObjectPool
         {
             player.render(g, im);
         }
-        damageEffect.render(g);
         score.render(g, im);
     }
 
@@ -325,7 +325,6 @@ public class ObjectPool
                             if (player.isCanBeDamaged())
                             {
                                 score.subHeart();
-                                damageEffect.start();
                                 player.damage();
                             }
                         }
@@ -349,7 +348,6 @@ public class ObjectPool
                             if (player.isCanBeDamaged())
                             {
                                 score.subHeart();
-                                damageEffect.start();
                                 player.damage();
                             }
                         }
@@ -397,7 +395,6 @@ public class ObjectPool
                     if (player.isCanBeDamaged())
                     {
                         score.subHeart();
-                        damageEffect.start();
                         player.damage();
                     }
                 }
@@ -434,11 +431,19 @@ public class ObjectPool
     }
 
     /**
+     * @return ゲームオーバーかどうか
+     */
+    public boolean isPlayerGameOver()
+    {
+        return score.isHeartZero();
+    }
+
+    /**
      * @return playerが死んだかどうか
      */
     public boolean isPlayerDead()
     {
-        return score.isHeartZero();
+        return !player.active;
     }
 
     /**

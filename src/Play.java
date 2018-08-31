@@ -101,7 +101,12 @@ public class Play extends GameState
                     objectPool.init();
                     stageData.loadStageDate(++stageNum);
                 }
-                if (objectPool.isPlayerDead())
+                else if (objectPool.isPlayerDead())
+                {
+                    objectPool.initStage();
+                    state = State.STAGETITLE;
+                }
+                else if (objectPool.isPlayerGameOver())
                 {
                     init(gc);
                     state = State.GAMEOVER;

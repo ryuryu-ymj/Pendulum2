@@ -93,7 +93,7 @@ public class Main extends BasicGame
             }
             else if (gc.getInput().isKeyPressed(Input.KEY_E))
             {
-                edit.init(play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
+                edit.initStage(play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
                 state = State.Edit;
             }
         }
