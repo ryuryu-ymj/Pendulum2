@@ -24,7 +24,7 @@ public class MousePointer extends GameObject
 
     public enum Type
     {
-        GROUND, JOINT, BACK_OBJECT, CHERRY, HEART, DELETE, OPERATE
+        GROUND, JOINT, BACK_OBJECT, CHERRY, HEART, DELETE, OPERATE, JOINT_LOCK_RADIUS
     }
 
     private Type type;
@@ -78,6 +78,10 @@ public class MousePointer extends GameObject
         {
             type = Type.OPERATE;
         }
+        else if (gc.getInput().isKeyPressed(Input.KEY_R))
+        {
+            type = Type.JOINT_LOCK_RADIUS;
+        }
         else if (gc.getInput().isKeyPressed(Input.KEY_ENTER))
         {
             switch (type)
@@ -113,6 +117,10 @@ public class MousePointer extends GameObject
                 g.drawOval(getDiX() - Ground.WIDTH / 2, getDiY() - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
                 break;
             case OPERATE:
+                break;
+            case JOINT_LOCK_RADIUS:
+                g.setColor(Color.blue);
+                g.drawOval(getDiX() - Joint.RADIUS, getDiY() - Joint.RADIUS, Joint.RADIUS * 2, Joint.RADIUS * 2);
                 break;
             case GROUND:
                 ground.renderEditVer(g, im);
@@ -166,6 +174,11 @@ public class MousePointer extends GameObject
                 this.backObject = (BackObject) gameObject;
                 break;
         }
-        System.out.println(gameObject.getClassName());
+        //System.out.println(gameObject.getClassName());
+    }
+
+    public void setType(Type type)
+    {
+        this.type = type;
     }
 }

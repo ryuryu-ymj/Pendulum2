@@ -96,7 +96,7 @@ public class ObjectPoolEditVer extends ObjectPool
         {
             for (int i = 0; i < JOINT_MAX; i++)
             {
-                if (joints[i].active && player.active)
+                if (joints[i].active)
                 {
                     if (gc.getInput().getMouseX() < joints[i].getDiX() + joints[i].RADIUS * 2 &&
                             gc.getInput().getMouseX() > joints[i].getDiX() - joints[i].RADIUS * 2)
@@ -104,20 +104,17 @@ public class ObjectPoolEditVer extends ObjectPool
                         if (gc.getInput().getMouseY() < joints[i].getDiY() + joints[i].RADIUS * 2 &&
                                 gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].RADIUS * 2)
                         {
-                            if (joints[i].getLockRadius() == 0 || getDistance(player, joints[i]) < joints[i].getLockRadius())
-                            {
-                                wire.jointLockedNum = i;
-                            }
+                            wire.jointLockedNum = i;
                             break f;
                         }
                     }
                 }
-                if (i == JOINT_MAX - 1)
-                {
-                    wire.init();
-                    //camera.active = false;
-                }
             }
+        }
+
+        if (!gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+        {
+            wire.init();
         }
     }
 }

@@ -54,6 +54,7 @@ public class Edit extends GameState
         mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));
         mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
 
+        System.out.println(objectPool.wire.jointLockedNum);
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
         {
             if (mousePointer.canPutObject)
@@ -64,7 +65,7 @@ public class Edit extends GameState
                     case DELETE:
                         stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY, objectPool);
                         break;
-                    case OPERATE:
+                    case JOINT_LOCK_RADIUS:
                         if (objectPool.wire.jointLockedNum != -1)
                         {
                             int jointLockRadius = ((int) (objectPool.joints[objectPool.wire.jointLockedNum].getDiX() - gc.getInput().getMouseX()))
@@ -72,7 +73,8 @@ public class Edit extends GameState
                             Joint joint = objectPool.joints[objectPool.wire.jointLockedNum];
                             stageData.resetJointRadius((int) joint.abX, (int) joint.abY, jointLockRadius);
                         }
-
+                        break;
+                    case OPERATE:
                         mousePointer.setType(stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY, objectPool));
                         mousePointer.canPutObject = false;
                         break;
@@ -86,7 +88,7 @@ public class Edit extends GameState
             {
                 mousePointer.canPutObject = true;
                 addStageData();
-                mousePointer.setType(null);
+                mousePointer.setType(MousePointer.Type.OPERATE);
                 objectPool.init();
             }
         }
