@@ -573,12 +573,12 @@ public class StageData
                         if (groundYs.get(j) == objectY + Ground.WIDTH)
                         {
                             //bottom
-                            resetGround(j);
+                            groundPositions.get(j).hasTop = false;
                         }
                         else if (groundYs.get(j) == objectY - Ground.WIDTH)
                         {
                             //top
-                            resetGround(j);
+                            groundPositions.get(j).hasBottom = false;
                         }
                     }
                     else if (groundXs.get(j) == objectX + Ground.WIDTH)
@@ -586,7 +586,7 @@ public class StageData
                         if (groundYs.get(j) == objectY)
                         {
                             //right
-                            resetGround(j);
+                            groundPositions.get(j).hasLeft = false;
                         }
                     }
                     else if (groundXs.get(j) == objectX - Ground.WIDTH)
@@ -594,7 +594,7 @@ public class StageData
                         if (groundYs.get(j) == objectY)
                         {
                             //left
-                            resetGround(j);
+                            groundPositions.get(j).hasRight = false;
                         }
                     }
                 }
@@ -654,18 +654,6 @@ public class StageData
         }
 
         return null;
-    }
-
-    private void resetGround(int index)
-    {
-        int groundX = groundXs.get(index);
-        int groundY = groundYs.get(index);
-        Ground.Type groundType = groundTypes.get(index);
-        groundXs.remove(index);
-        groundYs.remove(index);
-        groundTypes.remove(index);
-        groundPositions.remove(index);
-        addGround(groundX, groundY, groundType);
     }
 
     public void deleteAllObject()
