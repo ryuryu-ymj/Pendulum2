@@ -98,18 +98,17 @@ public class Play extends GameState
                 objectPool.update(gc);
                 if (objectPool.isPlayerGoal())
                 {
-                    objectPool.init();
-                    stageData.loadStageDate(++stageNum);
-                }
-                else if (objectPool.isPlayerDead())
-                {
-                    objectPool.initStage();
-                    state = State.STAGETITLE;
+                    initStage(stageNum + 1);
                 }
                 else if (objectPool.isPlayerGameOver())
                 {
                     init(gc);
                     state = State.GAMEOVER;
+                }
+                else if (objectPool.isPlayerDead())
+                {
+                    objectPool.initStage();
+                    state = State.STAGETITLE;
                 }
                 break;
             case GAMEOVER:
@@ -135,6 +134,7 @@ public class Play extends GameState
         {
             case STAGETITLE:
                 playMessage.renderStageNum(g, stageNum, counter);
+                objectPool.score.render(g, im);
                 break;
             case PLAY:
                 objectPool.render(g, im);
