@@ -14,9 +14,9 @@ public class ObjectPoolEditVer extends ObjectPool
     {
         player.init(200, 200);
         camera.active = true;
-        for (int i = 0; i < isJointDisplayed.length; i++)
+        for (int i = 0; i < isJointsActivate.length; i++)
         {
-            isJointDisplayed[i] = false;
+            isJointsActivate[i] = false;
         }
         for (int i = 0; i < joints.length; i++)
         {
@@ -30,25 +30,25 @@ public class ObjectPoolEditVer extends ObjectPool
         {
             grounds[i].active = false;
         }
-        for (int i = 0; i < isBackObjectDisplayed.length; i++)
+        for (int i = 0; i < isBackObjectsActivate.length; i++)
         {
-            isBackObjectDisplayed[i] = false;
+            isBackObjectsActivate[i] = false;
         }
         for (int i = 0; i < backObjects.length; i++)
         {
             backObjects[i].active = false;
         }
-        for (int i = 0; i < isCherryDisplayed.length; i++)
+        for (int i = 0; i < isCherriesActivate.length; i++)
         {
-            isCherryDisplayed[i] = false;
+            isCherriesActivate[i] = false;
         }
         for (int i = 0; i < cherries.length; i++)
         {
             cherries[i].active = false;
         }
-        for (int i = 0; i < isHeartDisplayed.length; i++)
+        for (int i = 0; i < isHeartsActivate.length; i++)
         {
-            isHeartDisplayed[i] = false;
+            isHeartsActivate[i] = false;
         }
         for (int i = 0; i < hearts.length; i++)
         {
@@ -99,11 +99,11 @@ public class ObjectPoolEditVer extends ObjectPool
             {
                 if (joints[i].active)
                 {
-                    if (gc.getInput().getMouseX() < joints[i].getDiX() + joints[i].RADIUS * 2 &&
-                            gc.getInput().getMouseX() > joints[i].getDiX() - joints[i].RADIUS * 2)
+                    if (gc.getInput().getMouseX() < joints[i].getDiX() + Joint.RADIUS * 2 &&
+                            gc.getInput().getMouseX() > joints[i].getDiX() - Joint.RADIUS * 2)
                     {
-                        if (gc.getInput().getMouseY() < joints[i].getDiY() + joints[i].RADIUS * 2 &&
-                                gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].RADIUS * 2)
+                        if (gc.getInput().getMouseY() < joints[i].getDiY() + Joint.RADIUS * 2 &&
+                                gc.getInput().getMouseY() > joints[i].getDiY() - Joint.RADIUS * 2)
                         {
                             wire.jointLockedNum = i;
                             break f;

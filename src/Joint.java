@@ -95,7 +95,7 @@ public class Joint extends GameObject
                 }
             }
             active = false;
-            objectPool.isJointDisplayed[num] = false;
+            objectPool.isJointsActivate[num] = false;
             //System.out.println("delete " + num + " " + objectPool.wire.jointLockedNum);
         }
         changeToDisplayPoint(cameraX, cameraY);

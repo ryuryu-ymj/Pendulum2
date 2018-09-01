@@ -18,10 +18,10 @@ public class ObjectPool
     Camera camera;
     Score score;
 
-    Sound cherryCatchSound;
-    Sound heartCatchSound;
-    Sound playerDieSound;
-    Sound playerGoalSound;
+    private Sound cherryCatchSound;
+    private Sound heartCatchSound;
+    private Sound playerDieSound;
+    private Sound playerGoalSound;
 
     /**
      * 画面上における ground の数の最大値
@@ -30,7 +30,7 @@ public class ObjectPool
     /**
      * その ground が表示されたかどうか
      */
-    public static boolean[] isGroundDisplayed = new boolean[StageData.GROUND_MAX];
+    public boolean[] isGroundDisplayed = new boolean[StageData.GROUND_MAX];
 
     /**
      * 画面上における joint の数の最大値
@@ -39,11 +39,11 @@ public class ObjectPool
     /**
      * その joint が表示されたかどうか
      */
-    public boolean[] isJointDisplayed = new boolean[StageData.JOINT_MAX];
+    public boolean[] isJointsActivate = new boolean[StageData.JOINT_MAX];
     /**
      * そのジョイントがプレイヤーに一周されているかどうか
      */
-    private boolean[] isJointLoopeds = new boolean[StageData.JOINT_MAX];
+    private boolean[] isJointsLoop = new boolean[StageData.JOINT_MAX];
 
     /**
      * 画面上における backObject の数の最大値
@@ -52,7 +52,7 @@ public class ObjectPool
     /**
      * その backObject が表示されたかどうか
      */
-    public boolean[] isBackObjectDisplayed = new boolean[StageData.BACK_OBJECT_MAX];
+    public boolean[] isBackObjectsActivate = new boolean[StageData.BACK_OBJECT_MAX];
 
     /**
      * 画面上における cherry の数の最大値
@@ -61,11 +61,11 @@ public class ObjectPool
     /**
      * その cherry が表示されたかどうか
      */
-    public boolean[] isCherryDisplayed = new boolean[StageData.CHERRY_MAX];
+    public boolean[] isCherriesActivate = new boolean[StageData.CHERRY_MAX];
     /**
      * その cherry が取られたかどうか
      */
-    private boolean[] isCherryTook = new boolean[StageData.CHERRY_MAX];
+    private boolean[] isCherriesTook = new boolean[StageData.CHERRY_MAX];
 
     /**
      * 画面上における heart の数の最大値
@@ -74,11 +74,11 @@ public class ObjectPool
     /**
      * その heart が表示されたかどうか
      */
-    public boolean[] isHeartDisplayed = new boolean[StageData.HEART_MAX];
+    public boolean[] isHeartsActivate = new boolean[StageData.HEART_MAX];
     /**
      * その heart が取られたかどうか
      */
-    private boolean[] isHeartTook = new boolean[StageData.HEART_MAX];
+    private boolean[] isHeartsTook = new boolean[StageData.HEART_MAX];
 
     /**
      * 画面上における bullet の数の最大値
@@ -156,13 +156,13 @@ public class ObjectPool
         player.init(200, 200);
         camera.init(200, 200);
         wire.init();
-        for (int i = 0; i < isJointDisplayed.length; i++)
+        for (int i = 0; i < isJointsActivate.length; i++)
         {
-            isJointDisplayed[i] = false;
+            isJointsActivate[i] = false;
         }
-        for (int i = 0; i < isJointLoopeds.length; i++)
+        for (int i = 0; i < isJointsLoop.length; i++)
         {
-            isJointLoopeds[i] = false;
+            isJointsLoop[i] = false;
         }
         for (int i = 0; i < joints.length; i++)
         {
@@ -176,33 +176,33 @@ public class ObjectPool
         {
             grounds[i].active = false;
         }
-        for (int i = 0; i < isBackObjectDisplayed.length; i++)
+        for (int i = 0; i < isBackObjectsActivate.length; i++)
         {
-            isBackObjectDisplayed[i] = false;
+            isBackObjectsActivate[i] = false;
         }
         for (int i = 0; i < backObjects.length; i++)
         {
             backObjects[i].active = false;
         }
-        for (int i = 0; i < isCherryDisplayed.length; i++)
+        for (int i = 0; i < isCherriesActivate.length; i++)
         {
-            isCherryDisplayed[i] = false;
+            isCherriesActivate[i] = false;
         }
-        for (int i = 0; i < isCherryTook.length; i++)
+        for (int i = 0; i < isCherriesTook.length; i++)
         {
-            isCherryTook[i] = false;
+            isCherriesTook[i] = false;
         }
         for (int i = 0; i < cherries.length; i++)
         {
             cherries[i].active = false;
         }
-        for (int i = 0; i < isHeartDisplayed.length; i++)
+        for (int i = 0; i < isHeartsActivate.length; i++)
         {
-            isHeartDisplayed[i] = false;
+            isHeartsActivate[i] = false;
         }
-        for (int i = 0; i < isHeartTook.length; i++)
+        for (int i = 0; i < isHeartsTook.length; i++)
         {
-            isHeartTook[i] = false;
+            isHeartsTook[i] = false;
         }
         for (int i = 0; i < hearts.length; i++)
         {
@@ -282,9 +282,9 @@ public class ObjectPool
             {
                 if (joints[i].active && player.active)
                 {
-                    if (gc.getInput().getMouseX() < joints[i].getDiX() + Joint.RADIUS * 5 && gc.getInput().getMouseX() > joints[i].getDiX() - joints[i].RADIUS * 5)
+                    if (gc.getInput().getMouseX() < joints[i].getDiX() + Joint.RADIUS * 5 && gc.getInput().getMouseX() > joints[i].getDiX() - Joint.RADIUS * 5)
                     {
-                        if (gc.getInput().getMouseY() < joints[i].getDiY() + Joint.RADIUS * 5 && gc.getInput().getMouseY() > joints[i].getDiY() - joints[i].RADIUS * 5)
+                        if (gc.getInput().getMouseY() < joints[i].getDiY() + Joint.RADIUS * 5 && gc.getInput().getMouseY() > joints[i].getDiY() - Joint.RADIUS * 5)
                         {
                             if (joints[i].getLockRadius() == 0 || getDistance(player, joints[i]) < joints[i].getLockRadius())
                             {
@@ -375,7 +375,7 @@ public class ObjectPool
                 if (getDistance(player, cherry) < player.width / 2 + cherry.width / 2)
                 {
                     cherry.taken();
-                    isCherryTook[cherry.num] = true;
+                    isCherriesTook[cherry.num] = true;
                     score.addCherry(heartCatchSound);
                     cherryCatchSound.play();
                 }
@@ -390,7 +390,7 @@ public class ObjectPool
                 if (getDistance(player, heart) < player.width / 2 + heart.width / 2)
                 {
                     heart.taken();
-                    isHeartTook[heart.num] = true;
+                    isHeartsTook[heart.num] = true;
                     score.addHeart();
                     heartCatchSound.play();
                 }
@@ -422,7 +422,7 @@ public class ObjectPool
             }
 
             joints[wire.jointLockedNum].isPlayerLoop = true;
-            isJointLoopeds[joints[wire.jointLockedNum].num] = true;
+            isJointsLoop[joints[wire.jointLockedNum].num] = true;
             wire.initIsPlayerPass();
         }
     }
@@ -548,13 +548,13 @@ public class ObjectPool
     {
         for (int i = 0; i < jointXs.length; i++)
         {
-            if (!isJointDisplayed[i])
+            if (!isJointsActivate[i])
             {
                 if (checkEntering(jointXs[i], jointYs[i], joints[0].RADIUS * 2, joints[0].RADIUS * 2, 15))
                 {
-                    if (newJoint(jointXs[i], jointYs[i], jointTypes[i], jointLockRadius[i], isJointLoopeds[i], i) != -1)
+                    if (newJoint(jointXs[i], jointYs[i], jointTypes[i], jointLockRadius[i], isJointsLoop[i], i) != -1)
                     {
-                        isJointDisplayed[i] = true;
+                        isJointsActivate[i] = true;
                     }
                     else
                     {
@@ -596,13 +596,13 @@ public class ObjectPool
     {
         for (int i = 0; i < cherryXs.length; i++)
         {
-            if (!isCherryDisplayed[i] && !isCherryTook[i])
+            if (!isCherriesActivate[i] && !isCherriesTook[i])
             {
                 if (checkEntering(cherryXs[i], cherryYs[i], Cherry.RADIUS * 2, Cherry.RADIUS * 2, 0))
                 {
                     if (newCherry(cherryXs[i], cherryYs[i], i) != -1)
                     {
-                        isCherryDisplayed[i] = true;
+                        isCherriesActivate[i] = true;
                     }
                     else
                     {
@@ -644,13 +644,13 @@ public class ObjectPool
     {
         for (int i = 0; i < heartXs.length; i++)
         {
-            if (!isHeartDisplayed[i] && !isHeartTook[i])
+            if (!isHeartsActivate[i] && !isHeartsTook[i])
             {
                 if (checkEntering(heartXs[i], heartYs[i], Heart.RADIUS * 2, Heart.RADIUS * 2, 0))
                 {
                     if (newHeart(heartXs[i], heartYs[i], i) != -1)
                     {
-                        isHeartDisplayed[i] = true;
+                        isHeartsActivate[i] = true;
                     }
                     else
                     {
@@ -694,13 +694,13 @@ public class ObjectPool
     {
         for (int i = 0; i < backObjectXs.length; i++)
         {
-            if (!isBackObjectDisplayed[i])
+            if (!isBackObjectsActivate[i])
             {
                 if (checkEntering(backObjectXs[i], backObjectYs[i], backObjectTypes[i].WIDTH, backObjectTypes[i].HEIGHT, 0))
                 {
                     if (newBackObject(backObjectXs[i], backObjectYs[i], backObjectTypes[i], backObjectLayers[i], i) != -1)
                     {
-                        isBackObjectDisplayed[i] = true;
+                        isBackObjectsActivate[i] = true;
                     }
                     else
                     {
@@ -724,7 +724,7 @@ public class ObjectPool
     {
         for (int i = 0; i < BULLET_MAX; i++)
         {
-            if ((bullets[i].active) == false)
+            if (!(bullets[i].active))
             {
                 bullets[i].activate(x, y, direction, speed);
                 return i;

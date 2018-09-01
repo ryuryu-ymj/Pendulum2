@@ -17,7 +17,7 @@ public class Play extends GameState
      * フレームカウンタ
      */
     public static int counter;
-    Music bgm;
+    private Music bgm;
 
     /**
      * プレイするステージの番号 0から
@@ -37,8 +37,8 @@ public class Play extends GameState
     }
 
     ObjectPool objectPool;
-    StageData stageData;
-    PlayMessage playMessage;
+    private StageData stageData;
+    private PlayMessage playMessage;
 
     /**
      * コンストラクタ

@@ -1,4 +1,3 @@
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -22,6 +21,6 @@ public class Cherry extends GameItem
     public void disActive()
     {
         active = false;
-        objectPool.isCherryDisplayed[num] = false;
+        objectPool.isCherriesActivate[num] = false;
     }
 }

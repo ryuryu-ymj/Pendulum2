@@ -1,4 +1,3 @@
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -22,6 +21,6 @@ public class Heart extends GameItem
     public void disActive()
     {
         active = false;
-        objectPool.isHeartDisplayed[num] = false;
+        objectPool.isHeartsActivate[num] = false;
     }
 }

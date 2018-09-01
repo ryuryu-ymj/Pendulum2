@@ -9,10 +9,10 @@ public class Edit extends GameState
      * フレームカウンタ
      */
     public static int counter;
-    ObjectPoolEditVer objectPool;
-    StageData stageData;
-    Grid grid;
-    MousePointer mousePointer;
+    private ObjectPoolEditVer objectPool;
+    private StageData stageData;
+    private Grid grid;
+    private MousePointer mousePointer;
 
     /**
      * プレイするステージの番号 0から
