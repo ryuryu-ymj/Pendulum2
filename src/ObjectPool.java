@@ -15,6 +15,7 @@ public class ObjectPool
     Cherry[] cherries;
     Heart[] hearts;
     Bullet[] bullets;
+    Background background;
     Camera camera;
     Score score;
 
@@ -94,6 +95,7 @@ public class ObjectPool
     {
         player = new Player(200, 200, objectPool);
         wire = new Wire();
+        background = new Background(objectPool);
         joints = new Joint[JOINT_MAX];
         for (int i = 0; i < JOINT_MAX; i++)
         {
@@ -219,6 +221,7 @@ public class ObjectPool
      */
     public void update(GameContainer gc)
     {
+        background.update(gc, camera.getX(), camera.getY());
         updateObjects(backObjects, gc);
         updateObjects(joints, gc);
         updateObjects(cherries, gc);
@@ -253,6 +256,7 @@ public class ObjectPool
         //g.setLineWidth(1.5f);
 
         //im.drawBackGround(Play.DISPLAY_WIDTH / 2, Play.DISPLAY_HEIGHT / 2, 4900 / 2, 1800 / 2);
+        background.render(g, im);
         renderObjects(backObjects, g, im);
         renderObjects(bullets, g, im);
         renderObjects(joints, g, im);

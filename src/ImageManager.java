@@ -34,6 +34,8 @@ public class ImageManager
     private Image spineMiddle;
     private Image spineEdge;
     private Image cursor;
+    private Image background1;
+    private Image background2;
 
     ImageManager()
     {
@@ -148,6 +150,24 @@ public class ImageManager
         try
         {
             cursor = new Image("res/img/cursor.png");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            background1 = new Image("res/img/background1.png");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            background2 = new Image("res/img/background2.png");
         }
         catch (SlickException e)
         {
@@ -498,5 +518,31 @@ public class ImageManager
     public Image getCursor()
     {
         return cursor;
+    }
+
+    /**
+     * background1 の画像を表示する
+     *
+     * @param x      左上のx座標
+     * @param y      左上のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawBackGround1(float x, float y, float width, float height)
+    {
+        background1.draw(x, y, width, height);
+    }
+
+    /**
+     * background2 の画像を表示する
+     *
+     * @param x      左上のx座標
+     * @param y      左上のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawBackGround2(float x, float y, float width, float height)
+    {
+        background2.draw(x, y, width, height);
     }
 }
