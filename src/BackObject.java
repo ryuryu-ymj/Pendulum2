@@ -19,8 +19,8 @@ public class BackObject extends GameObject
     public enum Layer
     {
         LAYER0(1),
-        LAYER1(0.8f),
-        LAYER2(0.3f),
+        /*LAYER1(0.8f),
+        LAYER2(0.3f),*/
         ;
 
         /**
@@ -40,7 +40,7 @@ public class BackObject extends GameObject
      */
     public enum Type
     {
-        TREE(600, 600),
+        //TREE(600, 600),
         GLASS1(120, 120),
         GLASS2(120, 120),
         GLASS3(120, 120),
@@ -69,12 +69,12 @@ public class BackObject extends GameObject
     BackObject(ObjectPool objectPool)
     {
         super(objectPool);
-        width = 600;
-        height = 600;
+        width = 120;
+        height = 120;
         abX = 300;
         abY = 660;
-        layer = Layer.LAYER1;
-        type = Type.TREE;
+        layer = Layer.LAYER0;
+        type = Type.GLASS1;
         active = false;
     }
 
@@ -89,9 +89,9 @@ public class BackObject extends GameObject
     {
         switch (type)
         {
-            case TREE:
+            /*case TREE:
                 im.drawTree1(getDiX(), getDiY() + 2, width, height);
-                break;
+                break;*/
             case GLASS1:
                 im.drawGlass1(getDiX(), getDiY() + 2, width, height);
                 break;

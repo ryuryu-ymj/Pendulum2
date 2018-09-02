@@ -122,7 +122,7 @@ public class Edit extends GameState
             }
             for (int i = 0; i < StageData.STAGE_MAX; i++)
             {
-                if (gc.getInput().isKeyPressed(2 + i) || gc.getInput().isKeyPressed(79 + i))
+                if (gc.getInput().isKeyPressed(2 + i))
                 {
                     stageNum = i;
                     if (!stageData.loadStageDate(stageNum))

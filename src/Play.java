@@ -114,11 +114,12 @@ public class Play extends GameState
                 }
                 break;
             case KEEP:
-                if (objectPool.isPlayerGoal())
+                if (objectPool.isPlayerGameOver())
                 {
-                    if (counter > 90)
+                    if (counter > 30)
                     {
-                        initStage(stageNum + 1);
+                        init(gc);
+                        state = State.GAMEOVER;
                     }
                 }
                 else if (objectPool.isPlayerDead())
@@ -129,17 +130,16 @@ public class Play extends GameState
                         state = State.STAGE_TITLE;
                     }
                 }
-                else if (objectPool.isPlayerGameOver())
+                else if (objectPool.isPlayerGoal())
                 {
-                    if (counter > 30)
+                    if (counter > 90)
                     {
-                        init(gc);
-                        state = State.GAMEOVER;
+                        initStage(stageNum + 1);
                     }
                 }
                 break;
             case GAMEOVER:
-                if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+                if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
                 {
                     state = State.STAGE_TITLE;
                 }
@@ -169,6 +169,7 @@ public class Play extends GameState
                 objectPool.render(g, im);
                 break;
             case GAMEOVER:
+                g.setBackground(new Color(189f / 256, 226f / 256, 14f / 256));
                 playMessage.renderGameOver(g, counter);
                 break;
         }

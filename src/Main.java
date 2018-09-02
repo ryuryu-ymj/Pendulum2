@@ -1,3 +1,4 @@
+import javafx.print.PageLayout;
 import org.newdawn.slick.*;
 
 /**
@@ -88,14 +89,20 @@ public class Main extends BasicGame
         {
             if (gc.getInput().isKeyPressed(Input.KEY_P))
             {
-                play.initStage(edit.getStageNum());
-                state = State.Play;
+                if (state == State.Edit)
+                {
+                    play.initStage(edit.getStageNum());
+                    state = State.Play;
+                }
             }
             else if (gc.getInput().isKeyPressed(Input.KEY_E))
             {
-                play.finish();
-                edit.initStage(play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
-                state = State.Edit;
+                if (state == State.Play)
+                {
+                    play.finish();
+                    edit.initStage(play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
+                    state = State.Edit;
+                }
             }
         }
     }
