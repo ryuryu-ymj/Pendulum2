@@ -422,6 +422,7 @@ public class ObjectPool
                 if (!joints[wire.jointLockedNum].isPlayerLoop)
                 {
                     score.addHeart();
+                    heartCatchSound.play();
                 }
             }
 
