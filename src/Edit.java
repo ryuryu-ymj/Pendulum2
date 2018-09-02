@@ -83,7 +83,7 @@ public class Edit extends GameState
                     case JOINT_LOCK_RADIUS:
                         if (objectPool.wire.jointLockedNum != -1)
                         {
-                            int jointLockRadius = ((int) (objectPool.joints[objectPool.wire.jointLockedNum].getDiX() - gc.getInput().getMouseX()))
+                            int jointLockRadius = Math.abs((int) (objectPool.joints[objectPool.wire.jointLockedNum].getDiX() - gc.getInput().getMouseX()))
                                     / Ground.WIDTH * Ground.WIDTH;
                             Joint joint = objectPool.joints[objectPool.wire.jointLockedNum];
                             stageData.resetJointRadius((int) joint.abX, (int) joint.abY, jointLockRadius);

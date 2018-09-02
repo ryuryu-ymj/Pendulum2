@@ -300,8 +300,8 @@ public class ObjectPool
                                 {
                                     playerGoalSound.play();
                                 }
+                                break f;
                             }
-                            break f;
                         }
                     }
                 }
