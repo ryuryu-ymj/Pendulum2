@@ -1,14 +1,15 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class Background extends GameObject
 {
-
+    private final float alpha = 0.5f;
 
     Background(ObjectPool objectPool)
     {
         super(objectPool);
-        width = 2400;
+        width = 1560;
         height = 900;
     }
 
@@ -39,16 +40,16 @@ public class Background extends GameObject
     @Override
     public void render(Graphics g, ImageManager im)
     {
-        im.drawBackGround2(getDiX(), getDiY(), width, height);
-        im.drawBackGround1(getDiX(), getDiY(), width, height);
+        im.drawBackGround2(getDiX(), getDiY(), width, height, alpha);
+        im.drawBackGround1(getDiX(), getDiY(), width, height, alpha);
 
-        im.drawBackGround2(getDiX(), getDiY() - height, width, height);
-        im.drawBackGround1(getDiX(), getDiY() - height, width, height);
+        im.drawBackGround2(getDiX(), getDiY() - height, width, height, alpha);
+        im.drawBackGround1(getDiX(), getDiY() - height, width, height, alpha);
 
-        im.drawBackGround2(getDiX() - width, getDiY(), width, height);
-        im.drawBackGround1(getDiX() - width, getDiY(), width, height);
+        im.drawBackGround2(getDiX() - width, getDiY(), width, height, alpha);
+        im.drawBackGround1(getDiX() - width, getDiY(), width, height, alpha);
 
-        im.drawBackGround2(getDiX() - width, getDiY() - height, width, height);
-        im.drawBackGround1(getDiX() - width, getDiY() - height, width, height);
+        im.drawBackGround2(getDiX() - width, getDiY() - height, width, height, alpha);
+        im.drawBackGround1(getDiX() - width, getDiY() - height, width, height, alpha);
     }
 }

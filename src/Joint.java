@@ -124,8 +124,7 @@ public class Joint extends GameObject
                 im.drawJoint(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2);
                 break;
             case GOAL:
-                g.setColor(Color.red);
-                g.drawOval(getDiX() - Joint.RADIUS, getDiY() - Joint.RADIUS, Joint.RADIUS * 2, Joint.RADIUS * 2);
+                im.drawJointGoal(getDiX(), getDiY(), RADIUS * 2, RADIUS * 2);
                 break;
             case BEE_AIM:
             case BEE_ROTATE:

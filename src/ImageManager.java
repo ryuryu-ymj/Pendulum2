@@ -31,6 +31,7 @@ public class ImageManager
     private Image jointHeartOut;
     private Image bee;
     private Image sting;
+    private Image jointGoal;
     private Image spineMiddle;
     private Image spineEdge;
     private Image cursor;
@@ -46,6 +47,7 @@ public class ImageManager
             joint = ss.getSubImage(1, 0);
             bee = ss.getSubImage(2, 0);
             sting = ss.getSubImage(3, 0);
+            jointGoal = ss.getSubImage(4, 0);
         }
         catch (SlickException e)
         {
@@ -240,6 +242,20 @@ public class ImageManager
         sting.setCenterOfRotation(width / 2 + margin, height / 2 + margin);
         sting.setRotation(angle - 90);
         sting.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
+    }
+
+    /**
+     * jointGoal の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawJointGoal(float x, float y, float width, float height)
+    {
+        float margin = 108.56f * width / (player.getWidth() - 108.56f * 2);
+        jointGoal.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
     }
 
     /**
@@ -528,8 +544,9 @@ public class ImageManager
      * @param width  横幅
      * @param height 縦幅
      */
-    public void drawBackGround1(float x, float y, float width, float height)
+    public void drawBackGround1(float x, float y, float width, float height, float alpha)
     {
+        background1.setAlpha(alpha);
         background1.draw(x, y, width, height);
     }
 
@@ -541,8 +558,9 @@ public class ImageManager
      * @param width  横幅
      * @param height 縦幅
      */
-    public void drawBackGround2(float x, float y, float width, float height)
+    public void drawBackGround2(float x, float y, float width, float height, float alpha)
     {
+        background2.setAlpha(alpha);
         background2.draw(x, y, width, height);
     }
 }
