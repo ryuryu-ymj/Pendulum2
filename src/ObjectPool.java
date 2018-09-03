@@ -166,25 +166,25 @@ public class ObjectPool
         {
             isJointsLoop[i] = false;
         }
-        for (int i = 0; i < joints.length; i++)
+        for (Joint joint : joints)
         {
-            joints[i].active = false;
+            joint.active = false;
         }
         for (int i = 0; i < isGroundDisplayed.length; i++)
         {
             isGroundDisplayed[i] = false;
         }
-        for (int i = 0; i < grounds.length; i++)
+        for (Ground ground : grounds)
         {
-            grounds[i].active = false;
+            ground.active = false;
         }
         for (int i = 0; i < isBackObjectsActivate.length; i++)
         {
             isBackObjectsActivate[i] = false;
         }
-        for (int i = 0; i < backObjects.length; i++)
+        for (BackObject backObject : backObjects)
         {
-            backObjects[i].active = false;
+            backObject.active = false;
         }
         for (int i = 0; i < isCherriesActivate.length; i++)
         {
@@ -194,9 +194,9 @@ public class ObjectPool
         {
             isCherriesTook[i] = false;
         }
-        for (int i = 0; i < cherries.length; i++)
+        for (Cherry cherry : cherries)
         {
-            cherries[i].active = false;
+            cherry.active = false;
         }
         for (int i = 0; i < isHeartsActivate.length; i++)
         {
@@ -206,9 +206,9 @@ public class ObjectPool
         {
             isHeartsTook[i] = false;
         }
-        for (int i = 0; i < hearts.length; i++)
+        for (Heart heart : hearts)
         {
-            hearts[i].active = false;
+            heart.active = false;
         }
         for (Bullet bullet : bullets)
         {
