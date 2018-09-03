@@ -435,6 +435,12 @@ public class StageData
 
     public void addGround(int groundX, int groundY, Ground.Type groundType)
     {
+        if (groundXs.size() >= GROUND_MAX)
+        {
+            System.err.println("1ステージにある ground の最大数を超えました");
+            return;
+        }
+
         for (int i = 0; i < groundXs.size(); i++)
         {
             if (groundX == groundXs.get(i) && groundY == groundYs.get(i))
@@ -492,6 +498,12 @@ public class StageData
 
     public void addJoint(int jointX, int jointY, Joint.Type jointType, int jointLockRadius)
     {
+        if (jointXs.size() >= JOINT_MAX)
+        {
+            System.err.println("1ステージにある joint の最大数を超えました");
+            return;
+        }
+
         for (int i = 0; i < jointXs.size(); i++)
         {
             if (jointX == jointXs.get(i) && jointY == jointYs.get(i))
@@ -507,6 +519,12 @@ public class StageData
 
     public void addCherry(int cherryX, int cherryY)
     {
+        if (cherryXs.size() >= CHERRY_MAX)
+        {
+            System.err.println("1ステージにある cherry の最大数を超えました");
+            return;
+        }
+
         for (int i = 0; i < cherryXs.size(); i++)
         {
             if (cherryX == cherryXs.get(i) && cherryY == cherryYs.get(i))
@@ -532,6 +550,12 @@ public class StageData
 
     public void addHeart(int heartX, int heartY)
     {
+        if (heartXs.size() >= HEART_MAX)
+        {
+            System.err.println("1ステージにある heart の最大数を超えました");
+            return;
+        }
+
         for (int i = 0; i < heartXs.size(); i++)
         {
             if (heartX == heartXs.get(i) && heartY == heartYs.get(i))
@@ -545,6 +569,12 @@ public class StageData
 
     public void addBackObject(int x, int y, BackObject.Type type, BackObject.Layer layer)
     {
+        if (backObjectXs.size() >= BACK_OBJECT_MAX)
+        {
+            System.err.println("1ステージにある backObject の最大数を超えました");
+            return;
+        }
+
         for (int i = 0; i < backObjectXs.size(); i++)
         {
             if (x == backObjectXs.get(i) && y == backObjectYs.get(i))
