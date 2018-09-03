@@ -255,7 +255,7 @@ public class ObjectPool
     {
         //g.setLineWidth(1.5f);
 
-        //im.drawBackGround(Play.DISPLAY_WIDTH / 2, Play.DISPLAY_HEIGHT / 2, 4900 / 2, 1800 / 2);
+        //im.drawBackGround(PLAY.DISPLAY_WIDTH / 2, PLAY.DISPLAY_HEIGHT / 2, 4900 / 2, 1800 / 2);
         background.render(g, im);
         renderObjects(backObjects, g, im);
         renderObjects(bullets, g, im);
@@ -401,15 +401,30 @@ public class ObjectPool
             }
         }
 
-        // player vs bullet
         for (Bullet bullet : bullets)
         {
             if (bullet.active)
             {
+                // player vs bullet
                 if (getDistance(player, bullet) < player.width / 2 + bullet.width / 2)
                 {
                     bullet.active = false;
                     playerDie();
+                }
+
+                // ground vs bullet
+                for (Ground ground : grounds)
+                {
+                    if (ground.active)
+                    {
+                        if (ground.getType() != Ground.Type.INVISIBLE)
+                        {
+                            if (getDistance(ground, bullet) < Ground.WIDTH / 2)
+                            {
+                                bullet.active = false;
+                            }
+                        }
+                    }
                 }
             }
         }

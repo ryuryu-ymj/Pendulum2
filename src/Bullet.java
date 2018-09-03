@@ -8,7 +8,7 @@ import org.newdawn.slick.Graphics;
 */
 public class Bullet extends GameObject
 {
-	public final int RADIUS = 4;
+	public static final int RADIUS = 4;
 	private float direction;
 	private float speed;
 	private float speedX;
