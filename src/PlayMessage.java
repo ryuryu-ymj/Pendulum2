@@ -19,7 +19,7 @@ public class PlayMessage
     {
         //fontTitle.setColor(240, 0, 160);
         fontTitle.setColor(0.4f, 0.23f, 0);
-        fontTitle.drawString("stage" + (stageNum + 1), x - fontTitle.getWidth("stage" + (stageNum + 1)) / 2, y - 100);
+        fontTitle.drawString("stage " + (stageNum + 1), x - fontTitle.getWidth("stage " + (stageNum + 1)) / 2, y - 100);
 
         fontMessage.setColor(0.4f, 0.23f, 0);
         fontMessage.setAlpha((float) Math.abs(counter % 20 - 10) / 10);
