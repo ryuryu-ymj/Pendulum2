@@ -1,5 +1,3 @@
-import jdk.nashorn.internal.scripts.JO;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
@@ -23,10 +21,6 @@ public class StageData
      * ground の位置
      */
     private ArrayList<Ground.Position> groundPositions;
-    /**
-     * ground に接するgroundの数
-     */
-    //private ArrayList<Integer> groundTouchNums;
 
     /**
      * joint の絶対座標（空の場合は-1）
@@ -91,7 +85,7 @@ public class StageData
     /**
      * ステージの最大数
      */
-    public static final int STAGE_MAX = 5;
+    public static final int STAGE_MAX = 10;
 
     StageData()
     {

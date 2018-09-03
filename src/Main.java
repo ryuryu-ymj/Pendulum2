@@ -1,4 +1,3 @@
-import javafx.print.PageLayout;
 import org.newdawn.slick.*;
 
 /**
@@ -24,9 +23,9 @@ public class Main extends BasicGame
 
     public enum State
     {
-        Title,
-        Play,
-        Edit,
+        TITLE,
+        PLAY,
+        EDIT,
     }
 
     /**
@@ -50,7 +49,7 @@ public class Main extends BasicGame
         title = new Title();
         play = new Play();
         edit = new Edit();
-        state = State.Title;
+        state = State.TITLE;
         title.init(gc);
         im = new ImageManager();
         gc.setMouseCursor(im.getCursor(), 20, 10);
@@ -65,23 +64,23 @@ public class Main extends BasicGame
     {
         switch (state)
         {
-            case Title:
+            case TITLE:
                 title.update(gc, delta);
-                if (gc.getInput().isKeyPressed(Input.KEY_P))
+                if (title.isGoToPlay())
                 {
                     play.init(gc);
-                    state = State.Play;
+                    state = State.PLAY;
                 }
-                else if (gc.getInput().isKeyPressed(Input.KEY_E))
+                else if (title.isGoToEdit())
                 {
                     edit.init(gc);
-                    state = State.Edit;
+                    state = State.EDIT;
                 }
                 break;
-            case Play:
+            case PLAY:
                 play.update(gc, delta);
                 break;
-            case Edit:
+            case EDIT:
                 edit.update(gc, delta);
                 break;
         }
@@ -89,19 +88,19 @@ public class Main extends BasicGame
         {
             if (gc.getInput().isKeyPressed(Input.KEY_P))
             {
-                if (state == State.Edit)
+                if (state == State.EDIT)
                 {
                     play.initStage(edit.getStageNum());
-                    state = State.Play;
+                    state = State.PLAY;
                 }
             }
             else if (gc.getInput().isKeyPressed(Input.KEY_E))
             {
-                if (state == State.Play)
+                if (state == State.PLAY)
                 {
                     play.finish();
                     edit.initStage(play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
-                    state = State.Edit;
+                    state = State.EDIT;
                 }
             }
         }
@@ -119,13 +118,13 @@ public class Main extends BasicGame
 
         switch (state)
         {
-            case Title:
+            case TITLE:
                 title.render(gc, g, im);
                 break;
-            case Play:
+            case PLAY:
                 play.render(gc, g, im);
                 break;
-            case Edit:
+            case EDIT:
                 edit.render(gc, g, im);
                 break;
         }

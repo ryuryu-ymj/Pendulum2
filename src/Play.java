@@ -2,6 +2,8 @@ import org.newdawn.slick.*;
 
 /**
  * プレイ画面の更新,描画を行うクラス.
+ *
+ * @author ryuryu
  */
 public class Play extends GameState
 {
@@ -156,20 +158,18 @@ public class Play extends GameState
     public void render(GameContainer gc, Graphics g, ImageManager im)
             throws SlickException
     {
+        g.setBackground(new Color(189f / 256, 226f / 256, 14f / 256));
         switch (state)
         {
             case STAGE_TITLE:
-                g.setBackground(new Color(189f / 256, 226f / 256, 14f / 256));
                 playMessage.renderStageNum(g, stageNum, counter);
                 objectPool.score.render(g, im);
                 break;
             case PLAY:
             case KEEP:
-                g.setBackground(new Color(189f / 256, 226f / 256, 14f / 256));
                 objectPool.render(g, im);
                 break;
             case GAMEOVER:
-                g.setBackground(new Color(189f / 256, 226f / 256, 14f / 256));
                 playMessage.renderGameOver(g, counter);
                 break;
         }

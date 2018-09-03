@@ -2,6 +2,8 @@ import org.newdawn.slick.*;
 
 /**
  * 編集画面の更新,描画を行うクラス.
+ *
+ * @author ryuryu
  */
 public class Edit extends GameState
 {
