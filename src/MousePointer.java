@@ -32,7 +32,7 @@ public class MousePointer extends GameObject
     MousePointer(ObjectPool objectPool)
     {
         super(objectPool);
-        type = Type.GROUND;
+        type = Type.OPERATE;
         ground = new Ground(objectPool);
         joint = new Joint(objectPool.player, objectPool);
         backObject = new BackObject(objectPool);
