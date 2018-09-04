@@ -15,6 +15,7 @@ public class Edit extends GameState
     private StageData stageData;
     private Grid grid;
     private MousePointer mousePointer;
+    private ToolBar toolBar;
 
     /**
      * プレイするステージの番号 0から
@@ -37,6 +38,7 @@ public class Edit extends GameState
         stageData = new StageData();
         grid = new Grid(objectPool);
         mousePointer = new MousePointer(objectPool);
+        toolBar = new ToolBar(objectPool);
     }
 
     /**
@@ -70,6 +72,7 @@ public class Edit extends GameState
         grid.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
         mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));
         mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
+        toolBar.update(gc);
 
         //System.out.println(objectPool.wire.jointLockedNum);
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
@@ -172,16 +175,17 @@ public class Edit extends GameState
         }
     }
 
-        /**
-         * ステップごとの描画処理.
-         */
-        public void render (GameContainer gc, Graphics g, ImageManager im)
+    /**
+     * ステップごとの描画処理.
+     */
+    public void render(GameContainer gc, Graphics g, ImageManager im)
             throws SlickException
-        {
-            grid.render(g, im);
-            objectPool.render(g, im);
-            mousePointer.render(g, im);
-            g.setColor(Color.black);
-            g.drawString("stage" + (stageNum + 1), 100, 100);
-        }
+    {
+        grid.render(g, im);
+        objectPool.render(g, im);
+        mousePointer.render(g, im);
+        toolBar.render(g, im);
+        g.setColor(Color.black);
+        g.drawString("stage" + (stageNum + 1), 100, 100);
     }
+}

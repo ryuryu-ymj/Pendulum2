@@ -1,3 +1,4 @@
+import org.lwjgl.input.Cursor;
 import org.newdawn.slick.*;
 
 /**
@@ -52,7 +53,7 @@ public class Main extends BasicGame
         state = State.TITLE;
         title.init(gc);
         im = new ImageManager();
-        gc.setMouseCursor(im.getCursor(), 20, 10);
+        gc.setMouseCursor(new Image("res/img/clear_img.png"), 0, 0);
     }
 
     /**
@@ -128,6 +129,8 @@ public class Main extends BasicGame
                 edit.render(gc, g, im);
                 break;
         }
+
+        im.drawCursor(gc.getInput().getMouseX() + 5, gc.getInput().getMouseY() + 13);
     }
 
     /**

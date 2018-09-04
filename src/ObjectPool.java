@@ -36,7 +36,7 @@ public class ObjectPool
     /**
      * 画面上における joint の数の最大値
      */
-    public static final int JOINT_MAX = 10;
+    public static final int JOINT_MAX = 20;
     /**
      * その joint が表示されたかどうか
      */

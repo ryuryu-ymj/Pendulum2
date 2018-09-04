@@ -37,6 +37,8 @@ public class ImageManager
     private Image cursor;
     private Image background1;
     private Image background2;
+    private Image toolBar;
+    private Image delete;
 
     ImageManager()
     {
@@ -151,7 +153,10 @@ public class ImageManager
 
         try
         {
-            cursor = new Image("res/img/cursor.png");
+            SpriteSheet ss = new SpriteSheet("res/img/cursor.png", 50, 50);
+            cursor = ss.getSubImage(0, 0);
+            delete = ss.getSubImage(1, 0);
+
         }
         catch (SlickException e)
         {
@@ -170,6 +175,15 @@ public class ImageManager
         try
         {
             background2 = new Image("res/img/background2.png");
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            toolBar = new Image("res/img/tool_bar.png");
         }
         catch (SlickException e)
         {
@@ -522,18 +536,26 @@ public class ImageManager
      *
      * @param x      中心点のx座標
      * @param y      中心点のy座標
-     * @param width  横幅
-     * @param height 縦幅
      */
-    public void drawCursor(float x, float y, float width, float height)
+    public void drawCursor(float x, float y)
     {
-        float margin = 10 * width / 50;
-        cursor.draw(x - width / 2 - margin, y - height / 2 - margin, width + margin * 2, height + margin * 2);
+        cursor.draw(x - cursor.getWidth() / 2, y- cursor.getHeight() / 2);
     }
 
     public Image getCursor()
     {
         return cursor;
+    }
+
+    /**
+     * delete の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     */
+    public void drawDelete(float x, float y)
+    {
+        delete.draw(x - delete.getWidth() / 2, y- delete.getHeight() / 2);
     }
 
     /**
@@ -562,5 +584,16 @@ public class ImageManager
     {
         background2.setAlpha(alpha);
         background2.draw(x, y, width, height);
+    }
+
+    /**
+     * toolBar の画像を表示する
+     *
+     * @param x      左上のx座標
+     * @param y      左上のy座標
+     */
+    public void drawToolBar(float x, float y)
+    {
+        toolBar.draw(x, y);
     }
 }
