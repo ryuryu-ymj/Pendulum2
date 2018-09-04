@@ -84,11 +84,7 @@ ground,1110,1350,SPINE,false,false,true,true
 ground,1170,810,SPINE,true,false,false,false
 ground,1170,750,SPINE,true,true,false,false
 ground,1170,690,SPINE,true,true,false,false
-ground,1170,630,SPINE,true,true,false,false
-ground,1170,570,SPINE,true,true,false,false
-ground,1170,510,SPINE,true,true,false,false
-ground,1170,450,SPINE,true,true,false,false
-ground,1170,390,SPINE,true,true,false,false
+ground,1170,630,SPINE,false,true,false,false
 ground,1170,1350,SPINE,false,false,true,true
 ground,1230,1350,SPINE,false,false,true,true
 ground,1290,1350,SPINE,false,false,true,true
@@ -111,7 +107,7 @@ ground,1650,690,SPINE,true,true,false,false
 ground,1650,630,SPINE,true,true,false,false
 ground,1650,570,SPINE,true,true,false,false
 ground,1650,510,SPINE,false,true,false,false
-ground,1170,330,SPINE,true,true,false,false
+ground,1170,330,SPINE,true,false,false,false
 ground,1170,270,SPINE,true,true,false,false
 ground,1170,210,SPINE,true,true,false,false
 ground,1170,150,SPINE,true,true,false,false
@@ -289,10 +285,10 @@ ground,870,390,NORMAL,true,true,true,true
 ground,930,390,NORMAL,true,true,true,true
 ground,990,390,NORMAL,true,true,true,true
 ground,1050,390,NORMAL,true,true,true,true
-ground,1110,390,NORMAL,true,true,true,false
-ground,1110,450,NORMAL,true,true,true,false
-ground,1110,510,NORMAL,true,true,true,false
-ground,1110,570,NORMAL,true,true,true,false
+ground,1110,390,NORMAL,true,true,true,true
+ground,1110,450,NORMAL,true,true,true,true
+ground,1110,510,NORMAL,true,true,true,true
+ground,1110,570,NORMAL,true,true,true,true
 ground,1050,450,NORMAL,true,true,true,true
 ground,990,450,NORMAL,true,true,true,true
 ground,930,450,NORMAL,true,true,true,true
@@ -364,6 +360,10 @@ ground,3210,390,NORMAL,false,false,true,true
 ground,3270,390,NORMAL,false,false,true,true
 ground,3330,390,NORMAL,false,false,true,true
 ground,3390,390,NORMAL,false,false,true,true
+ground,1170,570,NORMAL,true,false,true,false
+ground,1170,510,NORMAL,true,true,true,false
+ground,1170,450,NORMAL,true,true,true,false
+ground,1170,390,NORMAL,false,true,true,false
 joint,90,90,NORMAL,0
 joint,510,90,NORMAL,180
 joint,510,1110,NORMAL,0
@@ -376,6 +376,7 @@ joint,2130,930,NORMAL,0
 joint,2730,750,NORMAL,0
 joint,3210,750,NORMAL,0
 joint,3450,630,GOAL,180
+joint,510,690,NORMAL,0
 cherry,510,270
 cherry,690,390
 cherry,510,510
@@ -396,3 +397,11 @@ cherry,2010,750
 cherry,1950,1050
 cherry,2010,1110
 cherry,2130,1170
+cherry,2190,210
+cherry,2370,30
+cherry,2550,210
+cherry,2370,390
+cherry,2250,330
+cherry,2250,90
+cherry,2490,330
+cherry,2490,90
