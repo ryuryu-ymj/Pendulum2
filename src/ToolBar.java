@@ -45,8 +45,10 @@ public class ToolBar
         }
     }
 
-    ToolBar(ObjectPool objectPool)
+    ToolBar()
     {
+        ObjectPool objectPool = new ObjectPool();
+        objectPool.create(objectPool);
         ground = new Ground(objectPool);
         joint = new Joint(objectPool.player, objectPool);
         backObject = new BackObject(objectPool);
@@ -164,7 +166,6 @@ public class ToolBar
 
     private void setMousePointer(MousePointer mousePointer)
     {
-        System.out.println(selectedMenu);
         switch (selectedMenu)
         {
             case GROUND:

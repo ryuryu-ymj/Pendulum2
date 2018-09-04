@@ -633,7 +633,6 @@ public class StageData
                         }
                     }
                 }
-                System.out.println("ground");
                 return ground;
             }
         }

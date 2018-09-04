@@ -39,7 +39,7 @@ public class Edit extends GameState
         stageData = new StageData();
         grid = new Grid(objectPool);
         mousePointer = new MousePointer(objectPool);
-        toolBar = new ToolBar(objectPool);
+        toolBar = new ToolBar();
     }
 
     /**
@@ -71,7 +71,6 @@ public class Edit extends GameState
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
-        //System.out.println(mousePointer.getType() + " " + mousePointer.isDragging);
         if (gc.getInput().getMouseY() < 80)
         {
             toolBar.update(gc, mousePointer);
@@ -105,7 +104,6 @@ public class Edit extends GameState
             mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));
             mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
 
-            //System.out.println(objectPool.wire.jointLockedNum);
             if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
             {
                 if (mousePointer.canPutObject)
@@ -181,6 +179,12 @@ public class Edit extends GameState
         objectPool.moveBackObjects(stageData.getBackObjectXs(), stageData.getBackObjectYs(), stageData.getBackObjectTypes()
                 , stageData.getBackObjectLayers());
         objectPool.update(gc);
+
+        for (Joint joint : objectPool.joints)
+        {
+            System.out.print("(" + joint.active + " " + joint.getDiX() + " " + joint.getDiY() + ") ");
+        }
+        System.out.println();
 
         counter++;
     }

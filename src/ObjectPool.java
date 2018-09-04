@@ -570,7 +570,7 @@ public class ObjectPool
         {
             if (!isJointsActivate[i])
             {
-                if (checkEntering(jointXs[i], jointYs[i], joints[0].RADIUS * 2, joints[0].RADIUS * 2, 15))
+                if (checkEntering(jointXs[i], jointYs[i], Joint.RADIUS * 2, Joint.RADIUS * 2, 15))
                 {
                     if (newJoint(jointXs[i], jointYs[i], jointTypes[i], jointLockRadius[i], isJointsLoop[i], i) != -1)
                     {
