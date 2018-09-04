@@ -68,48 +68,79 @@ public class Edit extends GameState
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
-        objectPool.collisionDetection(gc);
-        grid.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
-        mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));
-        mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
-        toolBar.update(gc);
-
-        //System.out.println(objectPool.wire.jointLockedNum);
-        if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+        if (gc.getInput().getMouseY() < 80)
         {
-            if (mousePointer.canPutObject)
+            toolBar.update(gc, mousePointer);
+
+            if (toolBar.isStageDataSave())
             {
-                addStageData();
-                switch (mousePointer.getType())
+                stageData.saveStageDate(stageNum);
+                System.out.println("ステージデータをstage" + (stageNum + 1) + "を保存しました");
+            }
+
+            if (toolBar.isAddStageNum())
+            {
+                stageNum++;
+                if (!stageData.loadStageDate(stageNum))
                 {
-                    case DELETE:
-                        stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY, objectPool);
-                        break;
-                    case JOINT_LOCK_RADIUS:
-                        if (objectPool.wire.jointLockedNum != -1)
-                        {
-                            int jointLockRadius = Math.abs((int) (objectPool.joints[objectPool.wire.jointLockedNum].getDiX() - gc.getInput().getMouseX()))
-                                    / Ground.WIDTH * Ground.WIDTH;
-                            Joint joint = objectPool.joints[objectPool.wire.jointLockedNum];
-                            stageData.resetJointRadius((int) joint.abX, (int) joint.abY, jointLockRadius);
-                        }
-                        break;
-                    case OPERATE:
-                        mousePointer.setType(stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY, objectPool));
-                        mousePointer.canPutObject = false;
-                        break;
+                    stageData.createNewStage(stageNum);
+                }
+                objectPool.init();
+            }
+            else if (toolBar.isSubStageNum())
+            {
+                if (stageNum > 0)
+                {
+                    stageNum--;
+                    stageData.loadStageDate(stageNum);
                 }
                 objectPool.init();
             }
         }
         else
         {
-            if (!mousePointer.canPutObject)
+            objectPool.collisionDetection(gc);
+            grid.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
+            mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));
+            mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
+
+            //System.out.println(objectPool.wire.jointLockedNum);
+            if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
             {
-                mousePointer.canPutObject = true;
-                addStageData();
-                mousePointer.setType(MousePointer.Type.OPERATE);
-                objectPool.init();
+                if (mousePointer.canPutObject)
+                {
+                    addStageData();
+                    switch (mousePointer.getType())
+                    {
+                        case DELETE:
+                            stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY, objectPool);
+                            break;
+                        case JOINT_LOCK_RADIUS:
+                            if (objectPool.wire.jointLockedNum != -1)
+                            {
+                                int jointLockRadius = Math.abs((int) (objectPool.joints[objectPool.wire.jointLockedNum].getDiX() - gc.getInput().getMouseX()))
+                                        / Ground.WIDTH * Ground.WIDTH;
+                                Joint joint = objectPool.joints[objectPool.wire.jointLockedNum];
+                                stageData.resetJointRadius((int) joint.abX, (int) joint.abY, jointLockRadius);
+                            }
+                            break;
+                        case OPERATE:
+                            mousePointer.setType(stageData.deleteObject((int) mousePointer.abX, (int) mousePointer.abY, objectPool));
+                            mousePointer.isDragging = true;
+                            break;
+                    }
+                    objectPool.init();
+                }
+            }
+            else
+            {
+                if (mousePointer.isDragging)
+                {
+                    mousePointer.isDragging = false;
+                    addStageData();
+                    mousePointer.setType(MousePointer.Type.OPERATE);
+                    objectPool.init();
+                }
             }
         }
 
@@ -178,13 +209,14 @@ public class Edit extends GameState
     /**
      * ステップごとの描画処理.
      */
-    public void render(GameContainer gc, Graphics g, ImageManager im)
+    @Override
+    public void render(GameContainer gc, Graphics g, ImageManager im, FontManager fm)
             throws SlickException
     {
         grid.render(g, im);
         objectPool.render(g, im);
         mousePointer.render(g, im);
-        toolBar.render(g, im);
+        toolBar.render(g, im, stageNum);
         g.setColor(Color.black);
         g.drawString("stage" + (stageNum + 1), 100, 100);
     }

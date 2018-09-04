@@ -106,6 +106,27 @@ public class BackObject extends GameObject
                 break;
         }
     }
+    public static void renderIcon(Graphics g, ImageManager im, int x, int y, Type type)
+    {
+        switch (type)
+        {
+            /*case TREE:
+                im.drawTree1(getDiX(), getDiY() + 2, width, height);
+                break;*/
+            case GLASS1:
+                im.drawGlass1(x, y, 60, 60);
+                break;
+            case GLASS2:
+                im.drawGlass2(x, y, 60, 60);
+                break;
+            case GLASS3:
+                im.drawGlass3(x, y, 60, 60);
+                break;
+            case GLASS4:
+                im.drawGlass4(x, y, 60, 60);
+                break;
+        }
+    }
 
     /**
      * 初期化処理

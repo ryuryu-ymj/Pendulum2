@@ -21,10 +21,11 @@ public class MousePointer extends GameObject
      * ゲームオブジェクトを置けるかどうか
      */
     public boolean canPutObject;
+    public boolean isDragging;
 
     public enum Type
     {
-        GROUND, JOINT, BACK_OBJECT, CHERRY, HEART, DELETE, OPERATE, JOINT_LOCK_RADIUS
+        OPERATE, GROUND, JOINT, BACK_OBJECT, CHERRY, HEART, DELETE, JOINT_LOCK_RADIUS
     }
 
     private Type type;
@@ -39,12 +40,31 @@ public class MousePointer extends GameObject
         cherry = new Cherry(objectPool);
         heart = new Heart(objectPool);
         gameObject = ground;
+        isDragging = false;
         canPutObject = true;
     }
 
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
+        if (gc.getInput().getMouseY() < 80)
+        {
+            canPutObject = false;
+        }
+        else
+        {
+            canPutObject = true;
+        }
+
+        if (isDragging)
+        {
+            canPutObject = false;
+        }
+        else
+        {
+            canPutObject = true;
+        }
+
         if (gc.getInput().isKeyPressed(Input.KEY_G))
         {
             type = Type.GROUND;
@@ -114,8 +134,7 @@ public class MousePointer extends GameObject
         switch (type)
         {
             case DELETE:
-                g.setColor(Color.red);
-                g.drawOval(getDiX() - Ground.WIDTH / 2, getDiY() - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
+                im.drawDelete(getDiX(), getDiY());
                 break;
             case OPERATE:
                 break;

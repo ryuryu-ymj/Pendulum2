@@ -68,9 +68,9 @@ public class Camera
             x += (mouseX - (Play.DISPLAY_WIDTH - 60)) * speed;
         }
 
-        if (mouseY < 60)
+        if (mouseY > 80 && mouseY < 140)
         {
-            y -= (60 - mouseY) * speed;
+            y -= (140 - mouseY) * speed;
         }
         else if (mouseY > Play.DISPLAY_HEIGHT - 60)
         {

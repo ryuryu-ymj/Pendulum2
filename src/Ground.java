@@ -135,6 +135,23 @@ public class Ground extends GameObject
         //g.drawString(Boolean.toString(isCheckCollision), getDiX(), getDiY());
     }
 
+    public static void renderIcon(Graphics g, ImageManager im, int x, int y, Type type)
+    {
+        switch (type)
+        {
+            case NORMAL:
+                im.drawGround(x, y, Ground.WIDTH, Ground.WIDTH, new Position());
+                break;
+            case SPINE:
+                im.drawSpine(x, y, Ground.WIDTH, Ground.WIDTH, new Position());
+                break;
+            case INVISIBLE:
+                g.setColor(Color.red);
+                g.drawRect(x - Ground.WIDTH / 2, y - Ground.WIDTH / 2, Ground.WIDTH, Ground.WIDTH);
+                break;
+        }
+    }
+
     public void renderEditVer(Graphics g, ImageManager im)
     {
         switch (type)

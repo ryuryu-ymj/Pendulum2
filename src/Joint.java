@@ -152,7 +152,29 @@ public class Joint extends GameObject
         if (lockRadius != 0)
         {
             g.setColor(Color.blue);
-            g.drawOval((int)getDiX() - lockRadius, (int)getDiY() - lockRadius, lockRadius * 2, lockRadius * 2);
+            g.drawOval((int) getDiX() - lockRadius, (int) getDiY() - lockRadius, lockRadius * 2, lockRadius * 2);
+        }
+    }
+
+    public static void renderIcon(Graphics g, ImageManager im, int x, int y, float angle, Type type)
+    {
+        /*g.setColor(Color.blue);
+        g.drawOval((int)getDiX() - RADIUS, (int)getDiY() - RADIUS, RADIUS * 2, RADIUS * 2);*/
+        switch (type)
+        {
+            case NORMAL:
+                im.drawJoint(x, y, RADIUS * 2, RADIUS * 2);
+                break;
+            case GOAL:
+                im.drawJointGoal(x, y, RADIUS * 2, RADIUS * 2);
+                break;
+            case BEE_AIM:
+            case BEE_ROTATE:
+                im.drawBee(x, y, RADIUS * 2, RADIUS * 2, angle);
+                break;
+            case HEART_IN:
+                im.drawJointHeartIn(x, y, Heart.RADIUS * 2, Heart.RADIUS * 2);
+                break;
         }
     }
 
@@ -177,5 +199,10 @@ public class Joint extends GameObject
     public int getLockRadius()
     {
         return lockRadius;
+    }
+
+    public float getAngle()
+    {
+        return angle;
     }
 }
