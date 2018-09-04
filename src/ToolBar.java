@@ -185,11 +185,11 @@ public class ToolBar
         }
     }
 
-    public void render(Graphics g, ImageManager im, int stageNum)
+    public void render(Graphics g, ImageManager im, FontManager fm, int stageNum)
     {
         im.drawToolBar(0, 0);
 
-        Font font = FontManager.getMediumFont();
+        Font font = fm.getMediumFont();
         font.drawString(Integer.toString(stageNum + 1), 210 - font.getWidth(Integer.toString(stageNum)) / 2, 40);
 
         g.setColor(new Color(1, 1, 0, 0.6f));
@@ -210,7 +210,7 @@ public class ToolBar
         im.drawCherry(750, 40, Cherry.RADIUS * 2, Cherry.RADIUS * 2);
         im.drawHeart(850, 40, Heart.RADIUS * 2, Heart.RADIUS * 2);
         im.drawDelete(950, 40);
-        saveButton.render(g, im);
+        saveButton.render(g, im, fm);
     }
 
     public boolean isStageDataSave()

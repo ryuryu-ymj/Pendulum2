@@ -216,7 +216,7 @@ public class Edit extends GameState
         grid.render(g, im);
         objectPool.render(g, im);
         mousePointer.render(g, im);
-        toolBar.render(g, im, stageNum);
+        toolBar.render(g, im, fm, stageNum);
         g.setColor(Color.black);
         g.drawString("stage" + (stageNum + 1), 100, 100);
     }
