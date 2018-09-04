@@ -45,12 +45,12 @@ public class Title extends GameState
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g, ImageManager im) throws SlickException
+    public void render(GameContainer gc, Graphics g, ImageManager im, FontManager fm) throws SlickException
     {
         image.draw(0, 0, 1200, 900);
-        playButton.render(g, im);
-        editButton.render(g, im);
-        creditButton.render(g, im);
+        playButton.render(g, im, fm);
+        editButton.render(g, im, fm);
+        creditButton.render(g, im, fm);
     }
 
     public boolean isGoToPlay()

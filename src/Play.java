@@ -155,14 +155,14 @@ public class Play extends GameState
      * ステップごとの描画処理.
      */
     @Override
-    public void render(GameContainer gc, Graphics g, ImageManager im)
+    public void render(GameContainer gc, Graphics g, ImageManager im, FontManager fm)
             throws SlickException
     {
         g.setBackground(new Color(189f / 256, 226f / 256, 14f / 256));
         switch (state)
         {
             case STAGE_TITLE:
-                playMessage.renderStageNum(g, stageNum, counter);
+                playMessage.renderStageNum(g, stageNum, counter, fm);
                 objectPool.score.render(g, im);
                 break;
             case PLAY:
@@ -170,7 +170,7 @@ public class Play extends GameState
                 objectPool.render(g, im);
                 break;
             case GAMEOVER:
-                playMessage.renderGameOver(g, counter);
+                playMessage.renderGameOver(g, counter, fm);
                 break;
         }
     }

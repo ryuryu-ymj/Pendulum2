@@ -21,6 +21,7 @@ public class Main extends BasicGame
      */
     private State state;
     ImageManager im;
+    FontManager fm;
 
     public enum State
     {
@@ -53,6 +54,7 @@ public class Main extends BasicGame
         state = State.TITLE;
         title.init(gc);
         im = new ImageManager();
+        fm = new FontManager();
         gc.setMouseCursor(new Image("res/img/clear_img.png"), 0, 0);
     }
 
@@ -120,13 +122,13 @@ public class Main extends BasicGame
         switch (state)
         {
             case TITLE:
-                title.render(gc, g, im);
+                title.render(gc, g, im, fm);
                 break;
             case PLAY:
-                play.render(gc, g, im);
+                play.render(gc, g, im, fm);
                 break;
             case EDIT:
-                edit.render(gc, g, im);
+                edit.render(gc, g, im, fm);
                 break;
         }
 
