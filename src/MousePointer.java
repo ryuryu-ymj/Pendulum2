@@ -33,15 +33,20 @@ public class MousePointer extends GameObject
     MousePointer(ObjectPool objectPool)
     {
         super(objectPool);
-        type = Type.OPERATE;
         ground = new Ground(objectPool);
         joint = new Joint(objectPool.player, objectPool);
         backObject = new BackObject(objectPool);
         cherry = new Cherry(objectPool);
         heart = new Heart(objectPool);
         gameObject = ground;
-        isDragging = false;
+        init();
+    }
+
+    public void init()
+    {
+        type = Type.OPERATE;
         canPutObject = true;
+        isDragging = false;
     }
 
     @Override

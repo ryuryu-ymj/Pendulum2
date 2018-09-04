@@ -85,6 +85,11 @@ public class Main extends BasicGame
                 break;
             case EDIT:
                 edit.update(gc, delta);
+                if (edit.isGoToPlay())
+                {
+                    play.initStage(edit.getStageNum());
+                    state = State.PLAY;
+                }
                 break;
         }
         if (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))
@@ -102,7 +107,7 @@ public class Main extends BasicGame
                 if (state == State.PLAY)
                 {
                     play.finish();
-                    edit.initStage(play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
+                    edit.initStage(gc, play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
                     state = State.EDIT;
                 }
             }

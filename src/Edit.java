@@ -7,10 +7,6 @@ import org.newdawn.slick.*;
  */
 public class Edit extends GameState
 {
-    /**
-     * フレームカウンタ
-     */
-    public static int counter;
     private ObjectPoolEditVer objectPool;
     private StageData stageData;
     private Grid grid;
@@ -21,6 +17,11 @@ public class Edit extends GameState
      * プレイするステージの番号 0から
      */
     private int stageNum;
+    private boolean isGoToPlay;
+    /**
+     * フレームカウンタ
+     */
+    public static int counter;
 
     public int getStageNum()
     {
@@ -47,12 +48,10 @@ public class Edit extends GameState
     public void init(GameContainer gc)
             throws SlickException
     {
-        stageNum = 0;
-        stageData.loadStageDate(stageNum);
-        objectPool.init();
+        initStage(gc, 0, 0, 0);
     }
 
-    public void initStage(int stageNum, int cameraX, int cameraY)
+    public void initStage(GameContainer gc, int stageNum, int cameraX, int cameraY)
     {
         if (stageData.loadStageDate(stageNum))
         {
@@ -60,6 +59,10 @@ public class Edit extends GameState
         }
         objectPool.init();
         objectPool.camera.init(cameraX, cameraY);
+        isGoToPlay = false;
+        toolBar.init();
+        mousePointer.init();
+        grid.update(gc, cameraX, cameraY);
     }
 
     /**
@@ -68,6 +71,7 @@ public class Edit extends GameState
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
+        //System.out.println(mousePointer.getType() + " " + mousePointer.isDragging);
         if (gc.getInput().getMouseY() < 80)
         {
             toolBar.update(gc, mousePointer);
@@ -76,6 +80,7 @@ public class Edit extends GameState
             {
                 stageData.saveStageDate(stageNum);
                 System.out.println("ステージデータをstage" + (stageNum + 1) + "を保存しました");
+                isGoToPlay = true;
             }
 
             if (toolBar.isAddStageNum())
@@ -84,23 +89,19 @@ public class Edit extends GameState
                 if (!stageData.loadStageDate(stageNum))
                 {
                     stageData.createNewStage(stageNum);
+                    objectPool.camera.init(0, 0);
                 }
                 objectPool.init();
             }
             else if (toolBar.isSubStageNum())
             {
-                if (stageNum > 0)
-                {
-                    stageNum--;
-                    stageData.loadStageDate(stageNum);
-                }
+                initStage(gc, stageNum - 1, 0, 0);
                 objectPool.init();
             }
         }
         else
         {
             objectPool.collisionDetection(gc);
-            grid.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
             mousePointer.setPointer(grid.getGridCenterAbX(gc.getInput().getMouseX()), grid.getGridCenterAbY(gc.getInput().getMouseY()));
             mousePointer.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
 
@@ -170,6 +171,7 @@ public class Edit extends GameState
             }
         }
 
+        grid.update(gc, objectPool.camera.getX(), objectPool.camera.getY());
         objectPool.moveGrounds(stageData.getGroundXs(), stageData.getGroundYs(),
                 stageData.getGroundTypes(), stageData.getGroundPositions());
         objectPool.moveJoints(stageData.getJointXs(), stageData.getJointYs(), stageData.getJointTypes(),
@@ -179,6 +181,7 @@ public class Edit extends GameState
         objectPool.moveBackObjects(stageData.getBackObjectXs(), stageData.getBackObjectYs(), stageData.getBackObjectTypes()
                 , stageData.getBackObjectLayers());
         objectPool.update(gc);
+
         counter++;
     }
 
@@ -219,5 +222,10 @@ public class Edit extends GameState
         toolBar.render(g, im, fm, stageNum);
         g.setColor(Color.black);
         g.drawString("stage" + (stageNum + 1), 100, 100);
+    }
+
+    public boolean isGoToPlay()
+    {
+        return isGoToPlay;
     }
 }

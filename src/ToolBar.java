@@ -14,7 +14,7 @@ public class ToolBar
     private int cameraX = Play.DISPLAY_WIDTH / 2;
     private int cameraY = Play.DISPLAY_HEIGHT / 2;
     private boolean isJointLockRadius;
-    private Button saveButton;
+    private Button playButton;
     private boolean addStageNum;
     private boolean subStageNum;
 
@@ -47,14 +47,19 @@ public class ToolBar
 
     ToolBar(ObjectPool objectPool)
     {
-        selectedMenu = Menu.OPERATE;
         ground = new Ground(objectPool);
         joint = new Joint(objectPool.player, objectPool);
         backObject = new BackObject(objectPool);
         cherry = new Cherry(objectPool);
         heart = new Heart(objectPool);
-        saveButton = new Button(1100, 40, 130, 60, "save");
-        saveButton.setColor(new Color(0.4f, 0.23f, 0), new Color(28f / 256, 187f / 256, 227f / 256));
+        playButton = new Button(1100, 40, 130, 60, "play");
+        playButton.setColor(new Color(0.4f, 0.23f, 0), new Color(28f / 256, 187f / 256, 227f / 256));
+        init();
+    }
+
+    public void init()
+    {
+        selectedMenu = Menu.OPERATE;
     }
 
     public void update(GameContainer gc, MousePointer mousePointer)
@@ -114,7 +119,7 @@ public class ToolBar
                 }
             }
 
-            saveButton.update(gc);
+            playButton.update(gc);
 
             if (gc.getInput().getMouseY() > 30 &&
                     gc.getInput().getMouseY() < 50)
@@ -159,6 +164,7 @@ public class ToolBar
 
     private void setMousePointer(MousePointer mousePointer)
     {
+        System.out.println(selectedMenu);
         switch (selectedMenu)
         {
             case GROUND:
@@ -190,7 +196,7 @@ public class ToolBar
         im.drawToolBar(0, 0);
 
         Font font = fm.getMediumFont();
-        font.drawString(Integer.toString(stageNum + 1), 210 - font.getWidth(Integer.toString(stageNum)) / 2, 40);
+        font.drawString(Integer.toString(stageNum + 1), 210 - font.getWidth(Integer.toString(stageNum + 1)) / 2, 40);
 
         g.setColor(new Color(1, 1, 0, 0.6f));
         g.fillRect(selectedMenu.getMenuCenterX() - 40, selectedMenu.getMenuCenterY() - 40, 80, 80);
@@ -210,11 +216,11 @@ public class ToolBar
         im.drawCherry(750, 40, Cherry.RADIUS * 2, Cherry.RADIUS * 2);
         im.drawHeart(850, 40, Heart.RADIUS * 2, Heart.RADIUS * 2);
         im.drawDelete(950, 40);
-        saveButton.render(g, im, fm);
+        playButton.render(g, im, fm);
     }
 
     public boolean isStageDataSave()
     {
-        return saveButton.isPressed();
+        return playButton.isPressed();
     }
 }
