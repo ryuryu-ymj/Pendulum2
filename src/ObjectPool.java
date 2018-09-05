@@ -23,6 +23,7 @@ public class ObjectPool
     private Sound heartCatchSound;
     private Sound playerDieSound;
     private Sound playerGoalSound;
+    private Sound beeDieSound;
 
     /**
      * 画面上における ground の数の最大値
@@ -135,6 +136,7 @@ public class ObjectPool
             heartCatchSound = new Sound("res/sound/heart_catch.wav");
             playerDieSound = new Sound("res/sound/player_die.wav");
             playerGoalSound = new Sound("res/sound/player_goal.wav");
+            beeDieSound = new Sound("res/sound/bee_die.wav");
         }
         catch (SlickException e)
         {
@@ -432,12 +434,18 @@ public class ObjectPool
         //playerが一周したとき
         if (wire.playerLoop())
         {
-            if (joints[wire.jointLockedNum].getType() == Joint.Type.HEART_IN)
+            if (!joints[wire.jointLockedNum].isPlayerLoop)
             {
-                if (!joints[wire.jointLockedNum].isPlayerLoop)
+                switch (joints[wire.jointLockedNum].getType())
                 {
-                    score.addHeart();
-                    heartCatchSound.play();
+                    case HEART_IN:
+                        score.addHeart();
+                        heartCatchSound.play();
+                        break;
+                    case BEE_ROTATE:
+                    case BEE_AIM:
+                        beeDieSound.play();
+                        break;
                 }
             }
 
