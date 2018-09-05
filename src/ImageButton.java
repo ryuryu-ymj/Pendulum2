@@ -22,26 +22,20 @@ public class ImageButton
         this.height = height;
     }
 
-    public void checkDown(GameContainer gc)
+    public void checkPressed(GameContainer gc)
     {
-        if (gc.getInput().getMouseX() > x - width / 2 && gc.getInput().getMouseX() < x + width / 2)
+        if (Mouse.isJustClicked())
         {
-            if (gc.getInput().getMouseY() > y - height / 2 && gc.getInput().getMouseY() < y + height / 2)
+            if (gc.getInput().getMouseX() > x - width / 2 && gc.getInput().getMouseX() < x + width / 2)
             {
-                isPressed = true;
-                gc.getInput().clearMousePressedRecord();
-                return;
+                if (gc.getInput().getMouseY() > y - height / 2 && gc.getInput().getMouseY() < y + height / 2)
+                {
+                    isPressed = true;
+                    return;
+                }
             }
         }
         isPressed = false;
-    }
-
-    public void checkPressed(GameContainer gc)
-    {
-        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
-        {
-            checkDown(gc);
-        }
     }
 
     public void render(Image image)
@@ -51,11 +45,6 @@ public class ImageButton
 
     public boolean isPressed()
     {
-        if (isPressed)
-        {
-            isPressed = false;
-            return true;
-        }
-        return false;
+        return isPressed;
     }
 }

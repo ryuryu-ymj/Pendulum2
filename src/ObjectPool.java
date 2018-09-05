@@ -280,7 +280,7 @@ public class ObjectPool
     public void collisionDetection(GameContainer gc)
     {
         f:
-        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
+        if (Mouse.isJustClicked())
         {
             for (int i = 0; i < JOINT_MAX; i++)
             {

@@ -23,6 +23,11 @@ public class Main extends BasicGame
     ImageManager im;
     FontManager fm;
 
+    /**
+     * マウス入力用
+     */
+    private Mouse mouse;
+
     public enum State
     {
         TITLE,
@@ -55,6 +60,9 @@ public class Main extends BasicGame
         title.init(gc);
         im = new ImageManager();
         fm = new FontManager();
+
+        mouse = new Mouse();
+
         gc.setMouseCursor(new Image("res/img/clear_img.png"), 0, 0);
     }
 
@@ -65,6 +73,8 @@ public class Main extends BasicGame
     public void update(GameContainer gc, int delta)
             throws SlickException
     {
+        mouse.update(gc);
+
         switch (state)
         {
             case TITLE:

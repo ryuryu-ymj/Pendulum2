@@ -1,7 +1,6 @@
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 
 public class ToolBar
 {
@@ -67,7 +66,7 @@ public class ToolBar
     public void update(GameContainer gc, MousePointer mousePointer)
     {
         check:
-        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
+        if (Mouse.isJustClicked())
         {
             for (Menu menu : Menu.values())
             {
@@ -121,8 +120,6 @@ public class ToolBar
                 }
             }
 
-            playButton.checkDown(gc);
-
             if (gc.getInput().getMouseY() > 30 &&
                     gc.getInput().getMouseY() < 50)
             {
@@ -138,6 +135,8 @@ public class ToolBar
                 }
             }
         }
+
+        playButton.checkPressed(gc);
 
         joint.update(gc, cameraX, cameraY);
         ground.update(gc, cameraX, cameraY);

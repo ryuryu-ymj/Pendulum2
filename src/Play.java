@@ -92,7 +92,7 @@ public class Play extends GameState
         switch (state)
         {
             case STAGE_TITLE:
-                if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
+                if (Mouse.isJustClicked())
                 {
                     state = State.PLAY;
                     bgm.loop();
@@ -142,14 +142,14 @@ public class Play extends GameState
                 }
                 break;
             case GAME_OVER:
-                if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
+                if (Mouse.isJustClicked())
                 {
                     state = State.STAGE_TITLE;
                 }
                 break;
         }
 
-        backButton.checkDown(gc);
+        backButton.checkPressed(gc);
         if (backButton.isPressed())
         {
             switch (StageData.fileFolder)

@@ -36,12 +36,9 @@ public class Title extends GameState
     @Override
     public void update(GameContainer gc, int delta) throws SlickException
     {
-        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
-        {
-            playButton.checkDown(gc);
-            editButton.checkDown(gc);
-            creditButton.checkDown(gc);
-        }
+        playButton.checkPressed(gc);
+        editButton.checkPressed(gc);
+        creditButton.checkPressed(gc);
     }
 
     @Override
