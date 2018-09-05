@@ -1,3 +1,4 @@
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Sound;
 
@@ -13,7 +14,7 @@ public class Score
         cherryScore = 0;
         heartScore = 0;
         font = new Font("res/font/fontSmall");
-        font.setColor(1, 1, 1);
+        font.setColor(102f / 256, 59f / 256, 0 / 256);
     }
 
     public void initScore()

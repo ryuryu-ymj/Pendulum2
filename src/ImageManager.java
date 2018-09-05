@@ -39,8 +39,9 @@ public class ImageManager
     private Image background2;
     private Image toolBar;
     private Image delete;
-    private Image backButton;
-    private Image editButton;
+    private Image homeIcon;
+    private Image editIcon;
+    private Image playIcon;
 
     ImageManager()
     {
@@ -113,8 +114,9 @@ public class ImageManager
         try
         {
             SpriteSheet ss = new SpriteSheet("res/img/button.png", 100, 100);
-            backButton = ss.getSubImage(0, 0);
-            editButton = ss.getSubImage(1, 0);
+            homeIcon = ss.getSubImage(0, 0);
+            editIcon = ss.getSubImage(1, 0);
+            playIcon = ss.getSubImage(2, 0);
         }
         catch (SlickException e)
         {
@@ -546,38 +548,56 @@ public class ImageManager
     }
 
     /**
-     * backButton の画像を表示する
+     * homeIcon の画像を表示する
      *
      * @param x      中心点のx座標
      * @param y      中心点のy座標
      * @param width  横幅
      * @param height 縦幅
      */
-    public void drawBackButton(float x, float y, float width, float height)
+    public void drawHomeIcon(float x, float y, float width, float height)
     {
-        backButton.draw(x, y, width, height);
+        homeIcon.draw(x, y, width, height);
     }
 
-    public Image getBackButton()
+    public Image getHomeIcon()
     {
-        return backButton;
+        return homeIcon;
     }
 
     /**
-     * editButton の画像を表示する
+     * editIcon の画像を表示する
      *
      * @param x      中心点のx座標
      * @param y      中心点のy座標
      * @param width  横幅
      * @param height 縦幅
      */
-    public void drawEditButton(float x, float y, float width, float height)
+    public void drawEditIcon(float x, float y, float width, float height)
     {
-        editButton.draw(x, y, width, height);
+        editIcon.draw(x, y, width, height);
     }
 
-    public Image getEditButton()
+    public Image getEditIcon()
     {
-        return editButton;
+        return editIcon;
+    }
+
+    /**
+     * playIcon の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawPlayIcon(float x, float y, float width, float height)
+    {
+        playIcon.draw(x, y, width, height);
+    }
+
+    public Image getPlayIcon()
+    {
+        return playIcon;
     }
 }

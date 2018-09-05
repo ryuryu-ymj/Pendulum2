@@ -12,12 +12,15 @@ public class Edit extends GameState
     private Grid grid;
     private MousePointer mousePointer;
     private ToolBar toolBar;
+    private ImageButton playButton;
+    private ImageButton homeButton;
 
     /**
      * プレイするステージの番号 0から
      */
     private int stageNum;
     private boolean isGoToPlay;
+    private boolean isGoToTitle;
     /**
      * フレームカウンタ
      */
@@ -40,6 +43,8 @@ public class Edit extends GameState
         grid = new Grid(objectPool);
         mousePointer = new MousePointer(objectPool);
         toolBar = new ToolBar();
+        homeButton = new ImageButton(1050, 40, 60, 60);
+        playButton = new ImageButton(1125, 40, 60, 60);
     }
 
     /**
@@ -61,6 +66,7 @@ public class Edit extends GameState
         objectPool.init();
         objectPool.camera.init(cameraX, cameraY);
         isGoToPlay = false;
+        isGoToTitle = false;
         toolBar.init();
         mousePointer.init();
         grid.update(gc, cameraX, cameraY);
@@ -74,13 +80,19 @@ public class Edit extends GameState
     {
         if (gc.getInput().getMouseY() < 80)
         {
+            playButton.checkPressed(gc);
+            homeButton.checkPressed(gc);
             toolBar.update(gc, mousePointer);
 
-            if (toolBar.isStageDataSave())
+            if (playButton.isPressed())
             {
                 stageData.saveStageDate(stageNum);
                 System.out.println("ステージデータをstage" + (stageNum + 1) + "を保存しました");
                 isGoToPlay = true;
+            }
+            else if (homeButton.isPressed())
+            {
+                isGoToTitle = true;
             }
 
             if (toolBar.isAddStageNum())
@@ -89,8 +101,8 @@ public class Edit extends GameState
                 if (!stageData.loadStageDate(stageNum))
                 {
                     stageData.createNewStage(stageNum);
-                    objectPool.camera.init(0, 0);
                 }
+                objectPool.camera.init(0, 0);
                 objectPool.init();
             }
             else if (toolBar.isSubStageNum())
@@ -219,12 +231,17 @@ public class Edit extends GameState
         objectPool.render(g, im);
         mousePointer.render(g, im);
         toolBar.render(g, im, fm, stageNum);
-        g.setColor(Color.black);
-        g.drawString("stage" + (stageNum + 1), 100, 100);
+        homeButton.render(im.getHomeIcon());
+        playButton.render(im.getPlayIcon());
     }
 
     public boolean isGoToPlay()
     {
         return isGoToPlay;
+    }
+
+    public boolean isGoToTitle()
+    {
+        return isGoToTitle;
     }
 }

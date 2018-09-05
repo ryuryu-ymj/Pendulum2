@@ -20,7 +20,8 @@ public class Play extends GameState
      */
     public static int counter;
     private Music bgm;
-    private ImageButton backButton;
+    private ImageButton homeButton;
+    private ImageButton editButton;
 
     /**
      * プレイするステージの番号 0から
@@ -46,7 +47,8 @@ public class Play extends GameState
     Play()
     {
         super();
-        backButton = new ImageButton(30, 30, 60, 60);
+        homeButton = new ImageButton(30, 30, 60, 60);
+        editButton = new ImageButton(90, 30, 60, 60);
         objectPool = new ObjectPool();
         objectPool.create(objectPool);
         stageData = new StageData();
@@ -68,6 +70,7 @@ public class Play extends GameState
     public void init(GameContainer gc)
     {
         initStage(0);
+        objectPool.init();
     }
 
     public void initStage(int stageNum)
@@ -76,10 +79,11 @@ public class Play extends GameState
         {
             this.stageNum = stageNum;
         }
-        objectPool.init();
+        objectPool.initStage();
         state = State.STAGE_TITLE;
         isGoToTitle = false;
         isGoToEdit = false;
+        editButton.active = (StageData.fileFolder != StageData.FileFolder.OFFICIAL);
     }
 
     /**
@@ -148,19 +152,15 @@ public class Play extends GameState
                 }
                 break;
         }
-
-        backButton.checkPressed(gc);
-        if (backButton.isPressed())
+        homeButton.checkPressed(gc);
+        editButton.checkPressed(gc);
+        if (homeButton.isPressed())
         {
-            switch (StageData.fileFolder)
-            {
-                case OFFICIAL:
-                    isGoToTitle = true;
-                    break;
-                case SELF_MADE:
-                    isGoToEdit = true;
-                    break;
-            }
+            isGoToTitle = true;
+        }
+        else if (editButton.isPressed())
+        {
+            isGoToEdit = true;
         }
 
         counter++;
@@ -188,7 +188,8 @@ public class Play extends GameState
                 playMessage.renderGameOver(g, counter, fm);
                 break;
         }
-        backButton.render(im.getBackButton());
+        homeButton.render(im.getHomeIcon());
+        editButton.render(im.getEditIcon());
     }
 
     public void finish()

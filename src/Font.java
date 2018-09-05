@@ -259,6 +259,18 @@ public class Font
 		}
 	}
 
+    /**
+     * 文字列を中央揃えで描画する.
+     *
+     * @param str 描画する文字列
+     * @param x 中央のX座標
+     * @param y Y座標
+     */
+	public void drawStringCentered(String str, float x, float y)
+    {
+        drawString(str, x - getWidth(str) / 2, y);
+    }
+
 	/**
 	 * フォントを廃棄し,メモリを開放する.
 	 * 廃棄後はフォントにアクセスしてはならない.

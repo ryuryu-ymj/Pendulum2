@@ -59,6 +59,11 @@ public class Camera
         final int mouseX = gc.getInput().getMouseX();
         final int mouseY = gc.getInput().getMouseY();
         final float speed = 0.1f;
+        if (mouseY < 60)
+        {
+            return;
+        }
+
         if (mouseX < 60)
         {
             x -= (60 - mouseX) * speed;

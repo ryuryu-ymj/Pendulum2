@@ -13,7 +13,6 @@ public class ToolBar
     private int cameraX = Play.DISPLAY_WIDTH / 2;
     private int cameraY = Play.DISPLAY_HEIGHT / 2;
     private boolean isJointLockRadius;
-    private TextButton playButton;
     private boolean addStageNum;
     private boolean subStageNum;
 
@@ -53,8 +52,6 @@ public class ToolBar
         backObject = new BackObject(objectPool);
         cherry = new Cherry(objectPool);
         heart = new Heart(objectPool);
-        playButton = new TextButton(1100, 40, 130, 60, "play");
-        playButton.setColor(new Color(0.4f, 0.23f, 0), new Color(28f / 256, 187f / 256, 227f / 256));
         init();
     }
 
@@ -136,8 +133,6 @@ public class ToolBar
             }
         }
 
-        playButton.checkPressed(gc);
-
         joint.update(gc, cameraX, cameraY);
         ground.update(gc, cameraX, cameraY);
         backObject.update(gc, cameraX, cameraY);
@@ -216,11 +211,5 @@ public class ToolBar
         im.drawCherry(750, 40, Cherry.RADIUS * 2, Cherry.RADIUS * 2);
         im.drawHeart(850, 40, Heart.RADIUS * 2, Heart.RADIUS * 2);
         im.drawDelete(950, 40);
-        playButton.render(g, im, fm);
-    }
-
-    public boolean isStageDataSave()
-    {
-        return playButton.isPressed();
     }
 }

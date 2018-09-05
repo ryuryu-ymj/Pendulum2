@@ -59,4 +59,9 @@ public class Title extends GameState
     {
         return editButton.isPressed();
     }
+
+    public boolean isGoToCredit()
+    {
+        return creditButton.isPressed();
+    }
 }

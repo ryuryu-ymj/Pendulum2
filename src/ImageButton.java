@@ -13,6 +13,7 @@ public class ImageButton
      * ボタンが押されたかどうか
      */
     private boolean isPressed;
+    public boolean active;
 
     ImageButton(int x, int y, int width, int height)
     {
@@ -20,31 +21,38 @@ public class ImageButton
         this.y = y;
         this.width = width;
         this.height = height;
+        active = true;
     }
 
     public void checkPressed(GameContainer gc)
     {
-        if (Mouse.isJustClicked())
+        if (active)
         {
-            if (gc.getInput().getMouseX() > x - width / 2 && gc.getInput().getMouseX() < x + width / 2)
+            if (Mouse.isJustClicked())
             {
-                if (gc.getInput().getMouseY() > y - height / 2 && gc.getInput().getMouseY() < y + height / 2)
+                if (gc.getInput().getMouseX() > x - width / 2 && gc.getInput().getMouseX() < x + width / 2)
                 {
-                    isPressed = true;
-                    return;
+                    if (gc.getInput().getMouseY() > y - height / 2 && gc.getInput().getMouseY() < y + height / 2)
+                    {
+                        isPressed = true;
+                        return;
+                    }
                 }
             }
+            isPressed = false;
         }
-        isPressed = false;
     }
 
     public void render(Image image)
     {
-        image.draw(x - width / 2, y - height / 2, width, height);
+        if (active)
+        {
+            image.draw(x - width / 2, y - height / 2, width, height);
+        }
     }
 
     public boolean isPressed()
     {
-        return isPressed;
+        return active && isPressed;
     }
 }

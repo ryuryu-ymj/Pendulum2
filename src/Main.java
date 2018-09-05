@@ -16,6 +16,7 @@ public class Main extends BasicGame
      */
     Play play;
     Edit edit;
+    Credit credit;
     /**
      * ゲームシーン
      */
@@ -30,9 +31,7 @@ public class Main extends BasicGame
 
     public enum State
     {
-        TITLE,
-        PLAY,
-        EDIT,
+        TITLE, PLAY, EDIT, CREDIT
     }
 
     /**
@@ -56,6 +55,7 @@ public class Main extends BasicGame
         title = new Title();
         play = new Play();
         edit = new Edit();
+        credit = new Credit();
         state = State.TITLE;
         title.init(gc);
         im = new ImageManager();
@@ -81,6 +81,7 @@ public class Main extends BasicGame
                 title.update(gc, delta);
                 if (title.isGoToPlay())
                 {
+                    StageData.fileFolder = StageData.FileFolder.OFFICIAL;
                     play.init(gc);
                     state = State.PLAY;
                 }
@@ -88,6 +89,11 @@ public class Main extends BasicGame
                 {
                     edit.init(gc);
                     state = State.EDIT;
+                }
+                else if (title.isGoToCredit())
+                {
+                    credit.init(gc);
+                    state = State.CREDIT;
                 }
                 break;
             case PLAY:
@@ -98,10 +104,10 @@ public class Main extends BasicGame
                     title.init(gc);
                     state = State.TITLE;
                 }
-                else if (play.isGoToEdit())
+                if (play.isGoToEdit())
                 {
                     play.finish();
-                    edit.init(gc);
+                    edit.initStage(gc, play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
                     state = State.EDIT;
                 }
                 break;
@@ -109,18 +115,36 @@ public class Main extends BasicGame
                 edit.update(gc, delta);
                 if (edit.isGoToPlay())
                 {
+                    StageData.fileFolder = StageData.FileFolder.SELF_MADE;
                     play.initStage(edit.getStageNum());
+                    play.objectPool.score.initScore();
                     state = State.PLAY;
+                }
+                else if (edit.isGoToTitle())
+                {
+                    title.init(gc);
+                    state = State.TITLE;
+                }
+                break;
+            case CREDIT:
+                credit.update(gc, delta);
+                if (Mouse.isJustClicked())
+                {
+                    title.init(gc);
+                    state = State.TITLE;
                 }
                 break;
         }
+
         if (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))
         {
             if (gc.getInput().isKeyPressed(Input.KEY_P))
             {
                 if (state == State.EDIT)
                 {
+                    StageData.fileFolder = StageData.FileFolder.SELF_MADE;
                     play.initStage(edit.getStageNum());
+                    play.objectPool.score.initScore();
                     state = State.PLAY;
                 }
             }
@@ -156,6 +180,9 @@ public class Main extends BasicGame
                 break;
             case EDIT:
                 edit.render(gc, g, im, fm);
+                break;
+            case CREDIT:
+                credit.render(gc, g, im, fm);
                 break;
         }
 
