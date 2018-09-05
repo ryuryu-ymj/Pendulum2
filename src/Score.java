@@ -5,7 +5,7 @@ import org.newdawn.slick.Sound;
 public class Score
 {
     private int cherryScore;
-    private final int CHERRY_MAX = 10;
+    private final int CHERRY_MAX = 20;
     private int heartScore;
     private Font font;
 
