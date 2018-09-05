@@ -191,6 +191,7 @@ public class ToolBar
         im.drawToolBar(0, 0);
 
         Font font = fm.getMediumFont();
+        font.setColor(0, 0, 0);
         font.drawString(Integer.toString(stageNum + 1), 210 - font.getWidth(Integer.toString(stageNum + 1)) / 2, 40);
 
         g.setColor(new Color(1, 1, 0, 0.6f));

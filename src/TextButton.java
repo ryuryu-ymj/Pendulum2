@@ -21,8 +21,8 @@ public class TextButton extends ImageButton
         this.width = width;
         this.height = height;
         this.string = string;
-        frameColor = new Color(102f / 256, 59f / 256, 0 / 256);
-        insideColor = new Color(102f / 256, 165f / 256, 0 / 256);
+        insideColor = new Color(120f / 256, 165f / 256, 0 / 256);//new Color(99f / 256, 57f / 256, 0 / 256);
+        frameColor = new Color(227f / 256, 255f / 256, 152f / 256);//new Color(120f / 256, 165f / 256, 0 / 256);
         frameWidth = 8;
     }
 
