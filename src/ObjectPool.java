@@ -155,6 +155,9 @@ public class ObjectPool
         initStage();
     }
 
+    /**
+     * ステージごとの初期化
+     */
     public void initStage()
     {
         player.init(200, 200);
@@ -454,7 +457,7 @@ public class ObjectPool
             wire.initIsPlayerPass();
         }
     }
-
+    
     private void playerDie()
     {
         score.subHeart();

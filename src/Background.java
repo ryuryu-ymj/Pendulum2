@@ -1,7 +1,11 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
+/**
+ * 背景の更新，描画
+ *
+ * @author ryuryu
+ */
 public class Background extends GameObject
 {
     private final float alpha = 0.5f;

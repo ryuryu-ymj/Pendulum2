@@ -4,6 +4,8 @@ import org.newdawn.slick.Input;
 /**
  * カメラクラス<br>
  * 画面の制御などを行う
+ *
+ * @author ryuryu
  */
 public class Camera
 {
@@ -21,6 +23,9 @@ public class Camera
         active = false;
     }
 
+    /**
+     * 初期化
+     */
     public void init(int x, int y)
     {
         this.x = x;
@@ -28,12 +33,18 @@ public class Camera
         active = true;
     }
 
+    /**
+     * playerの動きに合わせて移動する
+     */
     public void followPlayer(float playerX, float playerY)
     {
         x += (playerX - x) / 20;
         y += (playerY - 100 - y) / 20;
     }
 
+    /**
+     * 方向キーによって移動する
+     */
     public void moveByKey(GameContainer gc)
     {
         if (gc.getInput().isKeyDown(Input.KEY_RIGHT))
@@ -54,6 +65,9 @@ public class Camera
         }
     }
 
+    /**
+     * マウスによって移動する
+     */
     public void moveByMouse(GameContainer gc)
     {
         final int mouseX = gc.getInput().getMouseX();

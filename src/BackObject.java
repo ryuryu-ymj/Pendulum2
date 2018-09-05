@@ -2,7 +2,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 /**
- * 背景オブジェクト
+ * 背景オブジェクト（あたり判定のないオブジェクト）
+ *
+ * @author ryuryu
  */
 public class BackObject extends GameObject
 {
@@ -20,8 +22,7 @@ public class BackObject extends GameObject
     {
         LAYER0(1),
         /*LAYER1(0.8f),
-        LAYER2(0.3f),*/
-        ;
+        LAYER2(0.3f),*/;
 
         /**
          * 進み具合<br>
@@ -106,6 +107,7 @@ public class BackObject extends GameObject
                 break;
         }
     }
+
     public static void renderIcon(Graphics g, ImageManager im, int x, int y, Type type)
     {
         switch (type)
