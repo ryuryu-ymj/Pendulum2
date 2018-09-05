@@ -82,6 +82,18 @@ public class Main extends BasicGame
                 break;
             case PLAY:
                 play.update(gc, delta);
+                if (play.isGoToTitle())
+                {
+                    play.finish();
+                    title.init(gc);
+                    state = State.TITLE;
+                }
+                else if (play.isGoToEdit())
+                {
+                    play.finish();
+                    edit.init(gc);
+                    state = State.EDIT;
+                }
                 break;
             case EDIT:
                 edit.update(gc, delta);

@@ -87,6 +87,20 @@ public class StageData
      */
     public static final int STAGE_MAX = 10;
 
+    enum FileFolder
+    {
+        OFFICIAL("res/stage/official"),
+        SELF_MADE("res/stage/official");
+
+        final String PATHNAME;
+
+        FileFolder(String PATHNAME)
+        {
+            this.PATHNAME = PATHNAME;
+        }
+    }
+    public static FileFolder fileFolder;
+
     StageData()
     {
         groundXs = new ArrayList<>();
@@ -105,6 +119,8 @@ public class StageData
         cherryYs = new ArrayList<>();
         heartXs = new ArrayList<>();
         heartYs = new ArrayList<>();
+
+        fileFolder = FileFolder.OFFICIAL;
     }
 
     /**
@@ -117,7 +133,7 @@ public class StageData
     {
         try
         {
-            File file = new File("res/stage/stage" + (stageNum + 1) + ".csv");
+            File file = new File(fileFolder.PATHNAME + "/stage" + (stageNum + 1) + ".csv");
             if (!file.exists())
             {
                 System.err.println("ファイルが存在しません stage" + (stageNum + 1));
@@ -253,7 +269,7 @@ public class StageData
     {
         try
         {
-            FileWriter fw = new FileWriter("res/stage/stage" + (stageNum + 1) + ".csv");
+            FileWriter fw = new FileWriter(fileFolder.PATHNAME + "/stage" + (stageNum + 1) + ".csv");
             PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
 
             for (int i = 0; i < groundXs.size(); i++)

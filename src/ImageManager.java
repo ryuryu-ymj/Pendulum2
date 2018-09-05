@@ -39,6 +39,7 @@ public class ImageManager
     private Image background2;
     private Image toolBar;
     private Image delete;
+    private Image backButton;
 
     ImageManager()
     {
@@ -50,15 +51,6 @@ public class ImageManager
             bee = ss.getSubImage(2, 0);
             sting = ss.getSubImage(3, 0);
             jointGoal = ss.getSubImage(4, 0);
-        }
-        catch (SlickException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
-            tree1 = new Image("res/img/tree1.png");
         }
         catch (SlickException e)
         {
@@ -84,43 +76,16 @@ public class ImageManager
 
         try
         {
-            background = new Image("res/img/background.png");
-        }
-        catch (SlickException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
+            tree1 = new Image("res/img/tree1.png");
             glass1 = new Image("res/img/glass1.png");
-        }
-        catch (SlickException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
             glass2 = new Image("res/img/glass2.png");
-        }
-        catch (SlickException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
             glass3 = new Image("res/img/glass3.png");
-        }
-        catch (SlickException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
             glass4 = new Image("res/img/glass4.png");
+            background = new Image("res/img/background.png");
+            background1 = new Image("res/img/background1.png");
+            background2 = new Image("res/img/background2.png");
+            toolBar = new Image("res/img/tool_bar.png");
+            backButton = new Image("res/img/back_button.png");
         }
         catch (SlickException e)
         {
@@ -157,33 +122,6 @@ public class ImageManager
             cursor = ss.getSubImage(0, 0);
             delete = ss.getSubImage(1, 0);
 
-        }
-        catch (SlickException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
-            background1 = new Image("res/img/background1.png");
-        }
-        catch (SlickException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
-            background2 = new Image("res/img/background2.png");
-        }
-        catch (SlickException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
-            toolBar = new Image("res/img/tool_bar.png");
         }
         catch (SlickException e)
         {
@@ -595,5 +533,23 @@ public class ImageManager
     public void drawToolBar(float x, float y)
     {
         toolBar.draw(x, y);
+    }
+
+    /**
+     * backButton の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawBackButton(float x, float y, float width, float height)
+    {
+        backButton.draw(x, y, width, height);
+    }
+
+    public Image getBackButton()
+    {
+        return backButton;
     }
 }

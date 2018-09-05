@@ -8,15 +8,15 @@ import org.newdawn.slick.*;
 public class Title extends GameState
 {
     private Image image;
-    private Button playButton;
-    private Button editButton;
-    private Button creditButton;
+    private TextButton playButton;
+    private TextButton editButton;
+    private TextButton creditButton;
 
     Title()
     {
-        playButton = new Button(Play.DISPLAY_WIDTH / 2, 500, 400, 60, "PLAY");
-        editButton = new Button(Play.DISPLAY_WIDTH / 2, 600, 400, 60, "EDIT");
-        creditButton = new Button(Play.DISPLAY_WIDTH / 2, 700, 400, 60, "CREDIT");
+        playButton = new TextButton(Play.DISPLAY_WIDTH / 2, 500, 400, 60, "PLAY");
+        editButton = new TextButton(Play.DISPLAY_WIDTH / 2, 600, 400, 60, "EDIT");
+        creditButton = new TextButton(Play.DISPLAY_WIDTH / 2, 700, 400, 60, "CREDIT");
 
         try
         {
@@ -38,9 +38,9 @@ public class Title extends GameState
     {
         if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
         {
-            playButton.update(gc);
-            editButton.update(gc);
-            creditButton.update(gc);
+            playButton.checkDown(gc);
+            editButton.checkDown(gc);
+            creditButton.checkDown(gc);
         }
     }
 

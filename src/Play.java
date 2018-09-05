@@ -20,22 +20,20 @@ public class Play extends GameState
      */
     public static int counter;
     private Music bgm;
+    private ImageButton backButton;
 
     /**
      * プレイするステージの番号 0から
      */
     private int stageNum;
-
-    public int getStageNum()
-    {
-        return stageNum;
-    }
+    private boolean isGoToTitle;
+    private boolean isGoToEdit;
 
     private State state;
 
     private enum State
     {
-        STAGE_TITLE, PLAY, GAMEOVER, KEEP
+        STAGE_TITLE, PLAY, GAME_OVER, KEEP
     }
 
     ObjectPool objectPool;
@@ -48,6 +46,7 @@ public class Play extends GameState
     Play()
     {
         super();
+        backButton = new ImageButton(30, 30, 60, 60);
         objectPool = new ObjectPool();
         objectPool.create(objectPool);
         stageData = new StageData();
@@ -79,6 +78,8 @@ public class Play extends GameState
         }
         objectPool.init();
         state = State.STAGE_TITLE;
+        isGoToTitle = false;
+        isGoToEdit = false;
     }
 
     /**
@@ -121,7 +122,7 @@ public class Play extends GameState
                     if (counter > 30)
                     {
                         init(gc);
-                        state = State.GAMEOVER;
+                        state = State.GAME_OVER;
                     }
                 }
                 else if (objectPool.isPlayerDead())
@@ -140,12 +141,26 @@ public class Play extends GameState
                     }
                 }
                 break;
-            case GAMEOVER:
+            case GAME_OVER:
                 if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
                 {
                     state = State.STAGE_TITLE;
                 }
                 break;
+        }
+
+        backButton.checkDown(gc);
+        if (backButton.isPressed())
+        {
+            switch (StageData.fileFolder)
+            {
+                case OFFICIAL:
+                    isGoToTitle = true;
+                    break;
+                case SELF_MADE:
+                    isGoToEdit = true;
+                    break;
+            }
         }
 
         counter++;
@@ -169,14 +184,30 @@ public class Play extends GameState
             case KEEP:
                 objectPool.render(g, im);
                 break;
-            case GAMEOVER:
+            case GAME_OVER:
                 playMessage.renderGameOver(g, counter, fm);
                 break;
         }
+        backButton.render(im.getBackButton());
     }
 
     public void finish()
     {
         bgm.pause();
+    }
+
+    public int getStageNum()
+    {
+        return stageNum;
+    }
+
+    public boolean isGoToTitle()
+    {
+        return isGoToTitle;
+    }
+
+    public boolean isGoToEdit()
+    {
+        return isGoToEdit;
     }
 }

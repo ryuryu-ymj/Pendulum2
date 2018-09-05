@@ -53,6 +53,7 @@ public class Edit extends GameState
 
     public void initStage(GameContainer gc, int stageNum, int cameraX, int cameraY)
     {
+        StageData.fileFolder = StageData.FileFolder.SELF_MADE;
         if (stageData.loadStageDate(stageNum))
         {
             this.stageNum = stageNum;
@@ -179,12 +180,6 @@ public class Edit extends GameState
         objectPool.moveBackObjects(stageData.getBackObjectXs(), stageData.getBackObjectYs(), stageData.getBackObjectTypes()
                 , stageData.getBackObjectLayers());
         objectPool.update(gc);
-
-        for (Joint joint : objectPool.joints)
-        {
-            System.out.print("(" + joint.active + " " + joint.getDiX() + " " + joint.getDiY() + ") ");
-        }
-        System.out.println();
 
         counter++;
     }

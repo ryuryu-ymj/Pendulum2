@@ -2,7 +2,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-public class Button
+public class TextButton extends ImageButton
 {
     /**
      * 中心点の座標
@@ -13,13 +13,10 @@ public class Button
     private Color frameColor;
     private Color insideColor;
     private int frameWidth;
-    /**
-     * ボタンが押されたかどうか
-     */
-    private boolean isPressed;
 
-    Button(int x, int y, int width, int height, String string)
+    TextButton(int x, int y, int width, int height, String string)
     {
+        super(x, y, width, height);
         this.x = x;
         this.y = y;
         this.width = width;
@@ -46,20 +43,6 @@ public class Button
         this.frameWidth = frameWidth;
     }
 
-    public void update(GameContainer gc)
-    {
-        if (gc.getInput().getMouseX() > x - width / 2 && gc.getInput().getMouseX() < x + width / 2)
-        {
-            if (gc.getInput().getMouseY() > y - height / 2 && gc.getInput().getMouseY() < y + height / 2)
-            {
-                isPressed = true;
-                gc.getInput().clearMousePressedRecord();
-                return;
-            }
-        }
-        isPressed = false;
-    }
-
     public void render(Graphics g, ImageManager im, FontManager fm)
     {
         g.setColor(frameColor);
@@ -70,15 +53,5 @@ public class Button
         Font font = fm.getMediumFont();
         font.setColor(frameColor.r, frameColor.g, frameColor.b);
         font.drawString(string, x - font.getWidth(string) / 2, y);
-    }
-
-    public boolean isPressed()
-    {
-        if (isPressed)
-        {
-            isPressed = false;
-            return true;
-        }
-        return false;
     }
 }
