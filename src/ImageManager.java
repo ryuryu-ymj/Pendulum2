@@ -40,6 +40,7 @@ public class ImageManager
     private Image toolBar;
     private Image delete;
     private Image backButton;
+    private Image editButton;
 
     ImageManager()
     {
@@ -76,24 +77,6 @@ public class ImageManager
 
         try
         {
-            tree1 = new Image("res/img/tree1.png");
-            glass1 = new Image("res/img/glass1.png");
-            glass2 = new Image("res/img/glass2.png");
-            glass3 = new Image("res/img/glass3.png");
-            glass4 = new Image("res/img/glass4.png");
-            background = new Image("res/img/background.png");
-            background1 = new Image("res/img/background1.png");
-            background2 = new Image("res/img/background2.png");
-            toolBar = new Image("res/img/tool_bar.png");
-            backButton = new Image("res/img/back_button.png");
-        }
-        catch (SlickException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
             SpriteSheet ss = new SpriteSheet("res/img/item.png", 50, 50);
             cherry = ss.getSubImage(0, 0);
             heart = ss.getSubImage(1, 0);
@@ -121,7 +104,34 @@ public class ImageManager
             SpriteSheet ss = new SpriteSheet("res/img/cursor.png", 50, 50);
             cursor = ss.getSubImage(0, 0);
             delete = ss.getSubImage(1, 0);
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
 
+        try
+        {
+            SpriteSheet ss = new SpriteSheet("res/img/button.png", 100, 100);
+            backButton = ss.getSubImage(0, 0);
+            editButton = ss.getSubImage(1, 0);
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            tree1 = new Image("res/img/tree1.png");
+            glass1 = new Image("res/img/glass1.png");
+            glass2 = new Image("res/img/glass2.png");
+            glass3 = new Image("res/img/glass3.png");
+            glass4 = new Image("res/img/glass4.png");
+            background = new Image("res/img/background.png");
+            background1 = new Image("res/img/background1.png");
+            background2 = new Image("res/img/background2.png");
+            toolBar = new Image("res/img/tool_bar.png");
         }
         catch (SlickException e)
         {
@@ -551,5 +561,23 @@ public class ImageManager
     public Image getBackButton()
     {
         return backButton;
+    }
+
+    /**
+     * editButton の画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawEditButton(float x, float y, float width, float height)
+    {
+        editButton.draw(x, y, width, height);
+    }
+
+    public Image getEditButton()
+    {
+        return editButton;
     }
 }
