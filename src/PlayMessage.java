@@ -18,7 +18,7 @@ public class PlayMessage
 
         fm.getSmallFont().setColor(0.4f, 0.23f, 0);
         fm.getSmallFont().setAlpha((float) Math.abs(counter % 20 - 10) / 10);
-        fm.getSmallFont().drawString("click left mouse", x - fm.getSmallFont().getWidth("click left mouse") / 2, y + 200);
+        fm.getSmallFont().drawStringCentered("click to start", x, y + 200);
     }
 
     public void renderGameOver(Graphics g, int counter, FontManager fm)
@@ -28,6 +28,6 @@ public class PlayMessage
 
         fm.getSmallFont().setColor(0.4f, 0.23f, 0);
         fm.getSmallFont().setAlpha((float) Math.abs(counter % 20 - 10) / 10);
-        fm.getSmallFont().drawString("click left mouse", x - fm.getSmallFont().getWidth("click left mouse") / 2, y + 200);
+        fm.getSmallFont().drawStringCentered("click to start", x, y + 200);
     }
 }
