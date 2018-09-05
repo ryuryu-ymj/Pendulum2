@@ -34,7 +34,7 @@ public class Play extends GameState
 
     private enum State
     {
-        STAGE_TITLE, PLAY, GAME_OVER, KEEP
+        STAGE_TITLE, PLAY, GAME_OVER, KEEP, GAME_CLEAR
     }
 
     ObjectPool objectPool;
@@ -73,17 +73,19 @@ public class Play extends GameState
         objectPool.init();
     }
 
-    public void initStage(int stageNum)
+    public boolean initStage(int stageNum)
     {
         if (stageData.loadStageDate(stageNum))
         {
             this.stageNum = stageNum;
+            objectPool.initStage();
+            state = State.STAGE_TITLE;
+            isGoToTitle = false;
+            isGoToEdit = false;
+            editButton.active = (StageData.fileFolder != StageData.FileFolder.OFFICIAL);
+            return true;
         }
-        objectPool.initStage();
-        state = State.STAGE_TITLE;
-        isGoToTitle = false;
-        isGoToEdit = false;
-        editButton.active = (StageData.fileFolder != StageData.FileFolder.OFFICIAL);
+        return false;
     }
 
     /**
@@ -141,7 +143,10 @@ public class Play extends GameState
                 {
                     if (counter > 90)
                     {
-                        initStage(stageNum + 1);
+                        if (!initStage(stageNum + 1))
+                        {
+                            state = State.GAME_CLEAR;
+                        }
                     }
                 }
                 break;
@@ -151,6 +156,11 @@ public class Play extends GameState
                     state = State.STAGE_TITLE;
                 }
                 break;
+            case GAME_CLEAR:
+                if (Mouse.isJustClicked())
+                {
+                    isGoToTitle = true;
+                }
         }
         homeButton.checkPressed(gc);
         editButton.checkPressed(gc);
@@ -186,6 +196,9 @@ public class Play extends GameState
                 break;
             case GAME_OVER:
                 playMessage.renderGameOver(g, counter, fm);
+                break;
+            case GAME_CLEAR:
+                playMessage.renderGameClear(g, counter, fm);
                 break;
         }
         homeButton.render(im.getHomeIcon());

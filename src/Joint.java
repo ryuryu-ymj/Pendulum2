@@ -99,7 +99,6 @@ public class Joint extends GameObject
             //System.out.println("delete " + num + " " + objectPool.wire.jointLockedNum);
         }
         changeToDisplayPoint(cameraX, cameraY);
-
         counter++;
     }
 
@@ -110,7 +109,10 @@ public class Joint extends GameObject
      */
     private void fireBullet(float angle)
     {
-        objectPool.newBullet(abX, abY, angle, 3);
+        if (objectPool.newBullet(abX, abY, angle, 3) == -1)
+        {
+            System.err.println("bullet の数が足りません");
+        }
     }
 
     @Override
