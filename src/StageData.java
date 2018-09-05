@@ -90,7 +90,7 @@ public class StageData
     enum FileFolder
     {
         OFFICIAL("res/stage/official"),
-        SELF_MADE("res/stage/official");
+        SELF_MADE("res/stage/self_made");
 
         final String PATHNAME;
 
@@ -99,6 +99,7 @@ public class StageData
             this.PATHNAME = PATHNAME;
         }
     }
+
     public static FileFolder fileFolder;
 
     StageData()

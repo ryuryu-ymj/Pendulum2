@@ -52,6 +52,7 @@ public abstract class GameItem extends GameObject
 
     /**
      * 初期化処理
+     *
      * @param abX 中心座標
      * @param abY 中心座標
      * @param num ID

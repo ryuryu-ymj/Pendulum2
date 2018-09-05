@@ -40,7 +40,7 @@ public class Wire
 
     public void initIsPlayerPass()
     {
-        for(int i = 0; i < isPlayerPass.length; i++)
+        for (int i = 0; i < isPlayerPass.length; i++)
         {
             isPlayerPass[i] = false;
         }
@@ -55,7 +55,7 @@ public class Wire
         angle = Math.atan2(playerY - jointY, playerX - jointX);
 
         // 加速
-        if(gc.getInput().isKeyDown(Input.KEY_SPACE))
+        if (gc.getInput().isKeyDown(Input.KEY_SPACE))
         {
             stringForce = 4;
         }

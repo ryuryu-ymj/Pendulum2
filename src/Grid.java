@@ -38,13 +38,13 @@ public class Grid extends GameObject
 
     public int getGridCenterAbX(int diX)
     {
-        int i = (diX - (int)getDiX()) / Ground.WIDTH;
-        return (int)abX + Ground.WIDTH * i + Ground.WIDTH / 2;
+        int i = (diX - (int) getDiX()) / Ground.WIDTH;
+        return (int) abX + Ground.WIDTH * i + Ground.WIDTH / 2;
     }
 
     public int getGridCenterAbY(int diY)
     {
-        int i = (diY - (int)getDiY()) / Ground.WIDTH;
-        return (int)abY + Ground.WIDTH * i + Ground.WIDTH / 2;
+        int i = (diY - (int) getDiY()) / Ground.WIDTH;
+        return (int) abY + Ground.WIDTH * i + Ground.WIDTH / 2;
     }
 }

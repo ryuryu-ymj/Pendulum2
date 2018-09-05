@@ -457,7 +457,7 @@ public class ObjectPool
             wire.initIsPlayerPass();
         }
     }
-    
+
     private void playerDie()
     {
         score.subHeart();

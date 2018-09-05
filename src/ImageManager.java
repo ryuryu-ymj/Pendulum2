@@ -484,12 +484,12 @@ public class ImageManager
     /**
      * cursor の画像を表示する
      *
-     * @param x      中心点のx座標
-     * @param y      中心点のy座標
+     * @param x 中心点のx座標
+     * @param y 中心点のy座標
      */
     public void drawCursor(float x, float y)
     {
-        cursor.draw(x - cursor.getWidth() / 2, y- cursor.getHeight() / 2);
+        cursor.draw(x - cursor.getWidth() / 2, y - cursor.getHeight() / 2);
     }
 
     public Image getCursor()
@@ -500,12 +500,12 @@ public class ImageManager
     /**
      * delete の画像を表示する
      *
-     * @param x      中心点のx座標
-     * @param y      中心点のy座標
+     * @param x 中心点のx座標
+     * @param y 中心点のy座標
      */
     public void drawDelete(float x, float y)
     {
-        delete.draw(x - delete.getWidth() / 2, y- delete.getHeight() / 2);
+        delete.draw(x - delete.getWidth() / 2, y - delete.getHeight() / 2);
     }
 
     /**
@@ -539,8 +539,8 @@ public class ImageManager
     /**
      * toolBar の画像を表示する
      *
-     * @param x      左上のx座標
-     * @param y      左上のy座標
+     * @param x 左上のx座標
+     * @param y 左上のy座標
      */
     public void drawToolBar(float x, float y)
     {

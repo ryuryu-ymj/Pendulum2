@@ -135,29 +135,6 @@ public class Main extends BasicGame
                 }
                 break;
         }
-
-        if (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))
-        {
-            if (gc.getInput().isKeyPressed(Input.KEY_P))
-            {
-                if (state == State.EDIT)
-                {
-                    StageData.fileFolder = StageData.FileFolder.SELF_MADE;
-                    play.initStage(edit.getStageNum());
-                    play.objectPool.score.initScore();
-                    state = State.PLAY;
-                }
-            }
-            else if (gc.getInput().isKeyPressed(Input.KEY_E))
-            {
-                if (state == State.PLAY)
-                {
-                    play.finish();
-                    edit.initStage(gc, play.getStageNum(), (int) play.objectPool.camera.getX(), (int) play.objectPool.camera.getY());
-                    state = State.EDIT;
-                }
-            }
-        }
     }
 
     /**
