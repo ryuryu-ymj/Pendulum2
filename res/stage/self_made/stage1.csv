@@ -1,0 +1,12 @@
+ground,-90,270,NORMAL,false,false,true,true
+ground,-30,270,NORMAL,false,false,true,true
+ground,30,270,NORMAL,false,false,true,true
+ground,90,270,NORMAL,false,false,true,true
+ground,150,270,NORMAL,false,false,true,true
+ground,210,270,NORMAL,false,false,true,true
+ground,270,270,NORMAL,false,false,true,true
+ground,330,270,NORMAL,false,false,true,true
+ground,390,270,NORMAL,false,false,true,true
+ground,450,270,NORMAL,false,false,true,true
+ground,-150,270,NORMAL,false,false,false,true
+ground,510,270,NORMAL,false,false,true,false

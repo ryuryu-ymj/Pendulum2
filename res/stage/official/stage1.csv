@@ -154,7 +154,6 @@ ground,510,570,NORMAL,true,true,true,true
 ground,510,510,NORMAL,true,true,true,true
 ground,570,510,NORMAL,true,true,true,true
 ground,630,510,NORMAL,true,true,true,true
-ground,570,570,NORMAL,true,true,true,true
 ground,630,570,NORMAL,true,true,true,true
 ground,690,450,NORMAL,true,true,true,true
 ground,750,450,NORMAL,true,true,true,true
@@ -163,7 +162,6 @@ ground,690,510,NORMAL,true,true,true,true
 ground,690,570,NORMAL,true,true,true,true
 ground,750,570,NORMAL,true,true,true,true
 ground,750,630,NORMAL,true,true,true,true
-ground,690,630,NORMAL,true,true,true,true
 ground,690,690,NORMAL,true,true,true,true
 ground,810,630,NORMAL,true,true,true,true
 ground,810,690,NORMAL,true,true,true,true
@@ -874,6 +872,8 @@ ground,3570,750,NORMAL,false,true,true,false
 ground,2610,-930,INVISIBLE,false,false,true,true
 ground,2670,-930,INVISIBLE,false,false,true,true
 ground,2730,-930,INVISIBLE,false,false,true,false
+ground,570,570,NORMAL,true,true,true,true
+ground,690,630,NORMAL,true,true,true,true
 joint,810,-330,NORMAL,0
 joint,1290,150,NORMAL,0
 joint,2310,-90,NORMAL,0
